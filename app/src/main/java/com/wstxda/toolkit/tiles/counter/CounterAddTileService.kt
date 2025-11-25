@@ -7,8 +7,8 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import com.wstxda.toolkit.R
-import com.wstxda.toolkit.utils.counter.CounterValue
-import com.wstxda.toolkit.utils.update
+import com.wstxda.toolkit.utils.CounterValue
+import com.wstxda.toolkit.services.update
 
 private const val TAG = "CounterAddTileService"
 
