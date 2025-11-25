@@ -95,4 +95,8 @@
     <!--screenshot tile-->
 
     <string name="screenshot_tile_label">Screenshot</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile_label">NFC</string>
 </resources>
