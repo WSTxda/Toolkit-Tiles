@@ -8,6 +8,7 @@
         tools:ignore="ForegroundServicesPolicy" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <!--use hardware sensors/components-->
 
@@ -48,6 +49,11 @@
 
         <activity
             android:name=".activity.AccessibilityPermissionActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name=".activity.NotificationPolicyPermissionActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
@@ -242,6 +248,22 @@
             android:exported="true"
             android:icon="@drawable/ic_sos"
             android:label="@string/sos_tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
+        <!--sound mode quick settings tile service-->
+
+        <service
+            android:name=".tiles.SoundModeTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_volume_up"
+            android:label="@string/sound_mode_tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

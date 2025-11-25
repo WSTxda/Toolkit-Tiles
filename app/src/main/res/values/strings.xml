@@ -18,6 +18,7 @@
     <!--messages-->
 
     <string name="not_supported">Your device does not support this feature</string>
+    <string name="notification_policy_permission_message">Notification policy permission required. Please enable it first</string>
 
     <!--general state tile-->
 
@@ -95,4 +96,10 @@
     <!--screenshot tile-->
 
     <string name="screenshot_tile_label">Screenshot</string>
+
+    <!--sound mode tile-->
+    <string name="sound_mode_tile_label">Sound Mode</string>
+    <string name="sound_mode_normal">Normal</string>
+    <string name="sound_mode_vibrate">Vibrate</string>
+    <string name="sound_mode_silent">Silent</string>
 </resources>
