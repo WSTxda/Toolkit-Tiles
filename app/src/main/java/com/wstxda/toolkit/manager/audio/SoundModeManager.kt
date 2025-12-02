@@ -7,17 +7,26 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class SoundModeManager(private val context: Context) {
 
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    val currentModeFlow: Flow<SoundMode> = callbackFlow {
+    val currentMode: StateFlow<SoundMode> = callbackFlow {
         trySend(getCurrentModeInternal())
 
         val receiver = object : BroadcastReceiver() {
@@ -42,7 +51,11 @@ class SoundModeManager(private val context: Context) {
             } catch (_: IllegalArgumentException) {
             }
         }
-    }.distinctUntilChanged()
+    }.distinctUntilChanged().stateIn(
+        scope = managerScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = getCurrentModeInternal()
+    )
 
     fun hasPermission(): Boolean {
         return notificationManager.isNotificationPolicyAccessGranted
@@ -51,13 +64,19 @@ class SoundModeManager(private val context: Context) {
     fun cycleMode() {
         if (!hasPermission()) return
 
-        val current = getCurrentModeInternal()
-        val newMode = when (current) {
-            SoundMode.NORMAL -> SoundMode.VIBRATE
-            SoundMode.VIBRATE -> SoundMode.SILENT
-            SoundMode.SILENT -> SoundMode.NORMAL
+        managerScope.launch {
+            val current = getCurrentModeInternal()
+            val newMode = when (current) {
+                SoundMode.NORMAL -> SoundMode.VIBRATE
+                SoundMode.VIBRATE -> SoundMode.SILENT
+                SoundMode.SILENT -> SoundMode.NORMAL
+            }
+            audioManager.ringerMode = newMode.ringerMode
         }
-        audioManager.ringerMode = newMode.ringerMode
+    }
+
+    fun cleanup() {
+        managerScope.cancel()
     }
 
     fun getCurrentModeInternal(): SoundMode {

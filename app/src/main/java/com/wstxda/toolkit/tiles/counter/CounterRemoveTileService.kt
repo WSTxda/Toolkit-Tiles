@@ -3,38 +3,28 @@ package com.wstxda.toolkit.tiles.counter
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.counter.CounterAction
-import com.wstxda.toolkit.manager.counter.CounterManager
+import com.wstxda.toolkit.manager.counter.CounterModule
 import com.wstxda.toolkit.ui.icon.CounterIconProvider
 import com.wstxda.toolkit.ui.label.CounterLabelProvider
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.Flow
 
 class CounterRemoveTileService : BaseTileService() {
 
-    private lateinit var counterLabelProvider: CounterLabelProvider
-    private lateinit var counterIconProvider: CounterIconProvider
-
-    override fun onCreate() {
-        super.onCreate()
-        CounterManager.initialize(this)
-        counterLabelProvider = CounterLabelProvider(this)
-        counterIconProvider = CounterIconProvider(this)
-    }
-
-    override fun onStartListening() {
-        super.onStartListening()
-        combine(CounterManager.count, CounterManager.lastAction) { _, _ ->
-            updateTile()
-        }.launchIn(serviceScope)
-    }
+    private val counterModule by lazy { CounterModule.getInstance(applicationContext) }
+    private val counterLabelProvider by lazy { CounterLabelProvider(applicationContext) }
+    private val counterIconProvider by lazy { CounterIconProvider(applicationContext) }
 
     override fun onClick() {
-        CounterManager.decrement()
+        counterModule.decrement()
+    }
+
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(counterModule.count, counterModule.lastAction)
     }
 
     override fun updateTile() {
-        val count = CounterManager.count.value
-        val action = CounterManager.lastAction.value
+        val count = counterModule.count.value
+        val action = counterModule.lastAction.value
         val isActive = action == CounterAction.REMOVE
 
         setTileState(

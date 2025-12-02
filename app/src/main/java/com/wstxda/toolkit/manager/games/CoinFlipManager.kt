@@ -1,26 +1,34 @@
 package com.wstxda.toolkit.manager.games
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlin.random.Random
 
-class CoinFlipManager() {
+class CoinFlipManager {
 
-    var headsCount = 0
-        private set
-    var tailsCount = 0
-        private set
+    private val _headsCount = MutableStateFlow(0)
+    val headsCount = _headsCount.asStateFlow()
 
-    fun flip(): CoinFlipSide {
+    private val _tailsCount = MutableStateFlow(0)
+    val tailsCount = _tailsCount.asStateFlow()
+
+    private val _lastFlip = MutableStateFlow<CoinFlipSide?>(null)
+    val lastFlip = _lastFlip.asStateFlow()
+
+    fun flip() {
         val side = if (Random.nextBoolean()) CoinFlipSide.HEADS else CoinFlipSide.TAILS
+        _lastFlip.value = side
+
         if (side == CoinFlipSide.HEADS) {
-            headsCount++
+            _headsCount.value += 1
         } else {
-            tailsCount++
+            _tailsCount.value += 1
         }
-        return side
     }
 
     fun reset() {
-        headsCount = 0
-        tailsCount = 0
+        _headsCount.value = 0
+        _tailsCount.value = 0
+        _lastFlip.value = null
     }
 }

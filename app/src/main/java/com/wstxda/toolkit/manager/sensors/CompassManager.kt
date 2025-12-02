@@ -14,23 +14,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.abs
 
-object CompassManager : SensorEventListener {
+class CompassManager(context: Context) : SensorEventListener {
 
-    private var appContext: Context? = null
-    private var lastHapticDegrees: Float? = null
-    private var isSensorRegistered = false
+    private val appContext = context.applicationContext
+    private val haptics = Haptics(appContext)
 
-    private val _isActive = MutableStateFlow(false)
-    val isActive = _isActive.asStateFlow()
+    private val _isEnabled = MutableStateFlow(false)
+    val isEnabled = _isEnabled.asStateFlow()
 
     private val _currentDegrees = MutableStateFlow(0f)
     val currentDegrees = _currentDegrees.asStateFlow()
+    private var isResumed = false
+    private var isSensorRegistered = false
+    private var lastHapticDegrees: Float? = null
 
     private val sensorManager: SensorManager?
-        get() = appContext?.getSystemService()
+        get() = appContext.getSystemService()
 
     private val display: Display?
-        get() = appContext?.getSystemService(DisplayManager::class.java)
+        get() = appContext.getSystemService(DisplayManager::class.java)
             ?.getDisplay(Display.DEFAULT_DISPLAY)
 
     private val rotationSensor: Sensor?
@@ -40,29 +42,33 @@ object CompassManager : SensorEventListener {
                 ?: sm.getDefaultSensor(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR)
         }
 
-    fun initialize(context: Context) {
-        if (appContext == null) appContext = context.applicationContext
+    fun toggle() {
+        _isEnabled.value = !_isEnabled.value
+        updateSensorState()
     }
 
-    fun isSupported(context: Context): Boolean {
-        val sm = context.getSystemService<SensorManager>()
-        return sm?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) != null || sm?.getDefaultSensor(
-            Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR
-        ) != null
-    }
-
-    fun start() {
-        _isActive.value = true
-        registerSensor()
-    }
-
-    fun stop() {
-        _isActive.value = false
-        unregisterSensor()
+    fun resume() {
+        isResumed = true
+        updateSensorState()
     }
 
     fun pause() {
+        isResumed = false
+        updateSensorState()
+    }
+
+    fun forceStop() {
+        _isEnabled.value = false
+        isResumed = false
         unregisterSensor()
+    }
+
+    private fun updateSensorState() {
+        if (_isEnabled.value && isResumed) {
+            registerSensor()
+        } else {
+            unregisterSensor()
+        }
     }
 
     private fun registerSensor() {
@@ -84,7 +90,7 @@ object CompassManager : SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event == null || appContext == null) return
+        if (event == null) return
 
         val degrees = event.getAzimuthDegrees(display?.rotation ?: 0)
         _currentDegrees.value = degrees
@@ -95,10 +101,19 @@ object CompassManager : SensorEventListener {
         }
 
         if (abs(degrees - lastHapticDegrees!!) > 1f) {
-            Haptics(appContext!!).tick()
+            haptics.tick()
             lastHapticDegrees = degrees
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+
+    companion object {
+        fun isSupported(context: Context): Boolean {
+            val sm = context.getSystemService<SensorManager>()
+            return sm?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) != null || sm?.getDefaultSensor(
+                Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR
+            ) != null
+        }
+    }
 }

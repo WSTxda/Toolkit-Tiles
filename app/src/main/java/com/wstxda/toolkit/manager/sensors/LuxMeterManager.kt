@@ -10,50 +10,46 @@ import com.wstxda.toolkit.services.sensors.getLux
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-object LuxMeterManager : SensorEventListener {
+class LuxMeterManager(context: Context) : SensorEventListener {
 
-    private var sensorManager: SensorManager? = null
-    private var lightSensor: Sensor? = null
-    private var isSensorRegistered = false
+    private val sensorManager: SensorManager? = context.getSystemService()
+    private val lightSensor: Sensor? = sensorManager?.getDefaultSensor(Sensor.TYPE_LIGHT)
 
-    private val _isActive = MutableStateFlow(false)
-    val isActive = _isActive.asStateFlow()
+    private val _isEnabled = MutableStateFlow(false)
+    val isEnabled = _isEnabled.asStateFlow()
 
     private val _lux = MutableStateFlow(0)
     val lux = _lux.asStateFlow()
+    private var isResumed = false
+    private var isSensorRegistered = false
 
-    fun initialize(context: Context) {
-        if (sensorManager != null) return
-
-        sensorManager = context.getSystemService<SensorManager>()
-        lightSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_LIGHT)
-    }
-
-    fun isSupported(context: Context): Boolean {
-        val sm = context.getSystemService<SensorManager>()
-        return sm?.getDefaultSensor(Sensor.TYPE_LIGHT) != null
-    }
-
-    fun start() {
-        _isActive.value = true
-        registerSensor()
-    }
-
-    fun stop() {
-        _isActive.value = false
-        unregisterSensor()
+    fun toggle() {
+        _isEnabled.value = !_isEnabled.value
+        updateSensorState()
     }
 
     fun resume() {
-        if (_isActive.value) registerSensor()
+        isResumed = true
+        updateSensorState()
     }
 
     fun pause() {
+        isResumed = false
+        updateSensorState()
+    }
+
+    fun forceStop() {
+        _isEnabled.value = false
+        isResumed = false
         unregisterSensor()
     }
 
-    fun setForceActive(active: Boolean) {
-        _isActive.value = active
+    private fun updateSensorState() {
+        if (_isEnabled.value && isResumed) {
+            registerSensor()
+        } else {
+            unregisterSensor()
+        }
     }
 
     private fun registerSensor() {
@@ -76,4 +72,11 @@ object LuxMeterManager : SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+
+    companion object {
+        fun isSupported(context: Context): Boolean {
+            val sm = context.getSystemService<SensorManager>()
+            return sm?.getDefaultSensor(Sensor.TYPE_LIGHT) != null
+        }
+    }
 }

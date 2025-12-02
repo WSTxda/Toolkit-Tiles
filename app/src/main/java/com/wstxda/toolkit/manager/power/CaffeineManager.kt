@@ -9,8 +9,12 @@ import android.provider.Settings
 import android.service.quicksettings.TileService
 import androidx.core.content.edit
 import com.wstxda.toolkit.tiles.power.CaffeineTileService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class CaffeineManager(context: Context) {
 
@@ -22,6 +26,7 @@ class CaffeineManager(context: Context) {
     }
 
     private val appContext = context.applicationContext
+    private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _currentState = MutableStateFlow<CaffeineState>(CaffeineState.Off)
     val currentState = _currentState.asStateFlow()
     private var isReceiverRegistered = false
@@ -38,29 +43,35 @@ class CaffeineManager(context: Context) {
     private val screenOffReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
-                restoreOriginalTimeout()
+                managerScope.launch {
+                    restoreOriginalTimeout()
+                }
             }
         }
     }
 
     fun synchronizeState() {
-        val prefs = getPrefs()
-        val expectedTimeout = prefs.getInt(PREF_KEY_EXPECTED, -1)
+        managerScope.launch {
+            val prefs = getPrefs()
+            val expectedTimeout = prefs.getInt(PREF_KEY_EXPECTED, -1)
 
-        if (expectedTimeout != -1) {
-            val systemTimeout = getSystemTimeout()
+            if (expectedTimeout != -1) {
+                val systemTimeout = getSystemTimeout()
 
-            if (systemTimeout != expectedTimeout) {
-                forceReset()
+                if (systemTimeout != expectedTimeout) {
+                    forceReset()
+                } else {
+                    val restoredState =
+                        stateCycle.find { it.timeout == expectedTimeout } ?: CaffeineState.Off
+                    _currentState.value = restoredState
+                    if (restoredState != CaffeineState.Off) {
+                        toggleReceiver(true)
+                    }
+                }
             } else {
-                val restoredState =
-                    stateCycle.find { it.timeout == expectedTimeout } ?: CaffeineState.Off
-                _currentState.value = restoredState
-                toggleReceiver(true)
+                _currentState.value = CaffeineState.Off
+                toggleReceiver(false)
             }
-        } else {
-            _currentState.value = CaffeineState.Off
-            toggleReceiver(false)
         }
     }
 
@@ -69,22 +80,14 @@ class CaffeineManager(context: Context) {
     }
 
     fun cycleState() {
-        if (!isPermissionGranted()) return
+        managerScope.launch {
+            if (!isPermissionGranted()) return@launch
 
-        val currentIndex = stateCycle.indexOf(_currentState.value)
-        val nextIndex = (currentIndex + 1) % stateCycle.size
-        val nextState = stateCycle[nextIndex]
+            val currentIndex = stateCycle.indexOf(_currentState.value)
+            val nextIndex = (currentIndex + 1) % stateCycle.size
+            val nextState = stateCycle[nextIndex]
 
-        applyState(nextState)
-    }
-
-    fun cleanup() {
-        try {
-            if (isReceiverRegistered) {
-                appContext.unregisterReceiver(screenOffReceiver)
-                isReceiverRegistered = false
-            }
-        } catch (_: IllegalArgumentException) {
+            applyState(nextState)
         }
     }
 
@@ -95,6 +98,7 @@ class CaffeineManager(context: Context) {
             if (_currentState.value == CaffeineState.Off) {
                 saveOriginalTimeout()
             }
+
             if (setSystemTimeout(newState.timeout)) {
                 _currentState.value = newState
                 getPrefs().edit { putInt(PREF_KEY_EXPECTED, newState.timeout) }

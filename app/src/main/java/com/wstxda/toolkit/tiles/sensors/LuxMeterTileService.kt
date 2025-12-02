@@ -7,14 +7,14 @@ import android.widget.Toast
 import com.wstxda.toolkit.R
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.sensors.LuxMeterManager
+import com.wstxda.toolkit.manager.sensors.LuxMeterModule
 import com.wstxda.toolkit.services.foreground.NOTIFICATION_ID
 import com.wstxda.toolkit.services.foreground.channel
 import com.wstxda.toolkit.services.foreground.notification
 import com.wstxda.toolkit.services.foreground.startForegroundCompat
 import com.wstxda.toolkit.ui.icon.LuxMeterIconProvider
 import com.wstxda.toolkit.ui.label.LuxMeterLabelProvider
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.Flow
 
 private val START_FOREGROUND_IMMEDIATELY =
     Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE
@@ -23,15 +23,12 @@ private val CAN_ONLY_START_FOREGROUND_ON_CLICK =
 
 class LuxMeterTileService : BaseTileService() {
 
-    private lateinit var luxMeterLabelProvider: LuxMeterLabelProvider
-    private lateinit var luxMeterIconProvider: LuxMeterIconProvider
+    private val luxMeterManager by lazy { LuxMeterModule.getInstance(applicationContext) }
+    private val luxMeterLabelProvider by lazy { LuxMeterLabelProvider(applicationContext) }
+    private val luxMeterIconProvider by lazy { LuxMeterIconProvider(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()
-        LuxMeterManager.initialize(this)
-        luxMeterLabelProvider = LuxMeterLabelProvider(this)
-        luxMeterIconProvider = LuxMeterIconProvider(this)
-
         getSystemService(android.app.NotificationManager::class.java)?.createNotificationChannel(
             channel()
         )
@@ -43,17 +40,20 @@ class LuxMeterTileService : BaseTileService() {
 
     override fun onStartListening() {
         super.onStartListening()
-        if (qsTile?.state == Tile.STATE_ACTIVE) {
-            LuxMeterManager.setForceActive(true)
-            LuxMeterManager.resume()
-            startLux()
-        } else {
-            LuxMeterManager.setForceActive(false)
-        }
+        luxMeterManager.resume()
 
-        combine(LuxMeterManager.isActive, LuxMeterManager.lux) { _, _ ->
-            updateTile()
-        }.launchIn(serviceScope)
+        if (luxMeterManager.isEnabled.value) {
+            startLuxService()
+        }
+    }
+
+    override fun onStopListening() {
+        super.onStopListening()
+        luxMeterManager.pause()
+
+        if (luxMeterManager.isEnabled.value) {
+            stopLuxService(fullyRemove = false)
+        }
     }
 
     override fun onClick() {
@@ -62,42 +62,12 @@ class LuxMeterTileService : BaseTileService() {
             return
         }
 
-        val isActive = qsTile?.state == Tile.STATE_ACTIVE
+        luxMeterManager.toggle()
 
-        if (isActive) {
-            LuxMeterManager.stop()
-            stopLuxAndRemoveNotification()
-            qsTile.state = Tile.STATE_INACTIVE
-            updateTile()
+        if (luxMeterManager.isEnabled.value) {
+            startLuxService()
         } else {
-            try {
-                if (!START_FOREGROUND_IMMEDIATELY) {
-                    startForegroundCompat(NOTIFICATION_ID, notification())
-                }
-                LuxMeterManager.start()
-                qsTile.state = Tile.STATE_ACTIVE
-                updateTile()
-
-            } catch (e: Exception) {
-                if (CAN_ONLY_START_FOREGROUND_ON_CLICK && e is ForegroundServiceStartNotAllowedException) {
-                    LuxMeterManager.stop()
-                    qsTile.state = Tile.STATE_INACTIVE
-                    updateTile()
-                } else {
-                    throw e
-                }
-            }
-        }
-    }
-
-    override fun onStopListening() {
-        super.onStopListening()
-        if (qsTile?.state == Tile.STATE_ACTIVE) {
-            LuxMeterManager.pause()
-
-            if (!START_FOREGROUND_IMMEDIATELY) {
-                stopForeground(STOP_FOREGROUND_DETACH)
-            }
+            stopLuxService(fullyRemove = true)
         }
     }
 
@@ -106,9 +76,34 @@ class LuxMeterTileService : BaseTileService() {
         super.onDestroy()
     }
 
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(luxMeterManager.isEnabled, luxMeterManager.lux)
+    }
+
+    private fun startLuxService() {
+        try {
+            if (!START_FOREGROUND_IMMEDIATELY) {
+                startForegroundCompat(NOTIFICATION_ID, notification())
+            }
+        } catch (e: Exception) {
+            if (CAN_ONLY_START_FOREGROUND_ON_CLICK && e is ForegroundServiceStartNotAllowedException) {
+                luxMeterManager.forceStop()
+            } else {
+                throw e
+            }
+        }
+    }
+
+    private fun stopLuxService(fullyRemove: Boolean) {
+        if (!START_FOREGROUND_IMMEDIATELY) {
+            val flags = if (fullyRemove) STOP_FOREGROUND_REMOVE else STOP_FOREGROUND_DETACH
+            stopForeground(flags)
+        }
+    }
+
     override fun updateTile() {
-        val isActive = LuxMeterManager.isActive.value
-        val lux = LuxMeterManager.lux.value
+        val isActive = luxMeterManager.isEnabled.value
+        val lux = luxMeterManager.lux.value
 
         setTileState(
             state = if (isActive) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
@@ -116,20 +111,5 @@ class LuxMeterTileService : BaseTileService() {
             subtitle = luxMeterLabelProvider.getSubtitle(isActive),
             icon = luxMeterIconProvider.getIcon(isActive)
         )
-    }
-
-    private fun startLux() {
-        if (!START_FOREGROUND_IMMEDIATELY) {
-            try {
-                startForegroundCompat(NOTIFICATION_ID, notification())
-            } catch (_: Exception) {
-            }
-        }
-    }
-
-    private fun stopLuxAndRemoveNotification() {
-        if (!START_FOREGROUND_IMMEDIATELY) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-        }
     }
 }

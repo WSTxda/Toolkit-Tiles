@@ -8,17 +8,32 @@ import android.service.quicksettings.TileService
 import androidx.annotation.CallSuper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 
 abstract class BaseTileService : TileService() {
 
-    protected val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    protected val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private var collectionJob: Job? = null
 
     @CallSuper
     override fun onStartListening() {
         super.onStartListening()
+        collectionJob?.cancel()
+        collectionJob = flowsToCollect().merge().onEach { updateTile() }.launchIn(serviceScope)
         updateTile()
+    }
+
+    @CallSuper
+    override fun onStopListening() {
+        super.onStopListening()
+        collectionJob?.cancel()
+        collectionJob = null
     }
 
     @CallSuper
@@ -28,6 +43,8 @@ abstract class BaseTileService : TileService() {
     }
 
     abstract fun updateTile()
+
+    protected open fun flowsToCollect(): List<Flow<*>> = emptyList()
 
     protected fun setTileState(
         state: Int,

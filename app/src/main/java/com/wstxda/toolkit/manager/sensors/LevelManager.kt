@@ -15,66 +15,60 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.roundToInt
 
-object LevelManager : SensorEventListener {
+class LevelManager(context: Context) : SensorEventListener {
 
-    private var appContext: Context? = null
+    private val appContext = context.applicationContext
+    private val haptics = Haptics(appContext)
 
-    private val _isActive = MutableStateFlow(false)
-    val isActive = _isActive.asStateFlow()
+    private val _isEnabled = MutableStateFlow(false)
+    val isEnabled = _isEnabled.asStateFlow()
 
     private val _orientation = MutableStateFlow(Orientation(0f, 0f, 0f, LevelMode.Dot))
     val orientation = _orientation.asStateFlow()
-
     private val _degrees = MutableStateFlow(0)
     val degrees = _degrees.asStateFlow()
+    private var isResumed = false
+    private var isSensorRegistered = false
+    private var lastHapticFeedback = 0L
 
     private val sensorManager: SensorManager?
-        get() = appContext?.getSystemService()
+        get() = appContext.getSystemService()
 
     private val rotationSensor: Sensor?
         get() = sensorManager?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
     private val display: Display?
-        get() = appContext?.getSystemService(android.hardware.display.DisplayManager::class.java)
+        get() = appContext.getSystemService(android.hardware.display.DisplayManager::class.java)
             ?.getDisplay(Display.DEFAULT_DISPLAY)
 
-    private val haptics: Haptics?
-        get() = appContext?.let { Haptics(it) }
 
-    private var isSensorRegistered = false
-    private var lastHapticFeedback = 0L
-
-    fun initialize(context: Context) {
-        if (appContext == null) {
-            appContext = context.applicationContext
-        }
-    }
-
-    fun isSupported(context: Context): Boolean {
-        val sm = context.getSystemService<SensorManager>()
-        return sm?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) != null
-    }
-
-    fun start() {
-        _isActive.value = true
-        registerSensor()
-    }
-
-    fun stop() {
-        _isActive.value = false
-        unregisterSensor()
+    fun toggle() {
+        _isEnabled.value = !_isEnabled.value
+        updateSensorState()
     }
 
     fun resume() {
-        if (_isActive.value) registerSensor()
+        isResumed = true
+        updateSensorState()
     }
 
     fun pause() {
+        isResumed = false
+        updateSensorState()
+    }
+
+    fun forceStop() {
+        _isEnabled.value = false
+        isResumed = false
         unregisterSensor()
     }
 
-    fun setForceActive(active: Boolean) {
-        _isActive.value = active
+    private fun updateSensorState() {
+        if (_isEnabled.value && isResumed) {
+            registerSensor()
+        } else {
+            unregisterSensor()
+        }
     }
 
     private fun registerSensor() {
@@ -113,10 +107,17 @@ object LevelManager : SensorEventListener {
     private fun vibrateOnZero() {
         val now = System.currentTimeMillis()
         if (now - lastHapticFeedback > 500) {
-            haptics?.tick()
+            haptics.tick()
             lastHapticFeedback = now
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+
+    companion object {
+        fun isSupported(context: Context): Boolean {
+            val sm = context.getSystemService<SensorManager>()
+            return sm?.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) != null
+        }
+    }
 }

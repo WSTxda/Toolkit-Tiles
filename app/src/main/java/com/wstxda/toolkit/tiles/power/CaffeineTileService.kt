@@ -3,42 +3,38 @@ package com.wstxda.toolkit.tiles.power
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.WriteSettingsPermissionActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.power.CaffeineManager
+import com.wstxda.toolkit.manager.power.CaffeineModule
 import com.wstxda.toolkit.manager.power.CaffeineState
 import com.wstxda.toolkit.ui.icon.CaffeineIconProvider
 import com.wstxda.toolkit.ui.label.CaffeineLabelProvider
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
 
 class CaffeineTileService : BaseTileService() {
 
-    private val caffeineManager by lazy { CaffeineManager(applicationContext) }
+    private val caffeineModule by lazy { CaffeineModule.getInstance(applicationContext) }
     private val caffeineLabelProvider by lazy { CaffeineLabelProvider(applicationContext) }
     private val caffeineIconProvider by lazy { CaffeineIconProvider(applicationContext) }
 
     override fun onStartListening() {
         super.onStartListening()
-        caffeineManager.synchronizeState()
-
-        caffeineManager.currentState.onEach { updateTile() }.launchIn(serviceScope)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        caffeineManager.cleanup()
+        caffeineModule.synchronizeState()
     }
 
     override fun onClick() {
-        if (caffeineManager.isPermissionGranted()) {
-            caffeineManager.cycleState()
+        if (caffeineModule.isPermissionGranted()) {
+            caffeineModule.cycleState()
         } else {
             startActivityAndCollapse(WriteSettingsPermissionActivity::class.java)
         }
     }
 
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(caffeineModule.currentState)
+    }
+
     override fun updateTile() {
-        val state = caffeineManager.currentState.value
-        val hasPermission = caffeineManager.isPermissionGranted()
+        val state = caffeineModule.currentState.value
+        val hasPermission = caffeineModule.isPermissionGranted()
 
         setTileState(
             state = if (state != CaffeineState.Off && hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,

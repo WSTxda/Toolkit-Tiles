@@ -3,9 +3,9 @@ package com.wstxda.toolkit.tiles.games
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.games.CoinFlipManager
-import com.wstxda.toolkit.manager.games.CoinFlipSide
 import com.wstxda.toolkit.ui.icon.CoinFlipIconProvider
 import com.wstxda.toolkit.ui.label.CoinFlipLabelProvider
+import kotlinx.coroutines.flow.Flow
 
 class CoinFlipTileService : BaseTileService() {
 
@@ -13,23 +13,25 @@ class CoinFlipTileService : BaseTileService() {
     private val coinFlipLabelProvider by lazy { CoinFlipLabelProvider(applicationContext) }
     private val coinFlipIconProvider by lazy { CoinFlipIconProvider(applicationContext) }
 
-    private var lastFlip: CoinFlipSide? = null
-
     override fun onStopListening() {
         super.onStopListening()
-        lastFlip = null
         coinFlipManager.reset()
-        updateTile()
     }
 
     override fun onClick() {
-        lastFlip = coinFlipManager.flip()
-        updateTile()
+        coinFlipManager.flip()
+    }
+
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(
+            coinFlipManager.lastFlip, coinFlipManager.headsCount, coinFlipManager.tailsCount
+        )
     }
 
     override fun updateTile() {
-        val heads = coinFlipManager.headsCount
-        val tails = coinFlipManager.tailsCount
+        val lastFlip = coinFlipManager.lastFlip.value
+        val heads = coinFlipManager.headsCount.value
+        val tails = coinFlipManager.tailsCount.value
 
         setTileState(
             state = if (lastFlip != null) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,

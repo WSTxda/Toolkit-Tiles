@@ -7,63 +7,67 @@ import androidx.core.content.edit
 import com.wstxda.toolkit.tiles.counter.CounterAddTileService
 import com.wstxda.toolkit.tiles.counter.CounterRemoveTileService
 import com.wstxda.toolkit.tiles.counter.CounterResetTileService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-object CounterManager {
+class CounterManager(context: Context) {
 
-    private const val PREFS_NAME = "counter_prefs"
-    private const val KEY_COUNT = "count"
-    private const val KEY_ACTION = "last_action"
+    companion object {
+        private const val PREFS_NAME = "counter_prefs"
+        private const val KEY_COUNT = "count"
+        private const val KEY_ACTION = "last_action"
+    }
 
-    private lateinit var appContext: Context
-
+    private val appContext = context.applicationContext
+    private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _count = MutableStateFlow(0)
     val count = _count.asStateFlow()
-
     private val _lastAction = MutableStateFlow(CounterAction.NONE)
     val lastAction = _lastAction.asStateFlow()
 
-    fun initialize(context: Context) {
-        if (::appContext.isInitialized) return
-        appContext = context.applicationContext
+    init {
+        managerScope.launch {
+            val prefs = getPrefs()
+            _count.value = prefs.getInt(KEY_COUNT, 0)
 
-        val prefs = getPrefs()
-        _count.value = prefs.getInt(KEY_COUNT, 0)
-
-        val actionString = prefs.getString(KEY_ACTION, CounterAction.NONE.name)
-        _lastAction.value =
-            runCatching { CounterAction.valueOf(actionString!!) }.getOrDefault(CounterAction.NONE)
+            val actionString = prefs.getString(KEY_ACTION, CounterAction.NONE.name)
+            _lastAction.value = runCatching {
+                CounterAction.valueOf(actionString!!)
+            }.getOrDefault(CounterAction.NONE)
+        }
     }
 
     fun increment() {
         updateState(_count.value + 1, CounterAction.ADD)
-        refreshAllTiles()
     }
 
     fun decrement() {
         updateState(_count.value - 1, CounterAction.REMOVE)
-        refreshAllTiles()
     }
 
     fun reset() {
         updateState(0, CounterAction.RESET)
-        refreshAllTiles()
     }
 
     private fun updateState(newValue: Int, action: CounterAction) {
         _count.value = newValue
         _lastAction.value = action
 
-        getPrefs().edit {
-            putInt(KEY_COUNT, newValue)
-            putString(KEY_ACTION, action.name)
+        managerScope.launch {
+            getPrefs().edit {
+                putInt(KEY_COUNT, newValue)
+                putString(KEY_ACTION, action.name)
+            }
         }
+
+        refreshAllTiles()
     }
 
     private fun refreshAllTiles() {
-        if (!::appContext.isInitialized) return
-
         val classes = listOf(
             CounterAddTileService::class.java,
             CounterRemoveTileService::class.java,

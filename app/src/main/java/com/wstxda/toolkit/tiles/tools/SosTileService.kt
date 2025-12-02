@@ -7,21 +7,13 @@ import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.tools.SosManager
 import com.wstxda.toolkit.ui.icon.SosIconProvider
 import com.wstxda.toolkit.ui.label.SosLabelProvider
-import com.wstxda.toolkit.ui.utils.Haptics
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
 
 class SosTileService : BaseTileService() {
 
     private val sosManager by lazy { SosManager(applicationContext) }
     private val sosLabelProvider by lazy { SosLabelProvider(applicationContext) }
     private val sosIconProvider by lazy { SosIconProvider(applicationContext) }
-    private val sosHaptics by lazy { Haptics(applicationContext) }
-
-    override fun onStartListening() {
-        super.onStartListening()
-        sosManager.isActive.onEach { updateTile() }.launchIn(serviceScope)
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -29,28 +21,31 @@ class SosTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        sosHaptics.tick()
-
-        if (!sosManager.hasFlash()) {
+        if (!sosManager.hasFlashHardware()) {
             Toast.makeText(this, getString(R.string.not_supported), Toast.LENGTH_SHORT).show()
             return
         }
-
         sosManager.toggle()
+    }
+
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(sosManager.isActive, sosManager.isFlashAvailable)
     }
 
     override fun updateTile() {
         val active = sosManager.isActive.value
-        val available = sosManager.hasFlash()
+        val isHardwareAvailable = sosManager.hasFlashHardware()
+        val isSystemAvailable = sosManager.isFlashAvailable.value
+        val isFullyAvailable = isHardwareAvailable && isSystemAvailable
 
         setTileState(
             state = when {
-                !available -> Tile.STATE_UNAVAILABLE
+                !isFullyAvailable -> Tile.STATE_UNAVAILABLE
                 active -> Tile.STATE_ACTIVE
                 else -> Tile.STATE_INACTIVE
             },
             label = sosLabelProvider.getLabel(),
-            subtitle = sosLabelProvider.getSubtitle(active, available),
+            subtitle = sosLabelProvider.getSubtitle(active, isFullyAvailable),
             icon = sosIconProvider.getIcon()
         )
     }

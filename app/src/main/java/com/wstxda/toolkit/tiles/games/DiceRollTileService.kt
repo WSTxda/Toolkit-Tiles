@@ -5,63 +5,31 @@ import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.games.DiceRollManager
 import com.wstxda.toolkit.ui.icon.DiceRollIconProvider
 import com.wstxda.toolkit.ui.label.DiceRollLabelProvider
-import com.wstxda.toolkit.ui.utils.Haptics
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 class DiceRollTileService : BaseTileService() {
 
-    private val diceRollManager by lazy { DiceRollManager() }
+    private val diceRollManager by lazy { DiceRollManager(applicationContext) }
     private val diceRollLabelProvider by lazy { DiceRollLabelProvider(applicationContext) }
     private val diceRollIconProvider by lazy { DiceRollIconProvider(applicationContext) }
-    private val diceRollHaptics by lazy { Haptics(applicationContext) }
-
-    private var animationJob: Job? = null
-    private var currentRoll: Int? = null
-    private var isRolling = false
 
     override fun onStopListening() {
         super.onStopListening()
-        cancelAnimation()
-        currentRoll = null
-        updateTile()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cancelAnimation()
-    }
-
-    private fun cancelAnimation() {
-        animationJob?.cancel()
-        animationJob = null
-        isRolling = false
+        diceRollManager.clearState()
     }
 
     override fun onClick() {
-        if (isRolling) return
-        animationJob?.cancel()
-        animationJob = serviceScope.launch {
-            isRolling = true
-            val finalRoll = diceRollManager.roll()
+        diceRollManager.roll()
+    }
 
-            for (i in 0 until 12) {
-                currentRoll = diceRollManager.roll()
-                diceRollHaptics.tick()
-                updateTile()
-
-                delay(60L + (i * 30))
-            }
-
-            currentRoll = finalRoll
-            isRolling = false
-            diceRollHaptics.tick()
-            updateTile()
-        }
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(diceRollManager.currentRoll, diceRollManager.isRolling)
     }
 
     override fun updateTile() {
+        val currentRoll = diceRollManager.currentRoll.value
+        val isRolling = diceRollManager.isRolling.value
+
         setTileState(
             state = if (currentRoll != null) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = diceRollLabelProvider.getLabel(currentRoll),

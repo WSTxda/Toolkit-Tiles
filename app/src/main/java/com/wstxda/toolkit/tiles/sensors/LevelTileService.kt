@@ -7,15 +7,14 @@ import android.widget.Toast
 import com.wstxda.toolkit.R
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.sensors.LevelManager
+import com.wstxda.toolkit.manager.sensors.LevelModule
 import com.wstxda.toolkit.services.foreground.NOTIFICATION_ID
 import com.wstxda.toolkit.services.foreground.channel
 import com.wstxda.toolkit.services.foreground.notification
 import com.wstxda.toolkit.services.foreground.startForegroundCompat
 import com.wstxda.toolkit.ui.icon.LevelIconProvider
 import com.wstxda.toolkit.ui.label.LevelLabelProvider
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
 
 private val START_FOREGROUND_IMMEDIATELY =
     Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE
@@ -24,15 +23,12 @@ private val CAN_ONLY_START_FOREGROUND_ON_CLICK =
 
 class LevelTileService : BaseTileService() {
 
-    private lateinit var levelLabelProvider: LevelLabelProvider
-    private lateinit var levelIconProvider: LevelIconProvider
+    private val levelModule by lazy { LevelModule.getInstance(applicationContext) }
+    private val levelLabelProvider by lazy { LevelLabelProvider(applicationContext) }
+    private val levelIconProvider by lazy { LevelIconProvider(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()
-        LevelManager.initialize(this)
-        levelLabelProvider = LevelLabelProvider(this)
-        levelIconProvider = LevelIconProvider(this)
-
         getSystemService(android.app.NotificationManager::class.java)?.createNotificationChannel(
             channel()
         )
@@ -44,21 +40,20 @@ class LevelTileService : BaseTileService() {
 
     override fun onStartListening() {
         super.onStartListening()
-        if (qsTile?.state == Tile.STATE_ACTIVE) {
-            LevelManager.setForceActive(true)
-            LevelManager.resume()
-            startLevel()
-        } else {
-            LevelManager.setForceActive(false)
-        }
+        levelModule.resume()
 
-        combine(
-            LevelManager.isActive, LevelManager.degrees, LevelManager.orientation
-        ) { active, deg, orient ->
-            Triple(active, deg, orient)
-        }.onEach { (active, degrees, orientation) ->
-            updateTile(active, degrees, orientation)
-        }.launchIn(serviceScope)
+        if (levelModule.isEnabled.value) {
+            startLevelService()
+        }
+    }
+
+    override fun onStopListening() {
+        super.onStopListening()
+        levelModule.pause()
+
+        if (levelModule.isEnabled.value) {
+            stopLevelService(fullyRemove = false)
+        }
     }
 
     override fun onClick() {
@@ -67,21 +62,12 @@ class LevelTileService : BaseTileService() {
             return
         }
 
-        val active = qsTile?.state == Tile.STATE_ACTIVE
-        if (active) {
-            updateTileAsInactive()
-        } else {
-            updateTileAsActive()
-        }
-    }
+        levelModule.toggle()
 
-    override fun onStopListening() {
-        super.onStopListening()
-        if (qsTile?.state == Tile.STATE_ACTIVE) {
-            LevelManager.pause()
-            if (!START_FOREGROUND_IMMEDIATELY) {
-                stopForeground(STOP_FOREGROUND_DETACH)
-            }
+        if (levelModule.isEnabled.value) {
+            startLevelService()
+        } else {
+            stopLevelService(fullyRemove = true)
         }
     }
 
@@ -90,66 +76,41 @@ class LevelTileService : BaseTileService() {
         super.onDestroy()
     }
 
-    override fun updateTile() {
-        val isActive = LevelManager.isActive.value
-        val degrees = LevelManager.degrees.value
-        val orient = LevelManager.orientation.value
-        updateTile(isActive, degrees, orient)
+    override fun flowsToCollect(): List<Flow<*>> {
+        return listOf(levelModule.isEnabled, levelModule.degrees, levelModule.orientation)
     }
 
-    private fun updateTile(
-        isActive: Boolean,
-        degrees: Int,
-        orientation: com.wstxda.toolkit.services.sensors.Orientation
-    ) {
-        setTileState(
-            state = if (isActive) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
-            label = levelLabelProvider.getLabel(isActive, degrees),
-            subtitle = levelLabelProvider.getSubtitle(isActive),
-            icon = levelIconProvider.getIcon(isActive, degrees, orientation)
-        )
-    }
-
-    private fun updateTileAsActive() {
+    private fun startLevelService() {
         try {
             if (!START_FOREGROUND_IMMEDIATELY) {
                 startForegroundCompat(NOTIFICATION_ID, notification())
             }
-
-            LevelManager.start()
-            qsTile.state = Tile.STATE_ACTIVE
-            updateTile()
-
         } catch (e: Exception) {
             if (CAN_ONLY_START_FOREGROUND_ON_CLICK && e is ForegroundServiceStartNotAllowedException) {
-                LevelManager.stop()
-                qsTile.state = Tile.STATE_INACTIVE
-                updateTile()
+                levelModule.forceStop()
             } else {
                 throw e
             }
         }
     }
 
-    private fun updateTileAsInactive() {
-        qsTile.state = Tile.STATE_INACTIVE
-        updateTile()
-        stopLevelAndRemoveNotification()
-        LevelManager.stop()
-    }
-
-    private fun startLevel() {
+    private fun stopLevelService(fullyRemove: Boolean) {
         if (!START_FOREGROUND_IMMEDIATELY) {
-            try {
-                startForegroundCompat(NOTIFICATION_ID, notification())
-            } catch (_: Exception) {
-            }
+            val flags = if (fullyRemove) STOP_FOREGROUND_REMOVE else STOP_FOREGROUND_DETACH
+            stopForeground(flags)
         }
     }
 
-    private fun stopLevelAndRemoveNotification() {
-        if (!START_FOREGROUND_IMMEDIATELY) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-        }
+    override fun updateTile() {
+        val isActive = levelModule.isEnabled.value
+        val degrees = levelModule.degrees.value
+        val orient = levelModule.orientation.value
+
+        setTileState(
+            state = if (isActive) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            label = levelLabelProvider.getLabel(isActive, degrees),
+            subtitle = levelLabelProvider.getSubtitle(isActive),
+            icon = levelIconProvider.getIcon(isActive, degrees, orient)
+        )
     }
 }

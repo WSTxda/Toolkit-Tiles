@@ -5,33 +5,51 @@ import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import com.wstxda.toolkit.ui.utils.Haptics
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
 class SosFlasher(context: Context) {
 
-    val hasFlash: Boolean get() = cameraId != null
-
-    private var sosJob: Job? = null
-    private val haptics = Haptics(context)
+    private val appContext = context.applicationContext
+    private val haptics = Haptics(appContext)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val unit = 200L
-    private val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+
+    private val cameraManager by lazy {
+        appContext.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+    }
+
     private val _isTorchOn = MutableStateFlow(false)
     private val _torchAvailable = MutableStateFlow(true)
-    val isTorchOn = _isTorchOn.asStateFlow()
+
     val isTorchAvailable = _torchAvailable.asStateFlow()
+
+    private var sosJob: Job? = null
 
     private val cameraId: String? = try {
         cameraManager.cameraIdList.find { id ->
             val c = cameraManager.getCameraCharacteristics(id)
-            c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true && c.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK
+            val hasFlash = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+            val isBack =
+                c.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK
+            hasFlash && isBack
         }
     } catch (_: Exception) {
         null
     }
+
+    val hasFlashHardware: Boolean get() = cameraId != null
 
     private val torchCallback = object : CameraManager.TorchCallback() {
         override fun onTorchModeChanged(id: String, enabled: Boolean) {
@@ -58,7 +76,8 @@ class SosFlasher(context: Context) {
     }
 
     fun start() {
-        if (!hasFlash || !_torchAvailable.value || sosJob?.isActive == true) return
+        if (!hasFlashHardware || !_torchAvailable.value || sosJob?.isActive == true) return
+
         sosJob?.cancel()
         sosJob = scope.launch {
             try {
