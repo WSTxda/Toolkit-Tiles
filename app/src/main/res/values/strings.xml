@@ -18,7 +18,7 @@
 
     <string name="accessibility_permission_message">Accessibility permission required. Please enable it first</string>
     <string name="dnd_access_permission_message">Do Not Disturb access permission required. Please enable it first</string>
-    <string name="write_settings_permission_message">Write settings permission required. Please enable it first</string>
+    <string name="write_settings_permission_message">Write system settings permission required. Please enable it first</string>
 
     <!--messages-->
 

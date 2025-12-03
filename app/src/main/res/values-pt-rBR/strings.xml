@@ -13,8 +13,8 @@
     <!--permission messages-->
 
     <string name="accessibility_permission_message">Permissão de acessibilidade necessária. Por favor, ative-a primeiro</string>
-    <string name="dnd_access_permission_message">Permissão de acesso a Não Perturbe necessária. Por favor, ative-a primeiro</string>
-    <string name="write_settings_permission_message">Permissão para modificar configurações necessária. Por favor, ative-a primeiro</string>
+    <string name="dnd_access_permission_message">Permissão de acesso ao Não Perturbe necessária. Por favor, ative-a primeiro</string>
+    <string name="write_settings_permission_message">Permissão para modificar as configurações do sistema necessária. Por favor, ative-a primeiro</string>
 
     <!--messages-->
 
