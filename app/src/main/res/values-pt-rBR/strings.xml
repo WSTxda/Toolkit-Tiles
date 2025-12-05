@@ -106,4 +106,12 @@
     <!--tile label-->
     <string name="caffeine_tile_minutes">%1$d minutos</string>
     <string name="caffeine_tile_infinite">Infinito</string>
+
+    <!--device memory tile-->
+
+    <string name="memory_tile">Memória</string>
+    <!--tile label-->
+    <string name="memory_format">%1$s de %2$s</string>
+    <string name="memory_ram">%s em uso</string>
+    <string name="memory_storage">%s livres</string>
 </resources>
