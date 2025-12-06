@@ -124,12 +124,10 @@
     <string name="memory_tile_format">%1$s of %2$s</string>
     <string name="memory_tile_ram">%s in use</string>
     <string name="memory_tile_storage">%s free</string>
-    <string name="memory_tile_empty" translatable="false">--</string>
 
     <!--device temperature tile-->
 
     <string name="temperature_tile">Temperature</string>
     <!--tile label-->
-    <string name="temperature_tile_source">Battery</string>
     <string name="temperature_tile_format" translatable="false">%.1f°C</string>
 </resources>

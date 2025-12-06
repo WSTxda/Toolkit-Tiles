@@ -22,43 +22,21 @@ class TemperatureManager(context: Context) {
 
     private val appContext = context.applicationContext
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    private val _isActive = MutableStateFlow(false)
-    val isActive = _isActive.asStateFlow()
-
     private val _temperature = MutableStateFlow(0f)
     val temperature = _temperature.asStateFlow()
-
     private var pollingJob: Job? = null
-    private var isPanelOpen = false
-
-    fun toggle() {
-        _isActive.value = !_isActive.value
-
-        if (_isActive.value) {
-            updateData()
-        }
-
-        updatePollingState()
-    }
 
     fun setListening(listening: Boolean) {
-        isPanelOpen = listening
-        updatePollingState()
-    }
-
-    private fun updatePollingState() {
-        val shouldPoll = _isActive.value && isPanelOpen
-
-        if (shouldPoll) {
-            if (pollingJob?.isActive != true) startPolling()
+        if (listening) {
+            startPolling()
         } else {
             stopPolling()
         }
     }
 
     private fun startPolling() {
-        pollingJob?.cancel()
+        if (pollingJob?.isActive == true) return
+
         pollingJob = managerScope.launch {
             updateData()
             while (isActive) {

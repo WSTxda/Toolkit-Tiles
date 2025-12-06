@@ -4,7 +4,6 @@ import android.service.quicksettings.Tile
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.memory.MemoryManager
 import com.wstxda.toolkit.manager.memory.MemoryModule
-import com.wstxda.toolkit.manager.memory.MemoryState
 import com.wstxda.toolkit.ui.icon.MemoryIconProvider
 import com.wstxda.toolkit.ui.label.MemoryLabelProvider
 import kotlinx.coroutines.flow.Flow
@@ -45,9 +44,9 @@ class MemoryTileService : BaseTileService() {
         val detail = memoryManager.detailValue.value
 
         setTileState(
-            state = if (state == MemoryState.DISABLED) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE,
+            state = Tile.STATE_INACTIVE,
             label = memoryLabelProvider.getLabel(state, detail),
-            subtitle = memoryLabelProvider.getSubtitle(state, used, total),
+            subtitle = memoryLabelProvider.getSubtitle(used, total),
             icon = memoryIconProvider.getIcon(state)
         )
     }

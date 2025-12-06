@@ -6,19 +6,11 @@ import java.util.Locale
 
 class TemperatureLabelProvider(private val context: Context) {
 
-    fun getLabel(isActive: Boolean, temp: Float): CharSequence {
-        return if (isActive) {
-            String.format(Locale.US, context.getString(R.string.temperature_tile_format), temp)
-        } else {
-            context.getString(R.string.temperature_tile)
-        }
+    fun getLabel(temp: Float): CharSequence {
+        return String.format(Locale.US, context.getString(R.string.temperature_tile_format), temp)
     }
 
-    fun getSubtitle(isActive: Boolean): CharSequence? {
-        return if (isActive) {
-            context.getString(R.string.temperature_tile_source)
-        } else {
-            context.getString(R.string.tile_off)
-        }
+    fun getSubtitle(): CharSequence? {
+        return context.getString(R.string.temperature_tile)
     }
 }

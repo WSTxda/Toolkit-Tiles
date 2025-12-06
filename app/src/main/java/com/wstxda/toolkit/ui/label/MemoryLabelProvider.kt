@@ -7,29 +7,16 @@ import com.wstxda.toolkit.manager.memory.MemoryState
 class MemoryLabelProvider(private val context: Context) {
 
     fun getLabel(state: MemoryState, detail: String): CharSequence {
+        if (detail.isBlank()) return context.getString(R.string.memory_tile)
+
         return when (state) {
-            MemoryState.DISABLED -> context.getString(R.string.memory_tile)
-
-            MemoryState.RAM -> {
-                if (detail.isBlank()) return context.getString(R.string.memory_tile_empty)
-                context.getString(R.string.memory_tile_ram, detail)
-            }
-
-            MemoryState.STORAGE -> {
-                if (detail.isBlank()) return context.getString(R.string.memory_tile_empty)
-                context.getString(R.string.memory_tile_storage, detail)
-            }
+            MemoryState.RAM -> context.getString(R.string.memory_tile_ram, detail)
+            MemoryState.STORAGE -> context.getString(R.string.memory_tile_storage, detail)
         }
     }
 
-    fun getSubtitle(state: MemoryState, used: String, total: String): CharSequence? {
-        return when (state) {
-            MemoryState.DISABLED -> context.getString(R.string.tile_switch)
-
-            MemoryState.RAM, MemoryState.STORAGE -> {
-                if (used.isBlank() || total.isBlank()) return null
-                context.getString(R.string.memory_tile_format, used, total)
-            }
-        }
+    fun getSubtitle(used: String, total: String): CharSequence? {
+        if (used.isBlank() || total.isBlank()) return null
+        return context.getString(R.string.memory_tile_format, used, total)
     }
 }

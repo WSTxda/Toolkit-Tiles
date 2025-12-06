@@ -27,7 +27,10 @@ class MemoryManager(context: Context) {
     private val appContext = context.applicationContext
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val _currentState = MutableStateFlow(MemoryState.DISABLED)
+    private val activityManager = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    private val memoryInfo = ActivityManager.MemoryInfo()
+
+    private val _currentState = MutableStateFlow(MemoryState.RAM)
     val currentState = _currentState.asStateFlow()
 
     private val _usedValue = MutableStateFlow("")
@@ -44,51 +47,39 @@ class MemoryManager(context: Context) {
 
     init {
         val prefs = appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedState = prefs.getString(KEY_STATE, MemoryState.DISABLED.name)
-        _currentState.value = runCatching {
-            MemoryState.valueOf(savedState!!)
-        }.getOrDefault(MemoryState.DISABLED)
+        val savedStateName = prefs.getString(KEY_STATE, MemoryState.RAM.name)
+        val savedState = runCatching { MemoryState.valueOf(savedStateName!!) }.getOrNull()
+        _currentState.value = savedState ?: MemoryState.RAM
     }
 
     fun toggle() {
-        val nextState = when (_currentState.value) {
-            MemoryState.DISABLED -> MemoryState.RAM
-            MemoryState.RAM -> MemoryState.STORAGE
-            MemoryState.STORAGE -> MemoryState.DISABLED
-        }
-
+        val nextState =
+            if (_currentState.value == MemoryState.RAM) MemoryState.STORAGE else MemoryState.RAM
         _currentState.value = nextState
-
         appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit {
             putString(KEY_STATE, nextState.name)
         }
 
-        if (nextState != MemoryState.DISABLED) {
-            updateData()
-        } else {
-            clearData()
-        }
-
-        updatePollingState()
+        updateData()
     }
 
     fun setListening(listening: Boolean) {
+        if (isPanelOpen == listening) return
         isPanelOpen = listening
         updatePollingState()
     }
 
     private fun updatePollingState() {
-        val shouldPoll = _currentState.value != MemoryState.DISABLED && isPanelOpen
-
-        if (shouldPoll) {
-            if (pollingJob?.isActive != true) startPolling()
+        if (isPanelOpen) {
+            startPolling()
         } else {
             stopPolling()
         }
     }
 
     private fun startPolling() {
-        pollingJob?.cancel()
+        if (pollingJob?.isActive == true) return
+
         pollingJob = managerScope.launch {
             updateData()
             while (isActive) {
@@ -103,28 +94,23 @@ class MemoryManager(context: Context) {
         pollingJob = null
     }
 
-    private fun clearData() {
-        _usedValue.value = ""
-        _totalValue.value = ""
-        _detailValue.value = ""
-    }
-
     private fun updateData() {
-        when (_currentState.value) {
-            MemoryState.RAM -> updateRamInfo()
-            MemoryState.STORAGE -> updateStorageInfo()
-            MemoryState.DISABLED -> {}
+        try {
+            when (_currentState.value) {
+                MemoryState.RAM -> updateRamInfo()
+                MemoryState.STORAGE -> updateStorageInfo()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun updateRamInfo() {
-        val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val memInfo = ActivityManager.MemoryInfo()
-        am.getMemoryInfo(memInfo)
+        activityManager.getMemoryInfo(memoryInfo)
 
-        val usedBytes = memInfo.totalMem - memInfo.availMem
-        val totalBytes = memInfo.totalMem
-        val percent = (usedBytes.toDouble() / totalBytes.toDouble() * 100).toInt()
+        val totalBytes = memoryInfo.totalMem
+        val usedBytes = totalBytes - memoryInfo.availMem
+        val percent = ((usedBytes * 100) / totalBytes).toInt()
 
         _usedValue.value = Formatter.formatShortFileSize(appContext, usedBytes)
         _totalValue.value = Formatter.formatShortFileSize(appContext, totalBytes)
@@ -132,19 +118,15 @@ class MemoryManager(context: Context) {
     }
 
     private fun updateStorageInfo() {
-        try {
-            val path = Environment.getDataDirectory()
-            val stat = StatFs(path.path)
+        val path = Environment.getDataDirectory()
+        val stat = StatFs(path.path)
 
-            val totalBytes = stat.blockCountLong * stat.blockSizeLong
-            val freeBytes = stat.availableBlocksLong * stat.blockSizeLong
-            val usedBytes = totalBytes - freeBytes
+        val totalBytes = stat.blockCountLong * stat.blockSizeLong
+        val freeBytes = stat.availableBlocksLong * stat.blockSizeLong
+        val usedBytes = totalBytes - freeBytes
 
-            _usedValue.value = Formatter.formatShortFileSize(appContext, usedBytes)
-            _totalValue.value = Formatter.formatShortFileSize(appContext, totalBytes)
-            _detailValue.value = Formatter.formatShortFileSize(appContext, freeBytes)
-        } catch (_: Exception) {
-            clearData()
-        }
+        _usedValue.value = Formatter.formatShortFileSize(appContext, usedBytes)
+        _totalValue.value = Formatter.formatShortFileSize(appContext, totalBytes)
+        _detailValue.value = Formatter.formatShortFileSize(appContext, freeBytes)
     }
 }
