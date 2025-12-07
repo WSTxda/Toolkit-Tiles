@@ -130,4 +130,8 @@
     <string name="temperature_tile">Temperature</string>
     <!--tile label-->
     <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+
+    <!--charge protection tile  -->
+
+    <string name="charge_protection_tile">Charge protection</string>
 </resources>
