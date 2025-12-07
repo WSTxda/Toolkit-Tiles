@@ -60,24 +60,24 @@
         <activity
             android:name=".activity.ScreenshotActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <!--permission activity for tiles-->
 
         <activity
             android:name=".activity.AccessibilityPermissionActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name=".activity.NotificationPolicyPermissionActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name=".activity.WriteSettingsPermissionActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <!--function services for tiles-->
 
