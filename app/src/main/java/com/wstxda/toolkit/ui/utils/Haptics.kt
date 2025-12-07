@@ -13,64 +13,70 @@ class Haptics(private val context: Context) {
 
     private val vibrator: Vibrator by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            context.getSystemService(VibratorManager::class.java)?.defaultVibrator
+            val vibratorManager = context.getSystemService(VibratorManager::class.java)
+            vibratorManager?.defaultVibrator ?: @Suppress("DEPRECATION") context.getSystemService(
+                Vibrator::class.java
+            )!!
         } else {
-            @Suppress("DEPRECATION") context.getSystemService(Vibrator::class.java)
-        }!!
+            @Suppress("DEPRECATION") context.getSystemService(Vibrator::class.java)!!
+        }
     }
 
     fun tick() {
-        perform(getEffectTick())
+        perform(
+            effectId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) VibrationEffect.EFFECT_TICK else -1,
+            fallbackDuration = 10L,
+            fallbackAmplitude = 100
+        )
     }
 
-    fun long(duration: Long, force: Boolean = false) {
-        performOneShot(duration, force)
+    fun click() {
+        perform(
+            effectId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) VibrationEffect.EFFECT_CLICK else -1,
+            fallbackDuration = 25L,
+            fallbackAmplitude = VibrationEffect.DEFAULT_AMPLITUDE
+        )
+    }
+
+    fun long(
+        duration: Long, force: Boolean = false, amplitude: Int = VibrationEffect.DEFAULT_AMPLITUDE
+    ) {
+        performOneShot(duration, amplitude, force)
     }
 
     fun cancel() {
         vibrator.cancel()
     }
 
-    private fun perform(effectId: Int) {
+    private fun perform(effectId: Int, fallbackDuration: Long, fallbackAmplitude: Int) {
         if (!isAllowed(force = false)) return
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val effect = VibrationEffect.createPredefined(effectId)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val attrs =
-                    VibrationAttributes.Builder().setUsage(VibrationAttributes.USAGE_TOUCH).build()
-                vibrator.vibrate(effect, attrs)
+        val effect: VibrationEffect =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && effectId != -1) {
+                VibrationEffect.createPredefined(effectId)
             } else {
-                @Suppress("DEPRECATION") vibrator.vibrate(effect)
+                VibrationEffect.createOneShot(fallbackDuration, fallbackAmplitude)
             }
-        } else {
-            val effect = VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE)
-            @Suppress("DEPRECATION") vibrator.vibrate(effect)
-        }
+
+        vibrateCompat(effect, force = false)
     }
 
-    private fun performOneShot(duration: Long, force: Boolean) {
+    private fun performOneShot(duration: Long, amplitude: Int, force: Boolean) {
         if (!isAllowed(force)) return
+        val effect = VibrationEffect.createOneShot(duration, amplitude)
+        vibrateCompat(effect, force)
+    }
 
-        val effect = VibrationEffect.createOneShot(
-            duration, VibrationEffect.DEFAULT_AMPLITUDE
-        )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    private fun vibrateCompat(effect: VibrationEffect, force: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33+
             val usage =
                 if (force) VibrationAttributes.USAGE_ALARM else VibrationAttributes.USAGE_TOUCH
-
             val attrs = VibrationAttributes.Builder().setUsage(usage).build()
             vibrator.vibrate(effect, attrs)
         } else {
             @Suppress("DEPRECATION") vibrator.vibrate(effect)
         }
     }
-
-    private fun getEffectTick(): Int =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) VibrationEffect.EFFECT_TICK
-        else 2
 
     private fun isAllowed(force: Boolean): Boolean {
         if (!vibrator.hasVibrator()) return false
@@ -80,7 +86,11 @@ class Haptics(private val context: Context) {
         if (am.ringerMode == AudioManager.RINGER_MODE_SILENT) return false
 
         val nm = context.getSystemService(NotificationManager::class.java)
-        val filter = nm.currentInterruptionFilter
-        return filter <= NotificationManager.INTERRUPTION_FILTER_PRIORITY
+        return try {
+            val filter = nm.currentInterruptionFilter
+            filter <= NotificationManager.INTERRUPTION_FILTER_PRIORITY
+        } catch (_: Exception) {
+            true
+        }
     }
 }
