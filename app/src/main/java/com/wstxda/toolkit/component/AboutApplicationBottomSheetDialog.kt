@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.wstxda.toolkit.R
@@ -19,7 +20,6 @@ class AboutApplicationBottomSheetDialog : BottomSheetDialogFragment() {
     private var _binding: BottomSheetAboutBinding? = null
     private lateinit var haptics: Haptics
     private val binding get() = _binding!!
-
     private val viewModel: AboutApplicationViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,6 +37,10 @@ class AboutApplicationBottomSheetDialog : BottomSheetDialogFragment() {
         val adapter = AboutApplicationAdapter(viewModel::openUrl)
         binding.recyclerLinks.adapter = adapter
 
+        binding.appIconShape.animate().rotationBy(360f).setDuration(20_000)
+            .setInterpolator(LinearInterpolator())
+            .withEndAction { binding.appIconShape.animate().rotationBy(360f).start() }.start()
+
         viewModel.applicationVersion.observe(viewLifecycleOwner) { version ->
             binding.appUpdate.text = getString(R.string.about_version, version)
 
@@ -44,7 +48,7 @@ class AboutApplicationBottomSheetDialog : BottomSheetDialogFragment() {
                 UpdaterService.checkForUpdates(requireContext(), it)
             }
 
-            binding.appIcon.setOnClickListener {
+            binding.appIconContainer.setOnClickListener {
                 haptics.tick()
                 viewModel.openAppInfo()
             }
@@ -57,6 +61,7 @@ class AboutApplicationBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.appIconShape.animate().cancel()
         _binding = null
     }
 
