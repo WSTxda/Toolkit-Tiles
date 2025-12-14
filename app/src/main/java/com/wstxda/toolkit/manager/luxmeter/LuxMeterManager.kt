@@ -20,7 +20,6 @@ class LuxMeterManager(context: Context) : SensorEventListener {
 
     private val _lux = MutableStateFlow(0)
     val lux = _lux.asStateFlow()
-    private var isResumed = false
     private var isSensorRegistered = false
 
     fun toggle() {
@@ -29,23 +28,20 @@ class LuxMeterManager(context: Context) : SensorEventListener {
     }
 
     fun resume() {
-        isResumed = true
         updateSensorState()
     }
 
     fun pause() {
-        isResumed = false
         updateSensorState()
     }
 
     fun forceStop() {
         _isEnabled.value = false
-        isResumed = false
         unregisterSensor()
     }
 
     private fun updateSensorState() {
-        if (_isEnabled.value && isResumed) {
+        if (_isEnabled.value) {
             registerSensor()
         } else {
             unregisterSensor()

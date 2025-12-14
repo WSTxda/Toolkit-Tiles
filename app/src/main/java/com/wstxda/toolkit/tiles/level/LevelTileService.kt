@@ -17,8 +17,6 @@ import com.wstxda.toolkit.ui.icon.LevelIconProvider
 import com.wstxda.toolkit.ui.label.LevelLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-private val START_FOREGROUND_IMMEDIATELY =
-    Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 private val CAN_ONLY_START_FOREGROUND_ON_CLICK =
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
 
@@ -33,10 +31,6 @@ class LevelTileService : BaseTileService() {
         getSystemService(NotificationManager::class.java)?.createNotificationChannel(
             channel()
         )
-
-        if (START_FOREGROUND_IMMEDIATELY) {
-            startForegroundCompat(NOTIFICATION_ID, notification())
-        }
     }
 
     override fun onStartListening() {
@@ -51,10 +45,6 @@ class LevelTileService : BaseTileService() {
     override fun onStopListening() {
         super.onStopListening()
         levelModule.pause()
-
-        if (levelModule.isEnabled.value) {
-            stopLevelService(fullyRemove = false)
-        }
     }
 
     override fun onClick() {
@@ -64,11 +54,10 @@ class LevelTileService : BaseTileService() {
         }
 
         levelModule.toggle()
-
         if (levelModule.isEnabled.value) {
             startLevelService()
         } else {
-            stopLevelService(fullyRemove = true)
+            stopLevelService()
         }
     }
 
@@ -83,9 +72,7 @@ class LevelTileService : BaseTileService() {
 
     private fun startLevelService() {
         try {
-            if (!START_FOREGROUND_IMMEDIATELY) {
-                startForegroundCompat(NOTIFICATION_ID, notification())
-            }
+            startForegroundCompat(NOTIFICATION_ID, notification())
         } catch (e: Exception) {
             if (CAN_ONLY_START_FOREGROUND_ON_CLICK && e is ForegroundServiceStartNotAllowedException) {
                 levelModule.forceStop()
@@ -95,11 +82,8 @@ class LevelTileService : BaseTileService() {
         }
     }
 
-    private fun stopLevelService(fullyRemove: Boolean) {
-        if (!START_FOREGROUND_IMMEDIATELY) {
-            val flags = if (fullyRemove) STOP_FOREGROUND_REMOVE else STOP_FOREGROUND_DETACH
-            stopForeground(flags)
-        }
+    private fun stopLevelService() {
+        stopForeground(STOP_FOREGROUND_REMOVE)
     }
 
     override fun updateTile() {

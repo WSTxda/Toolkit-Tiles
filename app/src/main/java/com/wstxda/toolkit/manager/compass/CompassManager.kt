@@ -24,7 +24,6 @@ class CompassManager(context: Context) : SensorEventListener {
 
     private val _currentDegrees = MutableStateFlow(0f)
     val currentDegrees = _currentDegrees.asStateFlow()
-    private var isResumed = false
     private var isSensorRegistered = false
     private var lastHapticDegrees: Float? = null
 
@@ -48,23 +47,20 @@ class CompassManager(context: Context) : SensorEventListener {
     }
 
     fun resume() {
-        isResumed = true
         updateSensorState()
     }
 
     fun pause() {
-        isResumed = false
         updateSensorState()
     }
 
     fun forceStop() {
         _isEnabled.value = false
-        isResumed = false
         unregisterSensor()
     }
 
     private fun updateSensorState() {
-        if (_isEnabled.value && isResumed) {
+        if (_isEnabled.value) {
             registerSensor()
         } else {
             unregisterSensor()
