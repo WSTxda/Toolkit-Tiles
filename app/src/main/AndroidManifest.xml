@@ -13,6 +13,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
     <!--use hardware sensors/components-->
 
@@ -81,6 +82,11 @@
 
         <activity
             android:name=".activity.WriteSettingsPermissionActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.SecureSettingsPermissionActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 
@@ -240,6 +246,22 @@
             android:exported="true"
             android:icon="@drawable/ic_lock"
             android:label="@string/lock_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
+        <!--ldac bitrate quick settings tile service-->
+
+        <service
+            android:name=".tiles.ldac.LdacTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_media_output"
+            android:label="@string/ldac_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
