@@ -53,6 +53,7 @@ abstract class BaseTileService : TileService() {
         icon: android.graphics.drawable.Icon? = null,
         description: CharSequence? = null,
     ) {
+        android.util.Log.d("BaseTileService", "Updating tile: label=$label, state=$state, subtitle=$subtitle")
         qsTile?.apply {
             this.state = state
             this.label = label
@@ -61,7 +62,7 @@ abstract class BaseTileService : TileService() {
             }
             this.icon = icon
             this.contentDescription = description
-            updateTile()
+            this.updateTile()
         }
     }
 

@@ -6,9 +6,9 @@ import com.wstxda.toolkit.R
 import com.wstxda.toolkit.activity.SecureSettingsPermissionActivity
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.ldac.LdacModule
-import com.wstxda.toolkit.manager.ldac.LdacState
 import com.wstxda.toolkit.ui.icon.LdacIconProvider
 import com.wstxda.toolkit.ui.label.LdacLabelProvider
+import com.wstxda.toolkit.ui.utils.Haptics
 import kotlinx.coroutines.flow.Flow
 
 class LdacTileService : BaseTileService() {
@@ -16,35 +16,57 @@ class LdacTileService : BaseTileService() {
     private val ldacModule by lazy { LdacModule.getInstance(applicationContext) }
     private val ldacLabelProvider by lazy { LdacLabelProvider(applicationContext) }
     private val ldacIconProvider by lazy { LdacIconProvider(applicationContext) }
+    private val haptics by lazy { Haptics(applicationContext) }
 
     override fun onStartListening() {
+        ldacModule.startMonitoring()
         super.onStartListening()
-        ldacModule.synchronizeState()
+    }
+
+    override fun onStopListening() {
+        super.onStopListening()
+        ldacModule.stopMonitoring()
     }
 
     override fun onClick() {
-        if (ldacModule.isPermissionGranted()) {
-            if (!ldacModule.cycleState()) {
-                Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show()
-            }
-        } else {
+        haptics.click()
+        
+        if (!ldacModule.isPermissionGranted()) {
             startActivityAndCollapse(SecureSettingsPermissionActivity::class.java)
+            return
         }
+
+        if (!ldacModule.isConnected.value) {
+            Toast.makeText(this, R.string.ldac_not_connected, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        ldacModule.cycleState()
     }
 
     override fun flowsToCollect(): List<Flow<*>> {
-        return listOf(ldacModule.currentState)
+        return listOf(
+            ldacModule.currentState,
+            ldacModule.isConnected
+        )
     }
 
     override fun updateTile() {
         val state = ldacModule.currentState.value
         val hasPermission = ldacModule.isPermissionGranted()
+        val isConnected = ldacModule.isConnected.value
+
+        val tileState = when {
+            !hasPermission -> Tile.STATE_INACTIVE
+            !isConnected -> Tile.STATE_INACTIVE
+            else -> Tile.STATE_ACTIVE
+        }
 
         setTileState(
-            state = if (hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            state = tileState,
             label = ldacLabelProvider.getLabel(),
-            subtitle = ldacLabelProvider.getSubtitle(state, hasPermission),
-            icon = ldacIconProvider.getIcon(state)
+            subtitle = ldacLabelProvider.getSubtitle(state, hasPermission, isConnected),
+            icon = ldacIconProvider.getIcon(state, isConnected)
         )
     }
 }

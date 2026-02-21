@@ -166,5 +166,6 @@
     <string name="ldac_quality_330">330kbps</string>
     <string name="ldac_quality_660">660kbps</string>
     <string name="ldac_quality_990">990kbps</string>
+    <string name="ldac_not_connected">LDAC device not connected</string>
     <string name="secure_settings_permission_message">Secure Settings permission required. Grant via ADB: adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS</string>
 </resources>

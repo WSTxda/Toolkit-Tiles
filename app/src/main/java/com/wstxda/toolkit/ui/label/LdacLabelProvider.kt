@@ -10,9 +10,13 @@ class LdacLabelProvider(private val context: Context) {
         return context.getString(R.string.ldac_tile)
     }
 
-    fun getSubtitle(state: LdacState, hasPermission: Boolean): String {
+    fun getSubtitle(state: LdacState, hasPermission: Boolean, isConnected: Boolean): String {
         if (!hasPermission) {
             return context.getString(R.string.tile_setup)
+        }
+
+        if (!isConnected) {
+            return context.getString(R.string.ldac_not_connected)
         }
 
         return when (state) {

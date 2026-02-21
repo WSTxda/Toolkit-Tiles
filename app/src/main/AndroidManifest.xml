@@ -11,6 +11,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
@@ -260,7 +261,7 @@
         <service
             android:name=".tiles.ldac.LdacTileService"
             android:exported="true"
-            android:icon="@drawable/ic_media_output"
+            android:icon="@drawable/ic_ldac"
             android:label="@string/ldac_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
