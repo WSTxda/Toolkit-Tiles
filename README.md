@@ -29,6 +29,7 @@ Whether you need a quick measurement, a random decision, system controls, or an 
 #### ⚙️ System & Controls
 - **Caffeine** — Keep the screen awake  
 - **Device Memory** — Display use of RAM and internal storage  
+- **LDAC Bitrate** — Toggle between LDAC bitrates (330/660/990kbps/Adaptive)
 - **Lock Screen** — Lock the device instantly  
 - **Media / Sound Output** — Audio output selector  
 - **Screenshot** — Take screenshots from Quick Settings  
