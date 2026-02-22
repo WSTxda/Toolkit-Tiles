@@ -3,10 +3,14 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
+    <!-- Filled Baseline Wave -->
     <path
         android:fillColor="@android:color/white"
-        android:pathData="M13,9.64L13,14.36L11,14.36L11,9.64L13,9.64M15,9.64L15,14.36L17,14.36L17,9.64L15,9.64M19,9.64L19,14.36L21,14.36L21,9.64L19,9.64M9,9.64L9,14.36L7,14.36L7,9.64L9,9.64M5,9.64L5,14.36L3,14.36L3,9.64L5,9.64" />
+        android:pathData="M2,12c1.25,-10 3.75,-10 5,0s3.75,10 5,0c1.25,-10 3.75,-10 5,0s3.75,10 5,0 L22,12 L2,12 Z" />
+    <!-- Centered Full-frame Slash -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M2,5V19H22V5H2M20,17H4V7H20V17Z" />
+        android:strokeColor="@android:color/black"
+        android:strokeLineCap="round"
+        android:strokeWidth="2"
+        android:pathData="M4,4 L20,20" />
 </vector>
