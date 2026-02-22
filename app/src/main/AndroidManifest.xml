@@ -11,6 +11,8 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
@@ -36,6 +38,10 @@
 
     <uses-feature
         android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.software.companion_device_setup"
         android:required="false" />
 
     <application
@@ -88,6 +94,11 @@
 
         <activity
             android:name=".activity.SecureSettingsPermissionActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.CdmAssociationActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 

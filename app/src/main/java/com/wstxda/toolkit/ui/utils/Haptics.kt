@@ -8,7 +8,6 @@ import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import kotlinx.coroutines.*
 
 class Haptics(private val context: Context) {
 
@@ -32,15 +31,11 @@ class Haptics(private val context: Context) {
     }
 
     fun click() {
-        // Run vibration on a background thread to prevent UI thread stalls
-        CoroutineScope(Dispatchers.Default).launch {
-            val effect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
-            } else {
-                VibrationEffect.createOneShot(25L, VibrationEffect.DEFAULT_AMPLITUDE)
-            }
-            vibrateCompat(effect, force = false)
-        }
+        perform(
+            effectId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) VibrationEffect.EFFECT_CLICK else -1,
+            fallbackDuration = 25L,
+            fallbackAmplitude = VibrationEffect.DEFAULT_AMPLITUDE
+        )
     }
 
     fun long(

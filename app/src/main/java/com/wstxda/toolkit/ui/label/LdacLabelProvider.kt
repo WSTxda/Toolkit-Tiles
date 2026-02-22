@@ -10,13 +10,27 @@ class LdacLabelProvider(private val context: Context) {
         return context.getString(R.string.ldac_tile)
     }
 
-    fun getSubtitle(state: LdacState, hasPermission: Boolean, isConnected: Boolean): String {
-        if (!hasPermission) {
+    fun getSubtitle(
+        state: LdacState,
+        hasSecureSettings: Boolean,
+        hasBluetoothPermission: Boolean,
+        isConnected: Boolean,
+        hasCdmAssociation: Boolean
+    ): String {
+        if (!hasSecureSettings) {
             return context.getString(R.string.tile_setup)
+        }
+
+        if (!hasBluetoothPermission) {
+            return context.getString(R.string.ldac_bluetooth_permission)
         }
 
         if (!isConnected) {
             return context.getString(R.string.ldac_not_connected)
+        }
+
+        if (!hasCdmAssociation) {
+            return context.getString(R.string.ldac_cdm_required)
         }
 
         return when (state) {
