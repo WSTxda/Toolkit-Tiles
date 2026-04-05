@@ -173,4 +173,14 @@
     <string name="breathing_tile_exhale">Exhale</string>
     <string name="breathing_tile_pause">Pause</string>
     <string name="breathing_tile_relax">Relax</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">Network</string>
+    <!--tile label-->
+    <string name="network_traffic_download">Download</string>
+    <string name="network_traffic_upload">Upload</string>
+    <string name="network_traffic_speed_bs"  translatable="false">%d B/s</string>
+    <string name="network_traffic_speed_kbs" translatable="false">%d KB/s</string>
+    <string name="network_traffic_speed_mbs" translatable="false">%.1f MB/s</string>
 </resources>
