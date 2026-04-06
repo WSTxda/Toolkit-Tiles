@@ -2,8 +2,8 @@
 
     <!--app about section -->
 
-    <string name="about_description">Tiles simples e leves que oferecem acesso instantâneo a recursos úteis, sem precisar de apps extras.</string>
-    <string name="about_version">Versão: %s</string>
+    <string name="about_description">Tiles simples e leves que oferecem acesso instantâneo a recursos úteis, sem precisar de apps extras</string>
+    <string name="about_version">Versão %s</string>
     <!--links-->
     <string name="about_developer">Desenvolvedor</string>
 
@@ -25,11 +25,11 @@
 
     <string name="channel_name">Serviços do atalho</string>
     <string name="notification_title">Serviço em execução</string>
-    <string name="notification_label">Algum atalho esta em execução, desative o atalho no painel de configurações rapidas ou toque aqui para ocultar esta notificação</string>
+    <string name="notification_label">Algum atalho está em execução, desative o atalho no painel de configurações rapidas ou toque aqui para ocultar esta notificação</string>
 
     <!--accessibility service-->
 
-    <string name="accessibility_service_description">Este aplicativo usa serviços de acessibilidade para que alguns de seus atalhos no painel de configurações rapidas funcionem. Essa permissão é essencial para que esses atalhos funcionem corretamente e forneçam acesso rápido a determinados recursos do dispositivo.</string>
+    <string name="accessibility_service_description">Este aplicativo usa serviços de acessibilidade para que alguns dos seus atalhos no painel de configurações rapidas funcionem. Essa permissão é essencial para que esses atalhos funcionem corretamente e forneçam acesso rápido a determinados recursos do dispositivo.</string>
 
     <!--permission messages-->
 

@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wstxda.toolkit.R
 import com.wstxda.toolkit.data.AboutItem
 
-class AboutApplicationViewModel(application: Application) : AndroidViewModel(application) {
+class AboutAppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _appVersion = MutableLiveData<String>()
     val applicationVersion: LiveData<String> = _appVersion
@@ -22,22 +22,23 @@ class AboutApplicationViewModel(application: Application) : AndroidViewModel(app
     val links: LiveData<List<AboutItem>> = _links
 
     init {
-        loadApplicationVersion()
+        loadAppVersion()
         loadLinks()
     }
 
-    private fun loadApplicationVersion() {
-        val context = getApplication<Application>()
+    private fun loadAppVersion() {
         try {
-            val packageName = context.packageName
+            val context = getApplication<Application>()
             val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 context.packageManager.getPackageInfo(
-                    packageName, PackageManager.PackageInfoFlags.of(0)
+                    context.packageName, PackageManager.PackageInfoFlags.of(0)
                 )
             } else {
-                @Suppress("DEPRECATION") context.packageManager.getPackageInfo(packageName, 0)
+                @Suppress("DEPRECATION") context.packageManager.getPackageInfo(
+                    context.packageName, 0
+                )
             }
-            _appVersion.value = packageInfo.versionName
+            _appVersion.value = packageInfo.versionName ?: "Unknown"
         } catch (_: Exception) {
             _appVersion.value = "Unknown"
         }
@@ -63,19 +64,24 @@ class AboutApplicationViewModel(application: Application) : AndroidViewModel(app
                 summary = R.string.about_contributors_summary,
                 url = "https://github.com/WSTxda/Toolkit-Tiles/graphs/contributors"
             ),
+            AboutItem(
+                icon = R.drawable.ic_license,
+                title = R.string.about_license,
+                summary = R.string.about_license_summary,
+                url = "https://github.com/WSTxda/Toolkit-Tiles/blob/main/LICENSE"
+            ),
         )
         _links.value = linkList
     }
 
     fun openUrl(link: AboutItem) {
         try {
-            val urlString = link.url
-            val uri =
-                if (!urlString?.startsWith("http://")!! && !urlString.startsWith("https://")) {
-                    "https://$urlString".toUri()
-                } else {
-                    urlString.toUri()
-                }
+            val urlString = link.url ?: return
+            val uri = if (!urlString.startsWith("http://") && !urlString.startsWith("https://")) {
+                "https://$urlString".toUri()
+            } else {
+                urlString.toUri()
+            }
 
             val intent = Intent(Intent.ACTION_VIEW, uri).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

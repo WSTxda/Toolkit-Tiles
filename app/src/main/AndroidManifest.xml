@@ -48,11 +48,13 @@
         android:theme="@style/AppTheme"
         tools:targetApi="tiramisu">
 
-        <!--about application activity for tiles-->
+        <!--about app activity for tiles preferences-->
 
         <activity
-            android:name=".activity.AboutApplicationActivity"
+            android:name=".activity.AboutAppActivity"
+            android:configChanges="uiMode|orientation|screenSize|keyboard|keyboardHidden"
             android:exported="false"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.Transparent">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />

@@ -5,6 +5,10 @@
     <color name="ic_launcher_foreground">#494900</color>
     <color name="ic_launcher_background">#E8E78F</color>
 
+    <!--app divider-->
+
+    <color name="divider_color">#1F000000</color>
+
     <!--material colors-->
 
     <color name="md_theme_primary">#616118</color>

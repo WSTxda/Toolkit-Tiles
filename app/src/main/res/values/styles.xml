@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- components theme styles -->
 
@@ -24,5 +24,36 @@
 
     <style name="Theme.Component.BottomSheet.Modal" parent="@style/Widget.Material3.BottomSheet">
         <item name="backgroundTint">?attr/colorSurface</item>
+    </style>
+
+    <style name="ShapeAppearance.Material3.ListItem.First" parent="" tools:override="true">
+        <item name="cornerFamily">?attr/shapeCornerFamily</item>
+        <item name="cornerSizeTopLeft">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSizeTopRight">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSizeBottomLeft">?attr/shapeCornerSizeExtraSmall</item>
+        <item name="cornerSizeBottomRight">?attr/shapeCornerSizeExtraSmall</item>
+    </style>
+
+    <style name="ShapeAppearance.Material3.ListItem.Middle" parent="" tools:override="true">
+        <item name="cornerFamily">?attr/shapeCornerFamily</item>
+        <item name="cornerSize">?attr/shapeCornerSizeExtraSmall</item>
+    </style>
+
+    <style name="ShapeAppearance.Material3.ListItem.Last" parent="" tools:override="true">
+        <item name="cornerFamily">?attr/shapeCornerFamily</item>
+        <item name="cornerSizeTopLeft">?attr/shapeCornerSizeExtraSmall</item>
+        <item name="cornerSizeTopRight">?attr/shapeCornerSizeExtraSmall</item>
+        <item name="cornerSizeBottomLeft">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSizeBottomRight">?attr/shapeCornerSizeLargeIncreased</item>
+    </style>
+
+    <style name="ShapeAppearance.Material3.ListItem.Single" parent="" tools:override="true">
+        <item name="cornerFamily">?attr/shapeCornerFamily</item>
+        <item name="cornerSize">?attr/shapeCornerSizeLargeIncreased</item>
+    </style>
+
+    <style name="ShapeAppearance.Material3.ListItem.Checked" parent="" tools:override="true">
+        <item name="cornerFamily">?attr/shapeCornerFamily</item>
+        <item name="cornerSize">?attr/shapeCornerSizeLargeIncreased</item>
     </style>
 </resources>
