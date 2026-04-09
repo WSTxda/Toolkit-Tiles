@@ -1,10 +1,7 @@
 package com.wstxda.toolkit.manager.battery
 
 enum class BatteryDisplayState {
-    PERCENTAGE, ELECTRICAL, TEMPERATURE, VOLTAGE;
+    PERCENTAGE, CURRENT, VOLTAGE, WATTAGE, TEMPERATURE;
 
-    fun next(): BatteryDisplayState {
-        val values = entries
-        return values[(ordinal + 1) % values.size]
-    }
+    fun next(): BatteryDisplayState = entries[(ordinal + 1) % entries.size]
 }

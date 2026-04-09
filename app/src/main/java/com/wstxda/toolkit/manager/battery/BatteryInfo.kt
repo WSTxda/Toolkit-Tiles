@@ -15,6 +15,7 @@ data class BatteryInfo(
 ) {
     val voltageV: Float get() = voltageMv / 1000f
     val temperatureC: Float get() = temperatureTenths / 10f
-    val isLow: Boolean get() = !isCharging && level <= 15
+    val isLow: Boolean get() = !isCharging && level < 25
     val signedCurrentMa: Int get() = if (isCharging) abs(currentMa) else -abs(currentMa)
+    val wattageW: Float get() = voltageV * (abs(currentMa) / 1000f)
 }

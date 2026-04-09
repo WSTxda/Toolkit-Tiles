@@ -183,9 +183,8 @@
     <!--tile label-->
     <string name="network_traffic_download">Download</string>
     <string name="network_traffic_upload">Upload</string>
-    <string name="network_traffic_speed_bs"  translatable="false">%d B/s</string>
-    <string name="network_traffic_speed_kbs" translatable="false">%d KB/s</string>
-    <string name="network_traffic_speed_mbs" translatable="false">%.1f MB/s</string>
+    <string name="network_traffic_speed_kb" translatable="false">%.1f kB/s</string>
+    <string name="network_traffic_speed_mb" translatable="false">%.1f MB/s</string>
 
     <!--battery tile-->
 
@@ -194,6 +193,7 @@
     <string name="battery_label_percent" translatable="false">%d%%</string>
     <string name="battery_label_voltage" translatable="false">%.2f V</string>
     <string name="battery_label_current" translatable="false">%d mA</string>
+    <string name="battery_label_wattage" translatable="false">%.1f W</string>
     <string name="battery_label_temperature" translatable="false">%.1f°C</string>
     <!--tile label status-->
     <string name="battery_status_full">Fully charged</string>

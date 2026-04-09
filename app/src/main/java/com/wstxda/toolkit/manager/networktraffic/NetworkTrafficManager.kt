@@ -36,7 +36,6 @@ class NetworkTrafficManager(context: Context) {
     private var pollingJob: Job? = null
     private var isPanelOpen = false
 
-    // Mutable sample state — confined to managerScope (IO) only.
     private var lastRxBytes = TrafficStats.UNSUPPORTED.toLong()
     private var lastTxBytes = TrafficStats.UNSUPPORTED.toLong()
     private var lastSampleTime = 0L
@@ -50,14 +49,14 @@ class NetworkTrafficManager(context: Context) {
     }
 
     fun toggle() {
-        val nextState = if (_currentState.value == NetworkTrafficState.DOWNLOAD) {
+        val next = if (_currentState.value == NetworkTrafficState.DOWNLOAD) {
             NetworkTrafficState.UPLOAD
         } else {
             NetworkTrafficState.DOWNLOAD
         }
-        _currentState.value = nextState
+        _currentState.value = next
         appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit {
-            putString(KEY_STATE, nextState.name)
+            putString(KEY_STATE, next.name)
         }
         restartPolling()
     }
@@ -124,17 +123,13 @@ class NetworkTrafficManager(context: Context) {
         }
     }
 
-    private fun formatSpeed(bytesPerSecond: Long): String {
-        return when {
-            bytesPerSecond >= BYTES_IN_MB -> appContext.getString(
-                R.string.network_traffic_speed_mbs, bytesPerSecond.toFloat() / BYTES_IN_MB
-            )
-            bytesPerSecond >= BYTES_IN_KB -> appContext.getString(
-                R.string.network_traffic_speed_kbs, bytesPerSecond / BYTES_IN_KB
-            )
-            else -> appContext.getString(
-                R.string.network_traffic_speed_bs, bytesPerSecond
-            )
-        }
+    private fun formatSpeed(bytesPerSecond: Long): String = when {
+        bytesPerSecond >= BYTES_IN_MB -> appContext.getString(
+            R.string.network_traffic_speed_mb, bytesPerSecond.toFloat() / BYTES_IN_MB
+        )
+
+        else -> appContext.getString(
+            R.string.network_traffic_speed_kb, bytesPerSecond.toFloat() / BYTES_IN_KB
+        )
     }
 }

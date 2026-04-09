@@ -112,7 +112,7 @@
         <service
             android:name=".tiles.battery.BatteryTileService"
             android:exported="true"
-            android:icon="@drawable/ic_battery"
+            android:icon="@drawable/ic_battery_full"
             android:label="@string/battery_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>

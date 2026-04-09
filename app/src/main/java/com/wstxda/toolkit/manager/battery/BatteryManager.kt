@@ -22,7 +22,8 @@ class BatteryManager(context: Context) {
     companion object {
         private const val PREFS_NAME = "battery_prefs"
         private const val KEY_DISPLAY_STATE = "display_state"
-        private const val REFRESH_RATE_MS = 3000L
+        private const val REFRESH_RATE_CHARGING_MS = 2000L
+        private const val REFRESH_RATE_DISCHARGING_MS = 4000L
     }
 
     private val appContext = context.applicationContext
@@ -90,10 +91,14 @@ class BatteryManager(context: Context) {
         if (pollingJob?.isActive == true) return
         pollingJob = managerScope.launch {
             while (isActive) {
-                delay(REFRESH_RATE_MS)
-                _batteryInfo.value = _batteryInfo.value.copy(
+                val info = _batteryInfo.value
+                _batteryInfo.value = info.copy(
                     currentMa = readCurrentMa(), isPowerSave = powerManager.isPowerSaveMode
                 )
+
+                val delayTime =
+                    if (info.isCharging) REFRESH_RATE_CHARGING_MS else REFRESH_RATE_DISCHARGING_MS
+                delay(delayTime)
             }
         }
     }
