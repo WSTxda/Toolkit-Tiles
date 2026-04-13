@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import com.wstxda.toolkit.permissions.PermissionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -13,6 +14,7 @@ class AutoBrightnessManager(context: Context) {
 
     private val appContext = context.applicationContext
     private val contentResolver = appContext.contentResolver
+    private val permissionManager = PermissionManager(appContext)
     private val _isEnabled = MutableStateFlow(getCurrentSystemMode())
     val isEnabled = _isEnabled.asStateFlow()
 
@@ -62,16 +64,12 @@ class AutoBrightnessManager(context: Context) {
         stop()
     }
 
-    fun isPermissionGranted(): Boolean {
-        return Settings.System.canWrite(appContext)
-    }
+    fun isPermissionGranted(): Boolean = permissionManager.hasWriteSettingsPermission()
 
     fun toggle() {
         if (!isPermissionGranted()) return
         val newState = !_isEnabled.value
-        val success = setSystemMode(newState)
-
-        if (success) {
+        if (setSystemMode(newState)) {
             _isEnabled.value = newState
         }
     }
@@ -83,9 +81,7 @@ class AutoBrightnessManager(context: Context) {
             } else {
                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
             }
-            Settings.System.putInt(
-                contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode
-            )
+            Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
             true
         } catch (_: Exception) {
             false

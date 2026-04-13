@@ -34,14 +34,14 @@ class BatteryTileService : BaseTileService() {
     )
 
     override fun updateTile() {
-        val info = batteryManager.batteryInfo.value
+        val batteryInfo = batteryManager.batteryInfo.value
         val displayState = batteryManager.displayState.value
 
         setTileState(
-            state = if (info.isCharging) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
-            label = labelProvider.getLabel(info, displayState),
-            subtitle = labelProvider.getSubtitle(info, displayState),
-            icon = iconProvider.getIcon(info),
+            state = if (batteryInfo.isCharging) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            label = labelProvider.getLabel(batteryInfo, displayState),
+            subtitle = labelProvider.getSubtitle(batteryInfo, displayState),
+            icon = iconProvider.getIcon(batteryInfo),
         )
     }
 }

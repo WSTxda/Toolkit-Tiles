@@ -3,22 +3,24 @@ package com.wstxda.toolkit.activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.wstxda.toolkit.ui.component.AboutAppBottomSheet
+import com.wstxda.toolkit.ui.component.WriteSecureSettingsBottomSheet
 
-class AboutAppActivity : BaseActivity() {
+class WriteSecureSettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            AboutAppBottomSheet().show(supportFragmentManager, AboutAppBottomSheet.TAG)
+            WriteSecureSettingsBottomSheet().show(
+                supportFragmentManager, WriteSecureSettingsBottomSheet.TAG
+            )
         }
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
                 override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
                     super.onFragmentViewDestroyed(fm, f)
-                    if (f is AboutAppBottomSheet) {
+                    if (f is WriteSecureSettingsBottomSheet) {
                         if (!isFinishing && !isChangingConfigurations) finish()
                         fm.unregisterFragmentLifecycleCallbacks(this)
                     }

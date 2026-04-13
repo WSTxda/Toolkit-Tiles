@@ -42,11 +42,28 @@
 
     <!--permission messages-->
 
+    <!--accessibility-->
     <string name="accessibility_permission_message">Accessibility permission required. Please enable it first</string>
+    <!--dnd-->
     <string name="dnd_access_permission_message">Do Not Disturb access permission required. Please enable it first</string>
+    <!--write settings-->
     <string name="write_settings_permission_message">Write system settings permission required. Please enable it first</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">Command copied to clipboard</string>
+    <!--location-->
+    <string name="location_permission_granted_message">Location permission granted</string>
+    <string name="location_permission_denied_message">Location permission denied. Tap the tile to try again</string>
 
-    <!--messages-->
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">ADB permission required</string>
+    <string name="write_secure_settings_message">This feature requires the WRITE_SECURE_SETTINGS permission, which can only be granted via ADB. Run the command below in your terminal with USB debugging enabled:</string>
+    <string name="write_secure_settings_support">After running the command, tap the tile again to activate it. You only need to do this once.</string>
+    <!--buttons-->
+    <string name="copy_clipboard">Copy to clipboard</string>
+    <string name="close">Close</string>
+
+    <!--general messages-->
 
     <string name="not_supported">Your device does not support this feature</string>
 
@@ -214,4 +231,17 @@
     <string name="battery_health_failure">Failure</string>
     <string name="battery_health_cold">Cold</string>
     <string name="battery_health_unknown">Unknown</string>
+
+    <!--speedometer tile-->
+
+    <string name="speedometer_tile">Speedometer</string>
+    <!--tile label-->
+    <string name="speedometer_tile_speed_kmh" translatable="false">%d km/h</string>
+    <string name="speedometer_tile_speed_mph" translatable="false">%d mph</string>
+    <string name="speedometer_unit_kmh" translatable="false">km/h</string>
+    <string name="speedometer_unit_mph" translatable="false">mph</string>
+
+    <!--dns switcher tile-->
+
+    <string name="dns_switcher_tile">DNS</string>
 </resources>

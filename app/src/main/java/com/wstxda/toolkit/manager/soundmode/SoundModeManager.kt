@@ -1,12 +1,12 @@
 package com.wstxda.toolkit.manager.soundmode
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
+import com.wstxda.toolkit.permissions.PermissionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,8 +21,7 @@ import kotlinx.coroutines.flow.stateIn
 class SoundModeManager(private val context: Context) {
 
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    private val notificationManager =
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val permissionManager = PermissionManager(context.applicationContext)
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     val currentMode: StateFlow<SoundMode> = callbackFlow {
@@ -56,7 +55,7 @@ class SoundModeManager(private val context: Context) {
         initialValue = getCurrentModeInternal()
     )
 
-    fun hasPermission(): Boolean = notificationManager.isNotificationPolicyAccessGranted
+    fun hasPermission(): Boolean = permissionManager.hasDoNotDisturbPermission()
 
     fun cycleMode() {
         if (!hasPermission()) return

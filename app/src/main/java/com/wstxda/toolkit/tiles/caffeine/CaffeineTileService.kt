@@ -21,12 +21,12 @@ class CaffeineTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        if (caffeineManager.isPermissionGranted()) {
-            caffeineManager.cycleState()
-            updateTile()
-        } else {
+        if (!caffeineManager.isPermissionGranted()) {
             startActivityAndCollapse(WriteSettingsPermissionActivity::class.java)
+            return
         }
+        caffeineManager.cycleState()
+        updateTile()
     }
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
@@ -34,15 +34,18 @@ class CaffeineTileService : BaseTileService() {
     )
 
     override fun updateTile() {
-        val state = caffeineManager.currentState.value
+        val currentState = caffeineManager.currentState.value
         val hasPermission = caffeineManager.isPermissionGranted()
 
         setTileState(
-            state = if (state != CaffeineState.Off && hasPermission) Tile.STATE_ACTIVE
-            else Tile.STATE_INACTIVE,
-            label = labelProvider.getLabel(state, hasPermission),
-            subtitle = labelProvider.getSubtitle(state, hasPermission),
-            icon = iconProvider.getIcon(state),
+            state = if (currentState != CaffeineState.Off && hasPermission) {
+                Tile.STATE_ACTIVE
+            } else {
+                Tile.STATE_INACTIVE
+            },
+            label = labelProvider.getLabel(currentState, hasPermission),
+            subtitle = labelProvider.getSubtitle(currentState, hasPermission),
+            icon = iconProvider.getIcon(currentState),
         )
     }
 }

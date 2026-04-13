@@ -20,11 +20,11 @@ class LockTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        if (lockManager.isPermissionGranted.value) {
-            lockManager.lockScreen()
-        } else {
+        if (!lockManager.isPermissionGranted.value) {
             startActivityAndCollapse(AccessibilityPermissionActivity::class.java)
+            return
         }
+        lockManager.lockScreen()
     }
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(

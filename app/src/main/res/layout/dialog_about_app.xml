@@ -17,7 +17,8 @@
         android:layout_height="1dp"
         android:visibility="gone"
         app:dividerColor="@color/divider_color"
-        app:dividerThickness="1dp" />
+        app:dividerThickness="1dp"
+        tools:visibility="visible" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -122,5 +123,6 @@
         android:layout_height="1dp"
         android:visibility="gone"
         app:dividerColor="@color/divider_color"
-        app:dividerThickness="1dp" />
+        app:dividerThickness="1dp"
+        tools:visibility="visible" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -34,14 +34,14 @@ class BreathingTileService : BaseTileService() {
     )
 
     override fun updateTile() {
-        val state = breathingManager.breathingState.value
-        val isIdle = state.phase == BreathingPhase.IDLE
+        val breathingState = breathingManager.breathingState.value
+        val isIdle = breathingState.phase == BreathingPhase.IDLE
 
         setTileState(
             state = if (isIdle) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE,
-            label = labelProvider.getLabel(state.phase),
-            subtitle = labelProvider.getSubtitle(state.phase),
-            icon = iconProvider.getIcon(state.phase, state.progress),
+            label = labelProvider.getLabel(breathingState.phase),
+            subtitle = labelProvider.getSubtitle(breathingState.phase),
+            icon = iconProvider.getIcon(breathingState.phase, breathingState.progress),
         )
     }
 }

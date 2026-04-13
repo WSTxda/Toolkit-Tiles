@@ -30,12 +30,12 @@ class AutoBrightnessTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        if (brightnessManager.isPermissionGranted()) {
-            brightnessManager.toggle()
-            updateTile()
-        } else {
+        if (!brightnessManager.isPermissionGranted()) {
             startActivityAndCollapse(WriteSettingsPermissionActivity::class.java)
+            return
         }
+        brightnessManager.toggle()
+        updateTile()
     }
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
@@ -43,14 +43,14 @@ class AutoBrightnessTileService : BaseTileService() {
     )
 
     override fun updateTile() {
-        val isActive = brightnessManager.isEnabled.value
+        val isEnabled = brightnessManager.isEnabled.value
         val hasPermission = brightnessManager.isPermissionGranted()
 
         setTileState(
-            state = if (isActive && hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            state = if (isEnabled && hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = labelProvider.getLabel(),
-            subtitle = labelProvider.getSubtitle(isActive, hasPermission),
-            icon = iconProvider.getIcon(isActive),
+            subtitle = labelProvider.getSubtitle(isEnabled, hasPermission),
+            icon = iconProvider.getIcon(isEnabled),
         )
     }
 }

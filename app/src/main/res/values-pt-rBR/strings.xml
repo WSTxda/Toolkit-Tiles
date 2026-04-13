@@ -150,10 +150,10 @@
 
     <string name="auto_brightness_tile">Brilho automático</string>
 
-    <!-- breathing tile -->
+    <!--breathing tile-->
 
     <string name="breathing_tile">Respirar</string>
-    <!-- tile label -->
+    <!--tile label-->
     <string name="breathing_tile_prepare">Siga o círculo</string>
     <string name="breathing_tile_inhale">Inspire</string>
     <string name="breathing_tile_exhale">Expire</string>

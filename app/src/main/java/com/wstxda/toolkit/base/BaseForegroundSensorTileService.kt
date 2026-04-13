@@ -1,6 +1,5 @@
 package com.wstxda.toolkit.base
 
-import android.app.ForegroundServiceStartNotAllowedException
 import android.app.NotificationManager
 import android.os.Build
 import android.widget.Toast
@@ -14,7 +13,7 @@ import com.wstxda.toolkit.services.foreground.startForegroundCompat
 abstract class BaseForegroundSensorTileService : BaseTileService() {
 
     private val requiresClickToStartForeground =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 
     protected abstract fun isSensorSupported(): Boolean
     protected abstract fun isSensorEnabled(): Boolean
@@ -22,6 +21,10 @@ abstract class BaseForegroundSensorTileService : BaseTileService() {
     protected abstract fun pauseSensor()
     protected abstract fun toggleSensor()
     protected abstract fun onForceStop()
+
+    protected open fun onSensorNotSupported() {
+        Toast.makeText(this, R.string.not_supported, Toast.LENGTH_LONG).show()
+    }
 
     @CallSuper
     override fun onCreate() {
@@ -32,7 +35,7 @@ abstract class BaseForegroundSensorTileService : BaseTileService() {
     @CallSuper
     override fun onStartListening() {
         resumeSensor()
-        if (isSensorEnabled()) startForeground()
+        if (isSensorEnabled() && !requiresClickToStartForeground) startForeground()
         super.onStartListening()
     }
 
@@ -50,7 +53,7 @@ abstract class BaseForegroundSensorTileService : BaseTileService() {
 
     final override fun onClick() {
         if (!isSensorSupported()) {
-            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_LONG).show()
+            onSensorNotSupported()
             return
         }
         toggleSensor()
@@ -62,11 +65,7 @@ abstract class BaseForegroundSensorTileService : BaseTileService() {
         try {
             startForegroundCompat(NOTIFICATION_ID, notification())
         } catch (e: Exception) {
-            if (requiresClickToStartForeground && e is ForegroundServiceStartNotAllowedException) {
-                onForceStop()
-            } else {
-                throw e
-            }
+            if (e is SecurityException) onForceStop() else throw e
         }
     }
 

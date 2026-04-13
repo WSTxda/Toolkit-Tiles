@@ -4,4 +4,5 @@
 
     <bool name="enable_lock_tile">true</bool>
     <bool name="enable_screenshot_tile">true</bool>
+    <bool name="enable_dns_tile">true</bool>
 </resources>

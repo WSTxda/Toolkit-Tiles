@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.provider.Settings
 import android.service.quicksettings.TileService
 import androidx.core.content.edit
+import com.wstxda.toolkit.permissions.PermissionManager
 import com.wstxda.toolkit.tiles.caffeine.CaffeineTileService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class CaffeineManager(context: Context) {
 
     private val appContext = context.applicationContext
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val permissionManager = PermissionManager(appContext)
     private val _currentState = MutableStateFlow<CaffeineState>(CaffeineState.Off)
     val currentState = _currentState.asStateFlow()
     private var isReceiverRegistered = false
@@ -76,7 +78,7 @@ class CaffeineManager(context: Context) {
         }
     }
 
-    fun isPermissionGranted(): Boolean = Settings.System.canWrite(appContext)
+    fun isPermissionGranted(): Boolean = permissionManager.hasWriteSettingsPermission()
 
     fun cycleState() {
         if (!isPermissionGranted()) return
@@ -98,7 +100,6 @@ class CaffeineManager(context: Context) {
             if (_currentState.value == newState) {
                 if (stateCycle.indexOf(newState) == 1) saveOriginalTimeout()
             }
-
             if (setSystemTimeout(newState.timeout)) {
                 getPrefs().edit { putInt(PREF_KEY_EXPECTED, newState.timeout) }
                 toggleReceiver(true)

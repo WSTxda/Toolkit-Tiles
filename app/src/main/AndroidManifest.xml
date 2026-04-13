@@ -2,21 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE"
-        tools:ignore="ForegroundServicesPolicy" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:ignore="ForegroundServicesPolicy" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
     <!--use hardware sensors/components-->
 
@@ -41,14 +40,17 @@
         android:required="false" />
 
     <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="tiramisu">
 
-        <!--about app activity for tiles preferences-->
+    <!--about app activity for tiles preferences-->
 
         <activity
             android:name=".activity.AboutAppActivity"
@@ -90,6 +92,16 @@
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 
+        <activity
+            android:name=".activity.LocationPermissionActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.WriteSecureSettingsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
         <!--function services for tiles-->
 
         <service
@@ -105,7 +117,6 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
-
 
         <!--battery quick settings tile service-->
 
@@ -258,6 +269,23 @@
             </intent-filter>
         </service>
 
+        <!--dns quick settings tile service-->
+
+        <service
+            android:name=".tiles.dns.DnsSwitcherTileService"
+            android:enabled="@bool/enable_dns_tile"
+            android:exported="true"
+            android:icon="@drawable/ic_dns"
+            android:label="@string/dns_switcher_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
         <!--bubble level quick settings tile service-->
 
         <service
@@ -344,7 +372,7 @@
             </intent-filter>
         </service>
 
-        <!--device network traffic quick settings tile service-->
+        <!--network traffic quick settings tile service-->
 
         <service
             android:name=".tiles.networktraffic.NetworkTrafficTileService"
@@ -397,6 +425,23 @@
             android:exported="true"
             android:icon="@drawable/ic_sound"
             android:label="@string/sound_mode_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
+        <!--speedometer quick settings tile service-->
+
+        <service
+            android:name=".tiles.speedometer.SpeedometerTileService"
+            android:exported="true"
+            android:foregroundServiceType="location"
+            android:icon="@drawable/ic_speedometer"
+            android:label="@string/speedometer_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

@@ -20,12 +20,12 @@ class SoundModeTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        if (soundModeManager.hasPermission()) {
-            soundModeManager.cycleMode()
-            updateTile()
-        } else {
+        if (!soundModeManager.hasPermission()) {
             startActivityAndCollapse(NotificationPolicyPermissionActivity::class.java)
+            return
         }
+        soundModeManager.cycleMode()
+        updateTile()
     }
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
@@ -34,13 +34,13 @@ class SoundModeTileService : BaseTileService() {
 
     override fun updateTile() {
         val hasPermission = soundModeManager.hasPermission()
-        val mode = soundModeManager.getCurrentModeInternal()
+        val currentMode = soundModeManager.getCurrentModeInternal()
 
         setTileState(
             state = if (hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
-            label = labelProvider.getLabel(mode, hasPermission),
+            label = labelProvider.getLabel(currentMode, hasPermission),
             subtitle = labelProvider.getSubtitle(hasPermission),
-            icon = iconProvider.getIcon(mode, hasPermission),
+            icon = iconProvider.getIcon(currentMode, hasPermission),
         )
     }
 }
