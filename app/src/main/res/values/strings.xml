@@ -247,7 +247,7 @@
 
     <!--usb debugging tile-->
 
-    <string name="usb_debugging_tile">USB Debugging</string>
+    <string name="usb_debugging_tile">USB debugging</string>
 
     <!--nfc tile-->
 

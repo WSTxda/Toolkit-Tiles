@@ -12,12 +12,12 @@ class UsbDebuggingLabelProvider(private val context: Context) {
     fun getSubtitle(
         isActive: Boolean, hasPermission: Boolean, isDevOptionsEnabled: Boolean
     ): CharSequence {
-        if (!hasPermission) {
-            return context.getString(R.string.tile_setup)
-        }
-
         if (!isDevOptionsEnabled) {
             return context.getString(R.string.tile_unavailable)
+        }
+
+        if (!hasPermission) {
+            return context.getString(R.string.tile_setup)
         }
 
         if (isActive) {

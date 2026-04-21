@@ -30,6 +30,7 @@ class UsbDebuggingTileService : BaseTileService() {
     }
 
     override fun onClick() {
+        if (!usbDebuggingManager.isDeveloperOptionsEnabled.value) return
         if (!usbDebuggingManager.hasPermission()) {
             startActivityAndCollapse(WriteSecureSettingsActivity::class.java)
             return
@@ -47,18 +48,16 @@ class UsbDebuggingTileService : BaseTileService() {
         val hasPermission = usbDebuggingManager.hasPermission()
         val isEnabled = usbDebuggingManager.isEnabled.value
         val isDeveloperOptionsEnabled = usbDebuggingManager.isDeveloperOptionsEnabled.value
-        val isFullyAvailable = hasPermission && isDeveloperOptionsEnabled
 
         setTileState(
             state = when {
-                !isFullyAvailable -> Tile.STATE_UNAVAILABLE
+                !isDeveloperOptionsEnabled -> Tile.STATE_UNAVAILABLE
+                !hasPermission -> Tile.STATE_INACTIVE
                 isEnabled -> Tile.STATE_ACTIVE
                 else -> Tile.STATE_INACTIVE
             },
             label = labelProvider.getLabel(),
-            subtitle = labelProvider.getSubtitle(
-                isEnabled, isDeveloperOptionsEnabled, hasPermission
-            ),
+            subtitle = labelProvider.getSubtitle(isEnabled, hasPermission, isDeveloperOptionsEnabled),
             icon = iconProvider.getIcon(isEnabled),
         )
     }
