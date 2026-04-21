@@ -18,10 +18,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 
-class SoundModeManager(private val context: Context) {
+class SoundModeManager(context: Context) {
 
-    private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    private val permissionManager = PermissionManager(context.applicationContext)
+    private val appContext = context.applicationContext
+    private val audioManager = appContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val permissionManager = PermissionManager(appContext)
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     val currentMode: StateFlow<SoundMode> = callbackFlow {
@@ -35,7 +36,7 @@ class SoundModeManager(private val context: Context) {
             }
         }
 
-        context.registerReceiver(
+        appContext.registerReceiver(
             receiver,
             IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -45,13 +46,13 @@ class SoundModeManager(private val context: Context) {
 
         awaitClose {
             try {
-                context.unregisterReceiver(receiver)
+                appContext.unregisterReceiver(receiver)
             } catch (_: IllegalArgumentException) {
             }
         }
     }.distinctUntilChanged().stateIn(
         scope = managerScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = getCurrentModeInternal()
     )
 
@@ -67,13 +68,13 @@ class SoundModeManager(private val context: Context) {
         audioManager.ringerMode = newMode.ringerMode
     }
 
-    fun cleanup() {
-        managerScope.cancel()
-    }
-
     fun getCurrentModeInternal(): SoundMode = when (audioManager.ringerMode) {
         AudioManager.RINGER_MODE_VIBRATE -> SoundMode.VIBRATE
         AudioManager.RINGER_MODE_SILENT -> SoundMode.SILENT
         else -> SoundMode.NORMAL
+    }
+
+    fun cleanup() {
+        managerScope.cancel()
     }
 }

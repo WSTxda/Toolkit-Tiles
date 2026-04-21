@@ -18,6 +18,11 @@ class DiceRollTileService : BaseTileService() {
         diceRollManager.clearState()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        diceRollManager.cleanup()
+    }
+
     override fun onClick() {
         diceRollManager.roll()
         updateTile()

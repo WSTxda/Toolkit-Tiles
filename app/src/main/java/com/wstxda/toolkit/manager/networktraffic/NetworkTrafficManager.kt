@@ -118,8 +118,7 @@ class NetworkTrafficManager(context: Context) {
             lastSampleTime = now
 
             _speedValue.value = formatSpeed(speedBytes)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
         }
     }
 

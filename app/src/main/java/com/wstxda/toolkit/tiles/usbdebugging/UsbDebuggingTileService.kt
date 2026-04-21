@@ -30,11 +30,12 @@ class UsbDebuggingTileService : BaseTileService() {
     }
 
     override fun onClick() {
-        if (!usbDebuggingManager.isDeveloperOptionsEnabled.value) return
         if (!usbDebuggingManager.hasPermission()) {
             startActivityAndCollapse(WriteSecureSettingsActivity::class.java)
             return
         }
+        if (!usbDebuggingManager.isDeveloperOptionsEnabled.value) return
+
         usbDebuggingManager.toggle()
         updateTile()
     }
@@ -57,7 +58,9 @@ class UsbDebuggingTileService : BaseTileService() {
                 else -> Tile.STATE_INACTIVE
             },
             label = labelProvider.getLabel(),
-            subtitle = labelProvider.getSubtitle(isEnabled, hasPermission, isDeveloperOptionsEnabled),
+            subtitle = labelProvider.getSubtitle(
+                isEnabled, hasPermission, isDeveloperOptionsEnabled
+            ),
             icon = iconProvider.getIcon(isEnabled),
         )
     }

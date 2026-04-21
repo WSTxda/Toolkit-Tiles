@@ -4,6 +4,7 @@ import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.WriteSecureSettingsActivity
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.dns.DnsManager
+import com.wstxda.toolkit.manager.dns.DnsProvider
 import com.wstxda.toolkit.ui.icon.DnsIconProvider
 import com.wstxda.toolkit.ui.label.DnsLabelProvider
 import kotlinx.coroutines.flow.Flow
@@ -35,10 +36,13 @@ class DnsTileService : BaseTileService() {
     override fun updateTile() {
         val hasPermission = dnsManager.hasPermission()
         val currentProvider = dnsManager.getCurrentProviderInternal()
-        val isDisabled = currentProvider == com.wstxda.toolkit.manager.dns.DnsProvider.DISABLED
 
         setTileState(
-            state = if (hasPermission && !isDisabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            state = if (hasPermission && currentProvider != DnsProvider.DISABLED) {
+                Tile.STATE_ACTIVE
+            } else {
+                Tile.STATE_INACTIVE
+            },
             label = labelProvider.getLabel(currentProvider, hasPermission),
             subtitle = labelProvider.getSubtitle(hasPermission),
             icon = iconProvider.getIcon(currentProvider, hasPermission),
