@@ -93,8 +93,7 @@ class MemoryManager(context: Context) {
                 MemoryState.RAM -> updateRamInfo()
                 MemoryState.STORAGE -> updateStorageInfo()
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
         }
     }
 

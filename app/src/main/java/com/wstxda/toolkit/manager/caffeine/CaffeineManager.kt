@@ -97,9 +97,8 @@ class CaffeineManager(context: Context) {
         if (newState == CaffeineState.Off) {
             restoreOriginalTimeout()
         } else {
-            if (_currentState.value == newState) {
-                if (stateCycle.indexOf(newState) == 1) saveOriginalTimeout()
-            }
+            if (stateCycle.indexOf(newState) == 1) saveOriginalTimeout()
+
             if (setSystemTimeout(newState.timeout)) {
                 getPrefs().edit { putInt(PREF_KEY_EXPECTED, newState.timeout) }
                 toggleReceiver(true)

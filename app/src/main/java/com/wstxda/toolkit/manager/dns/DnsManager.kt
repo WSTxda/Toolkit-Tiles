@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 
-class DnsManager(private val context: Context) {
+class DnsManager(context: Context) {
 
     companion object {
         private const val PRIVATE_DNS_MODE = "private_dns_mode"
@@ -27,8 +27,9 @@ class DnsManager(private val context: Context) {
         private const val MODE_HOSTNAME = "hostname"
     }
 
+    private val appContext = context.applicationContext
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val permissionManager = PermissionManager(context.applicationContext)
+    private val permissionManager = PermissionManager(appContext)
 
     val currentProvider: StateFlow<DnsProvider> = callbackFlow {
         trySend(getCurrentProviderInternal())
@@ -40,7 +41,7 @@ class DnsManager(private val context: Context) {
             }
         }
 
-        val resolver = context.contentResolver
+        val resolver = appContext.contentResolver
         resolver.registerContentObserver(
             Settings.Global.getUriFor(PRIVATE_DNS_MODE), false, observer
         )
@@ -67,10 +68,10 @@ class DnsManager(private val context: Context) {
     }
 
     fun getCurrentProviderInternal(): DnsProvider {
-        val mode = Settings.Global.getString(context.contentResolver, PRIVATE_DNS_MODE)
-            ?: return DnsProvider.AUTOMATIC
-        val hostname =
-            Settings.Global.getString(context.contentResolver, PRIVATE_DNS_SPECIFIER) ?: ""
+        val resolver = appContext.contentResolver
+        val mode =
+            Settings.Global.getString(resolver, PRIVATE_DNS_MODE) ?: return DnsProvider.AUTOMATIC
+        val hostname = Settings.Global.getString(resolver, PRIVATE_DNS_SPECIFIER) ?: ""
 
         return when (mode) {
             MODE_OFF -> DnsProvider.DISABLED
@@ -85,22 +86,19 @@ class DnsManager(private val context: Context) {
 
     private fun applyProvider(provider: DnsProvider) {
         try {
+            val resolver = appContext.contentResolver
             when (provider) {
-                DnsProvider.DISABLED -> {
-                    Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_OFF)
-                }
+                DnsProvider.DISABLED -> Settings.Global.putString(
+                    resolver, PRIVATE_DNS_MODE, MODE_OFF
+                )
 
-                DnsProvider.AUTOMATIC -> {
-                    Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_AUTO)
-                }
+                DnsProvider.AUTOMATIC -> Settings.Global.putString(
+                    resolver, PRIVATE_DNS_MODE, MODE_AUTO
+                )
 
                 else -> {
-                    Settings.Global.putString(
-                        context.contentResolver, PRIVATE_DNS_SPECIFIER, provider.hostname
-                    )
-                    Settings.Global.putString(
-                        context.contentResolver, PRIVATE_DNS_MODE, MODE_HOSTNAME
-                    )
+                    Settings.Global.putString(resolver, PRIVATE_DNS_SPECIFIER, provider.hostname)
+                    Settings.Global.putString(resolver, PRIVATE_DNS_MODE, MODE_HOSTNAME)
                 }
             }
         } catch (_: SecurityException) {

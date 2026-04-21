@@ -20,9 +20,7 @@ class Haptics(context: Context) {
 
     @SuppressLint("InlinedApi")
     fun tick() = performSafely(
-        effectId = VibrationEffect.EFFECT_TICK,
-        fallbackDuration = 10L,
-        fallbackAmplitude = 100
+        effectId = VibrationEffect.EFFECT_TICK, fallbackDuration = 10L, fallbackAmplitude = 100
     )
 
     @SuppressLint("InlinedApi")
@@ -38,9 +36,7 @@ class Haptics(context: Context) {
     }
 
     fun cancel() {
-        if (hasVibrator()) {
-            vibrator.cancel()
-        }
+        if (hasVibrator()) vibrator.cancel()
     }
 
     private fun hasVibrator(): Boolean = vibrator.hasVibrator()
@@ -59,13 +55,13 @@ class Haptics(context: Context) {
     private fun vibrateCompat(effect: VibrationEffect) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val attributes =
-                VibrationAttributes.Builder().setUsage(VibrationAttributes.USAGE_ALARM).build()
+                VibrationAttributes.Builder().setUsage(VibrationAttributes.USAGE_HARDWARE_FEEDBACK)
+                    .build()
             vibrator.vibrate(effect, attributes)
         } else {
             val attributes =
                 AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM).build()
-
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).build()
             @Suppress("DEPRECATION") vibrator.vibrate(effect, attributes)
         }
     }

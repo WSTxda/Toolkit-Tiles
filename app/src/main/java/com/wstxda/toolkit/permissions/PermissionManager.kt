@@ -3,6 +3,7 @@ package com.wstxda.toolkit.permissions
 import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
 import android.provider.Settings
 import android.text.TextUtils
 import androidx.core.content.getSystemService
@@ -34,13 +35,8 @@ class PermissionManager(context: Context) {
 
     fun hasWriteSettingsPermission(): Boolean = Settings.System.canWrite(appContext)
 
-    fun hasWriteSecureSettingsPermission(): Boolean = try {
-        val currentMode = Settings.Global.getString(appContext.contentResolver, "private_dns_mode")
-        Settings.Global.putString(appContext.contentResolver, "private_dns_mode", currentMode)
-        true
-    } catch (_: SecurityException) {
-        false
-    }
+    fun hasWriteSecureSettingsPermission(): Boolean =
+        appContext.checkSelfPermission("android.permission.WRITE_SECURE_SETTINGS") == PackageManager.PERMISSION_GRANTED
 
     fun hasDoNotDisturbPermission(): Boolean {
         val notificationManager = appContext.getSystemService<NotificationManager>()
