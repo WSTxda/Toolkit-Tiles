@@ -244,4 +244,8 @@
     <string name="dns_tile_provider_mullvad" translatable="false">Mullvad</string>
     <string name="dns_tile_provider_controld" translatable="false">Control D</string>
     <string name="dns_tile_provider_libredns" translatable="false">LibreDNS</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">USB Debugging</string>
 </resources>

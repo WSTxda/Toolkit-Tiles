@@ -26,7 +26,7 @@ class DnsLabelProvider(private val context: Context) {
         return context.getString(nameRes)
     }
 
-    fun getSubtitle(provider: DnsProvider, hasPermission: Boolean): CharSequence {
+    fun getSubtitle(hasPermission: Boolean): CharSequence {
         if (!hasPermission) {
             return context.getString(R.string.tile_setup)
         }
