@@ -40,7 +40,7 @@ class DnsTileService : BaseTileService() {
         setTileState(
             state = if (hasPermission && !isDisabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = labelProvider.getLabel(currentProvider, hasPermission),
-            subtitle = labelProvider.getSubtitle(currentProvider, hasPermission),
+            subtitle = labelProvider.getSubtitle(hasPermission),
             icon = iconProvider.getIcon(currentProvider, hasPermission),
         )
     }

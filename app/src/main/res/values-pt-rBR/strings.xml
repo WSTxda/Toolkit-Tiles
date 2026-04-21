@@ -213,4 +213,8 @@
     <string name="dns_tile_automatic">Automático</string>
     <!--providers-->
     <string name="dns_tile_provider_block_adult_content">Bloquear conteúdo adulto</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">Depuração USB</string>
 </resources>

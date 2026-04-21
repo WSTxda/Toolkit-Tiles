@@ -438,5 +438,21 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+
+        <!--usb debugging quick settings tile service-->
+
+        <service
+            android:name=".tiles.usbdebugging.UsbDebuggingTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_usb_on"
+            android:label="@string/usb_debugging_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
     </application>
 </manifest>
