@@ -6,19 +6,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE"
-        tools:ignore="ForegroundServicesPolicy" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:ignore="ForegroundServicesPolicy" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission
-        android:name="android.permission.WRITE_SECURE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
     <!--use hardware sensors/components-->
 
@@ -45,9 +40,9 @@
     <application
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:directBootAware="true"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="false"
-        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -108,6 +103,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":tiles"
             tools:ignore="AccessibilityPolicy">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -124,7 +120,8 @@
             android:exported="true"
             android:icon="@drawable/ic_battery_full"
             android:label="@string/battery_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -137,7 +134,8 @@
             android:exported="true"
             android:icon="@drawable/ic_breathing"
             android:label="@string/breathing_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -153,7 +151,8 @@
             android:exported="true"
             android:icon="@drawable/ic_auto_brightness_on"
             android:label="@string/auto_brightness_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -169,7 +168,8 @@
             android:exported="true"
             android:icon="@drawable/ic_caffeine"
             android:label="@string/caffeine_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -185,7 +185,8 @@
             android:exported="true"
             android:icon="@drawable/ic_coin"
             android:label="@string/coin_flip_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -199,7 +200,8 @@
             android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_compass"
             android:label="@string/compass_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -218,7 +220,8 @@
             android:exported="true"
             android:icon="@drawable/ic_counter_add"
             android:label="@string/counter_tile_add"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -232,7 +235,8 @@
             android:exported="true"
             android:icon="@drawable/ic_counter_remove"
             android:label="@string/counter_tile_remove"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -246,7 +250,8 @@
             android:exported="true"
             android:icon="@drawable/ic_counter_reset"
             android:label="@string/counter_tile_reset"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -262,7 +267,8 @@
             android:exported="true"
             android:icon="@drawable/ic_dice"
             android:label="@string/dice_roll_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -276,7 +282,8 @@
             android:exported="true"
             android:icon="@drawable/ic_dns_on"
             android:label="@string/dns_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -293,7 +300,8 @@
             android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_level"
             android:label="@string/level_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -313,7 +321,8 @@
             android:exported="true"
             android:icon="@drawable/ic_lock"
             android:label="@string/lock_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -330,7 +339,8 @@
             android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_lux_meter"
             android:label="@string/lux_meter_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -349,7 +359,8 @@
             android:exported="true"
             android:icon="@drawable/ic_media_output"
             android:label="@string/media_output_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -365,7 +376,8 @@
             android:exported="true"
             android:icon="@drawable/ic_memory"
             android:label="@string/memory_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -378,7 +390,8 @@
             android:exported="true"
             android:icon="@drawable/ic_network"
             android:label="@string/network_traffic_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -391,7 +404,8 @@
             android:exported="true"
             android:icon="@drawable/ic_nfc_on"
             android:label="@string/nfc_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -408,7 +422,8 @@
             android:exported="true"
             android:icon="@drawable/ic_screenshot"
             android:label="@string/screenshot_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -424,7 +439,8 @@
             android:exported="true"
             android:icon="@drawable/ic_sos"
             android:label="@string/sos_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -440,7 +456,8 @@
             android:exported="true"
             android:icon="@drawable/ic_sound"
             android:label="@string/sound_mode_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -456,7 +473,8 @@
             android:exported="true"
             android:icon="@drawable/ic_temperature"
             android:label="@string/temperature_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
@@ -469,7 +487,8 @@
             android:exported="true"
             android:icon="@drawable/ic_usb_on"
             android:label="@string/usb_debugging_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
