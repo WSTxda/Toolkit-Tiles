@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +10,6 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:ignore="ForegroundServicesPolicy" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
@@ -93,11 +90,6 @@
             android:theme="@style/AppTheme.Transparent" />
 
         <activity
-            android:name=".activity.LocationPermissionActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.Transparent" />
-
-        <activity
             android:name=".activity.WriteSecureSettingsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
@@ -152,7 +144,7 @@
         <service
             android:name=".tiles.brightness.AutoBrightnessTileService"
             android:exported="true"
-            android:icon="@drawable/ic_auto_brightness_off"
+            android:icon="@drawable/ic_auto_brightness_on"
             android:label="@string/auto_brightness_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -198,7 +190,7 @@
             android:name=".tiles.compass.CompassTileService"
             android:exported="true"
             android:foregroundServiceType="specialUse"
-            android:icon="@drawable/ic_compass_off"
+            android:icon="@drawable/ic_compass"
             android:label="@string/compass_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -272,11 +264,11 @@
         <!--dns quick settings tile service-->
 
         <service
-            android:name=".tiles.dns.DnsSwitcherTileService"
+            android:name=".tiles.dns.DnsTileService"
             android:enabled="@bool/enable_dns_tile"
             android:exported="true"
-            android:icon="@drawable/ic_dns"
-            android:label="@string/dns_switcher_tile"
+            android:icon="@drawable/ic_dns_on"
+            android:label="@string/dns_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -329,7 +321,7 @@
             android:name=".tiles.luxmeter.LuxMeterTileService"
             android:exported="true"
             android:foregroundServiceType="specialUse"
-            android:icon="@drawable/ic_lux_meter_off"
+            android:icon="@drawable/ic_lux_meter"
             android:label="@string/lux_meter_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -425,23 +417,6 @@
             android:exported="true"
             android:icon="@drawable/ic_sound"
             android:label="@string/sound_mode_tile"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-        </service>
-
-        <!--speedometer quick settings tile service-->
-
-        <service
-            android:name=".tiles.speedometer.SpeedometerTileService"
-            android:exported="true"
-            android:foregroundServiceType="location"
-            android:icon="@drawable/ic_speedometer"
-            android:label="@string/speedometer_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

@@ -125,11 +125,11 @@ class NetworkTrafficManager(context: Context) {
 
     private fun formatSpeed(bytesPerSecond: Long): String = when {
         bytesPerSecond >= BYTES_IN_MB -> appContext.getString(
-            R.string.network_traffic_speed_mb, bytesPerSecond.toFloat() / BYTES_IN_MB
+            R.string.network_traffic_tile_mb, bytesPerSecond.toFloat() / BYTES_IN_MB
         )
 
         else -> appContext.getString(
-            R.string.network_traffic_speed_kb, bytesPerSecond.toFloat() / BYTES_IN_KB
+            R.string.network_traffic_tile_kb, bytesPerSecond.toFloat() / BYTES_IN_KB
         )
     }
 }

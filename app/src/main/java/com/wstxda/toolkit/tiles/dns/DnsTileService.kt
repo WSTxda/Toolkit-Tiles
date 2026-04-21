@@ -8,7 +8,7 @@ import com.wstxda.toolkit.ui.icon.DnsIconProvider
 import com.wstxda.toolkit.ui.label.DnsLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-class DnsSwitcherTileService : BaseTileService() {
+class DnsTileService : BaseTileService() {
 
     private val dnsManager by lazy { DnsManager(applicationContext) }
     private val labelProvider by lazy { DnsLabelProvider(applicationContext) }
@@ -35,11 +35,12 @@ class DnsSwitcherTileService : BaseTileService() {
     override fun updateTile() {
         val hasPermission = dnsManager.hasPermission()
         val currentProvider = dnsManager.getCurrentProviderInternal()
+        val isDisabled = currentProvider == com.wstxda.toolkit.manager.dns.DnsProvider.DISABLED
 
         setTileState(
-            state = if (hasPermission) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
+            state = if (hasPermission && !isDisabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = labelProvider.getLabel(currentProvider, hasPermission),
-            subtitle = labelProvider.getSubtitle(hasPermission),
+            subtitle = labelProvider.getSubtitle(currentProvider, hasPermission),
             icon = iconProvider.getIcon(currentProvider, hasPermission),
         )
     }

@@ -19,7 +19,7 @@
     <string name="about_contributors_summary">People who contributed to the project</string>
 
     <string name="about_license">Licence</string>
-    <string name="about_license_summary">Apache License 2.0</string>
+    <string name="about_license_summary" translatable="false">Apache License 2.0</string>
 
     <!--update checker-->
 
@@ -30,7 +30,7 @@
     <string name="update_checker_no_internet">No internet connection</string>
     <string name="update_checker_generic_error">Something went wrong… Please try again later</string>
 
-    <!--notification service-->
+    <!--notification foreground service-->
 
     <string name="channel_name">Tiles services</string>
     <string name="notification_title">Service running</string>
@@ -50,15 +50,12 @@
     <string name="write_settings_permission_message">Write system settings permission required. Please enable it first</string>
     <!--write secure settings-->
     <string name="write_secure_settings_clipboard_message">Command copied to clipboard</string>
-    <!--location-->
-    <string name="location_permission_granted_message">Location permission granted</string>
-    <string name="location_permission_denied_message">Location permission denied. Tap the tile to try again</string>
 
     <!--write secure settings command dialog-->
 
     <string name="write_secure_settings_title">ADB permission required</string>
     <string name="write_secure_settings_message">This feature requires the WRITE_SECURE_SETTINGS permission, which can only be granted via ADB. Run the command below in your terminal with USB debugging enabled:</string>
-    <string name="write_secure_settings_support">After running the command, tap the tile again to activate it. You only need to do this once.</string>
+    <string name="write_secure_settings_support">After running the command, tap the tile again to enable it. You only need to do this once.</string>
     <!--buttons-->
     <string name="copy_clipboard">Copy to clipboard</string>
     <string name="close">Close</string>
@@ -67,7 +64,7 @@
 
     <string name="not_supported">Your device does not support this feature</string>
 
-    <!--general state tile-->
+    <!--general tiles subtitles-->
 
     <string name="tile_on">On</string>
     <string name="tile_off">Off</string>
@@ -81,8 +78,8 @@
     <!--compass tile-->
 
     <string name="compass_tile">Compass</string>
-    <!--tile label-->
     <string name="compass_tile_degrees" translatable="false">%1$d° %2$s</string>
+    <!--directions-->
     <string name="N">N</string>
     <string name="NE">NE</string>
     <string name="E">E</string>
@@ -95,14 +92,13 @@
     <!--bubble level tile-->
 
     <string name="level_tile">Level</string>
-    <!--tile label-->
-    <string name="level_tile_zero" translatable="false">0°</string>
     <string name="level_tile_degrees" translatable="false">%d°</string>
+    <!--perfect level-->
+    <string name="level_tile_zero" translatable="false">0°</string>
 
     <!--lux meter tile-->
 
     <string name="lux_meter_tile">Lux Meter</string>
-    <!--tile label-->
     <string name="lux_meter_tile_lux" translatable="false">%d lx</string>
 
     <!--lock screen tile-->
@@ -112,18 +108,19 @@
     <!--coin flip tile-->
 
     <string name="coin_flip_tile">Coin Flip</string>
-    <!--tile label-->
     <string name="coin_flip_tile_tap">Tap to flip</string>
-    <string name="coin_flip_tile_count">Heads: %1$d Tails: %2$d</string>
+    <!--sides-->
     <string name="coin_tile_heads">Heads</string>
     <string name="coin_tile_tails">Tails</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">Heads: %1$d Tails: %2$d</string>
 
     <!--dice roll tile-->
 
     <string name="dice_roll_tile">Dice Roll</string>
-    <!--tile label-->
     <string name="dice_roll_tile_tap">Tap to roll</string>
     <string name="dice_roll_tile_rolling">Rolling…</string>
+    <!--numbers-->
     <string name="dice_tile_1">One</string>
     <string name="dice_tile_2">Two</string>
     <string name="dice_tile_3">Three</string>
@@ -138,7 +135,7 @@
     <!--counter tile-->
 
     <string name="counter_tile">Counter</string>
-    <!--tile label-->
+    <!--values-->
     <string name="counter_tile_add">Add</string>
     <string name="counter_tile_remove">Remove</string>
     <string name="counter_tile_reset">Reset</string>
@@ -150,7 +147,7 @@
     <!--sound mode tile-->
 
     <string name="sound_mode_tile">Sound mode</string>
-    <!--tile label-->
+    <!--sound modes-->
     <string name="sound_tile_normal">Normal</string>
     <string name="sound_tile_silent">Silent</string>
     <string name="sound_tile_vibrate">Vibrate</string>
@@ -158,22 +155,21 @@
     <!--caffeine tile-->
 
     <string name="caffeine_tile">Caffeine</string>
-    <!--tile label-->
+    <!--timeouts-->
     <string name="caffeine_tile_minutes">%1$d minutes</string>
     <string name="caffeine_tile_infinite">Infinite</string>
 
     <!--device memory tile-->
 
     <string name="memory_tile">Memory</string>
-    <!--tile label-->
     <string name="memory_tile_format">%1$s of %2$s</string>
+    <!--memory type-->
     <string name="memory_tile_ram">%s in use</string>
     <string name="memory_tile_storage">%s free</string>
 
     <!--device temperature tile-->
 
     <string name="temperature_tile">Temperature</string>
-    <!--tile label-->
     <string name="temperature_tile_format" translatable="false">%.1f°C</string>
 
     <!--media output tile-->
@@ -187,8 +183,8 @@
     <!--breathing tile-->
 
     <string name="breathing_tile">Breathe</string>
-    <!--tile label-->
     <string name="breathing_tile_prepare">Follow the circle</string>
+    <!--steps-->
     <string name="breathing_tile_inhale">Inhale</string>
     <string name="breathing_tile_exhale">Exhale</string>
     <string name="breathing_tile_pause">Pause</string>
@@ -197,51 +193,55 @@
     <!--network traffic tile-->
 
     <string name="network_traffic_tile">Network</string>
-    <!--tile label-->
-    <string name="network_traffic_download">Download</string>
-    <string name="network_traffic_upload">Upload</string>
-    <string name="network_traffic_speed_kb" translatable="false">%.1f kB/s</string>
-    <string name="network_traffic_speed_mb" translatable="false">%.1f MB/s</string>
+    <!--speed units-->
+    <string name="network_traffic_tile_kb" translatable="false">%.1f kB</string>
+    <string name="network_traffic_tile_mb" translatable="false">%.1f MB</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">Download</string>
+    <string name="network_traffic_tile_upload">Upload</string>
 
     <!--battery tile-->
 
     <string name="battery_tile">Battery</string>
-    <!--tile label-->
-    <string name="battery_label_percent" translatable="false">%d%%</string>
-    <string name="battery_label_voltage" translatable="false">%.2f V</string>
-    <string name="battery_label_current" translatable="false">%d mA</string>
-    <string name="battery_label_wattage" translatable="false">%.1f W</string>
-    <string name="battery_label_temperature" translatable="false">%.1f°C</string>
-    <!--tile label status-->
-    <string name="battery_status_full">Fully charged</string>
-    <string name="battery_status_low">Low battery</string>
-    <string name="battery_status_saver">Power saver</string>
-    <string name="battery_status_discharging">Discharging</string>
-    <!--tile label charging-->
-    <string name="battery_charging">Charging</string>
-    <string name="battery_charging_ac">Charging · AC</string>
-    <string name="battery_charging_usb">Charging · USB</string>
-    <string name="battery_charging_wireless">Charging · Wireless</string>
-    <string name="battery_charging_dock">Charging · Dock</string>
-    <!--tile label health-->
-    <string name="battery_health_good">Good</string>
-    <string name="battery_health_overheat">Overheating</string>
-    <string name="battery_health_dead">Dead</string>
-    <string name="battery_health_overvoltage">Overvoltage</string>
-    <string name="battery_health_failure">Failure</string>
-    <string name="battery_health_cold">Cold</string>
-    <string name="battery_health_unknown">Unknown</string>
+    <!--info-->
+    <string name="battery_tile_percent" translatable="false">%d%%</string>
+    <string name="battery_tile_voltage" translatable="false">%.2f V</string>
+    <string name="battery_tile_current" translatable="false">%d mA</string>
+    <string name="battery_tile_wattage" translatable="false">%.1f W</string>
+    <string name="battery_tile_temperature" translatable="false">%.1f°C</string>
+    <!--status-->
+    <string name="battery_tile_status_full">Fully charged</string>
+    <string name="battery_tile_status_low">Low battery</string>
+    <string name="battery_tile_status_saver">Power saver</string>
+    <string name="battery_tile_status_discharging">Discharging</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">Charging</string>
+    <string name="battery_tile_charging_ac">Charging · AC</string>
+    <string name="battery_tile_charging_usb">Charging · USB</string>
+    <string name="battery_tile_charging_wireless">Charging · Wireless</string>
+    <string name="battery_tile_charging_dock">Charging · Dock</string>
+    <!--health-->
+    <string name="battery_tile_health_good">Good</string>
+    <string name="battery_tile_health_overheat">Overheating</string>
+    <string name="battery_tile_health_dead">Dead</string>
+    <string name="battery_tile_health_overvoltage">Overvoltage</string>
+    <string name="battery_tile_health_failure">Failure</string>
+    <string name="battery_tile_health_cold">Cold</string>
+    <string name="battery_tile_health_unknown">Unknown</string>
 
-    <!--speedometer tile-->
+    <!--dns tile-->
 
-    <string name="speedometer_tile">Speedometer</string>
-    <!--tile label-->
-    <string name="speedometer_tile_speed_kmh" translatable="false">%d km/h</string>
-    <string name="speedometer_tile_speed_mph" translatable="false">%d mph</string>
-    <string name="speedometer_unit_kmh" translatable="false">km/h</string>
-    <string name="speedometer_unit_mph" translatable="false">mph</string>
-
-    <!--dns switcher tile-->
-
-    <string name="dns_switcher_tile">DNS</string>
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">Automatic</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Block adult content</string>
+    <string name="dns_tile_provider_google" translatable="false">Google</string>
+    <string name="dns_tile_provider_cloudflare" translatable="false">Cloudflare</string>
+    <string name="dns_tile_provider_adguard" translatable="false">AdGuard</string>
+    <string name="dns_tile_provider_opendns" translatable="false">OpenDNS</string>
+    <string name="dns_tile_provider_quad9" translatable="false">Quad9</string>
+    <string name="dns_tile_provider_nextdns" translatable="false">NextDNS</string>
+    <string name="dns_tile_provider_mullvad" translatable="false">Mullvad</string>
+    <string name="dns_tile_provider_controld" translatable="false">Control D</string>
+    <string name="dns_tile_provider_libredns" translatable="false">LibreDNS</string>
 </resources>

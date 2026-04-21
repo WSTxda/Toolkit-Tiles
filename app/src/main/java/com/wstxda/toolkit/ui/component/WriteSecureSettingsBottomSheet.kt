@@ -59,6 +59,8 @@ class WriteSecureSettingsBottomSheet : BaseBottomSheet<DialogWriteSecureSettings
         val clipboard =
             requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText("ADB Command", text))
-        Toast.makeText(requireContext(), R.string.write_secure_settings_clipboard_message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(), R.string.write_secure_settings_clipboard_message, Toast.LENGTH_SHORT
+        ).show()
     }
 }

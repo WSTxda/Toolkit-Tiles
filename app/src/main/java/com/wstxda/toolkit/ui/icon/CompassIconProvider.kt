@@ -12,14 +12,14 @@ import androidx.core.graphics.withRotation
 
 class CompassIconProvider(private val context: Context) {
 
-    private val arrowDrawable = ContextCompat.getDrawable(context, R.drawable.ic_compass_on)!!
+    private val arrowDrawable = ContextCompat.getDrawable(context, R.drawable.ic_compass)!!
     private val iconBitmap =
         createBitmap(arrowDrawable.intrinsicWidth, arrowDrawable.intrinsicHeight)
     private val canvas = Canvas(iconBitmap)
 
     fun getIcon(isActive: Boolean, degrees: Float): Icon {
         if (!isActive) {
-            return Icon.createWithResource(context, R.drawable.ic_compass_off)
+            return Icon.createWithResource(context, R.drawable.ic_compass)
         }
 
         canvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR)

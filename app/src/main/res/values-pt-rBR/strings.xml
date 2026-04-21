@@ -12,6 +12,8 @@
     <string name="about_contributors">Contribuidores</string>
     <string name="about_contributors_summary">Pessoas que contribuíram com o projeto</string>
 
+    <string name="about_license">Licença</string>
+
     <!--update checker-->
 
     <string name="update_checker_download_button">Baixar</string>
@@ -21,27 +23,41 @@
     <string name="update_checker_no_internet">Sem conexão com a internet</string>
     <string name="update_checker_generic_error">Algo deu errado… Tente novamente mais tarde</string>
 
-    <!--notification service-->
+    <!--notification foreground service-->
 
     <string name="channel_name">Serviços do atalho</string>
     <string name="notification_title">Serviço em execução</string>
-    <string name="notification_label">Algum atalho está em execução, desative o atalho no painel de configurações rapidas ou toque aqui para ocultar esta notificação</string>
+    <string name="notification_label">Algum atalho está em execução, desative o atalho no painel de configurações rápidas ou toque aqui para ocultar esta notificação</string>
 
     <!--accessibility service-->
 
-    <string name="accessibility_service_description">Este aplicativo usa serviços de acessibilidade para que alguns dos seus atalhos no painel de configurações rapidas funcionem. Essa permissão é essencial para que esses atalhos funcionem corretamente e forneçam acesso rápido a determinados recursos do dispositivo.</string>
+    <string name="accessibility_service_description">Este aplicativo usa serviços de acessibilidade para que alguns dos seus atalhos no painel de configurações rápidas funcionem. Essa permissão é essencial para que esses atalhos funcionem corretamente e forneçam acesso rápido a determinados recursos do dispositivo.</string>
 
     <!--permission messages-->
 
+    <!--accessibility-->
     <string name="accessibility_permission_message">Permissão de acessibilidade necessária. Por favor, ative-a primeiro</string>
+    <!--dnd-->
     <string name="dnd_access_permission_message">Permissão de acesso ao Não Perturbe necessária. Por favor, ative-a primeiro</string>
+    <!--write settings-->
     <string name="write_settings_permission_message">Permissão para modificar as configurações do sistema necessária. Por favor, ative-a primeiro</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">Comando copiado para a área de transferência</string>
 
-    <!--messages-->
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">Permissão ADB necessária</string>
+    <string name="write_secure_settings_message">Este recurso requer a permissão WRITE_SECURE_SETTINGS, que só pode ser concedida via ADB. Execute o comando abaixo no seu terminal com a depuração USB ativada:</string>
+    <string name="write_secure_settings_support">Após executar o comando, toque no atalho novamente para ativá-lo. Você só precisa fazer isso uma vez.</string>
+    <!--buttons-->
+    <string name="copy_clipboard">Copiar comando</string>
+    <string name="close">Fechar</string>
+
+    <!--general messages-->
 
     <string name="not_supported">Seu dispositivo não suporta este recurso</string>
 
-    <!--general state tile-->
+    <!--general tiles subtitles-->
 
     <string name="tile_on">Ligado</string>
     <string name="tile_off">Desligado</string>
@@ -55,7 +71,7 @@
     <!--compass tile-->
 
     <string name="compass_tile">Bússola</string>
-    <!--tile label-->
+    <!--directions-->
     <string name="N">Norte</string>
     <string name="NE">Nordeste</string>
     <string name="E">Leste</string>
@@ -80,18 +96,19 @@
     <!--coin flip tile-->
 
     <string name="coin_flip_tile">Jogar moeda</string>
-    <!--tile label-->
     <string name="coin_flip_tile_tap">Toque para jogar</string>
-    <string name="coin_flip_tile_count">Cara: %1$d Coroa: %2$d</string>
+    <!--sides-->
     <string name="coin_tile_heads">Cara</string>
     <string name="coin_tile_tails">Coroa</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">Cara: %1$d Coroa: %2$d</string>
 
     <!--dice roll tile-->
 
     <string name="dice_roll_tile">Rolar dado</string>
-    <!--tile label-->
     <string name="dice_roll_tile_tap">Toque para jogar</string>
     <string name="dice_roll_tile_rolling">Rolando…</string>
+    <!--numbers-->
     <string name="dice_tile_1">Um</string>
     <string name="dice_tile_2">Dois</string>
     <string name="dice_tile_3">Três</string>
@@ -106,7 +123,7 @@
     <!--counter tile-->
 
     <string name="counter_tile">Contador</string>
-    <!--tile label-->
+    <!--values-->
     <string name="counter_tile_add">Adicionar</string>
     <string name="counter_tile_remove">Remover</string>
     <string name="counter_tile_reset">Resetar</string>
@@ -118,7 +135,7 @@
     <!--sound mode tile-->
 
     <string name="sound_mode_tile">Modo de som</string>
-    <!--tile label-->
+    <!--sound modes-->
     <string name="sound_tile_normal">Normal</string>
     <string name="sound_tile_silent">Silencioso</string>
     <string name="sound_tile_vibrate">Vibrar</string>
@@ -126,15 +143,15 @@
     <!--caffeine tile-->
 
     <string name="caffeine_tile">Cafeína</string>
-    <!--tile label-->
+    <!--timeouts-->
     <string name="caffeine_tile_minutes">%1$d minutos</string>
     <string name="caffeine_tile_infinite">Infinito</string>
 
     <!--device memory tile-->
 
     <string name="memory_tile">Memória</string>
-    <!--tile label-->
     <string name="memory_tile_format">%1$s de %2$s</string>
+    <!--memory type-->
     <string name="memory_tile_ram">%s em uso</string>
     <string name="memory_tile_storage">%s livres</string>
 
@@ -153,10 +170,47 @@
     <!--breathing tile-->
 
     <string name="breathing_tile">Respirar</string>
-    <!--tile label-->
     <string name="breathing_tile_prepare">Siga o círculo</string>
+    <!--steps-->
     <string name="breathing_tile_inhale">Inspire</string>
     <string name="breathing_tile_exhale">Expire</string>
     <string name="breathing_tile_pause">Pausa</string>
     <string name="breathing_tile_relax">Relaxe</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">Rede</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">Download</string>
+    <string name="network_traffic_tile_upload">Upload</string>
+
+    <!--battery tile-->
+
+    <string name="battery_tile">Bateria</string>
+    <!--status-->
+    <string name="battery_tile_status_full">Totalmente carregada</string>
+    <string name="battery_tile_status_low">Bateria fraca</string>
+    <string name="battery_tile_status_saver">Economia de energia</string>
+    <string name="battery_tile_status_discharging">Descarregando</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">Carregando</string>
+    <string name="battery_tile_charging_ac">Carregando · AC</string>
+    <string name="battery_tile_charging_usb">Carregando · USB</string>
+    <string name="battery_tile_charging_wireless">Carregando · Sem fio</string>
+    <string name="battery_tile_charging_dock">Carregando · Dock</string>
+    <!--health-->
+    <string name="battery_tile_health_good">Boa</string>
+    <string name="battery_tile_health_overheat">Superaquecendo</string>
+    <string name="battery_tile_health_dead">Morta</string>
+    <string name="battery_tile_health_overvoltage">Sobretensão</string>
+    <string name="battery_tile_health_failure">Falha</string>
+    <string name="battery_tile_health_cold">Fria</string>
+    <string name="battery_tile_health_unknown">Desconhecida</string>
+
+    <!--dns tile-->
+
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">Automático</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Bloquear conteúdo adulto</string>
 </resources>

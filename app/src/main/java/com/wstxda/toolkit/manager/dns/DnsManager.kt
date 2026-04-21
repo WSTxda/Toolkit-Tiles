@@ -73,10 +73,11 @@ class DnsManager(private val context: Context) {
             Settings.Global.getString(context.contentResolver, PRIVATE_DNS_SPECIFIER) ?: ""
 
         return when (mode) {
-            MODE_OFF -> DnsProvider.AUTOMATIC
+            MODE_OFF -> DnsProvider.DISABLED
             MODE_AUTO -> DnsProvider.AUTOMATIC
-            MODE_HOSTNAME -> DnsProvider.entries.firstOrNull { it.hostname == hostname }
-                ?: DnsProvider.AUTOMATIC
+            MODE_HOSTNAME -> DnsProvider.entries.firstOrNull {
+                it != DnsProvider.DISABLED && it != DnsProvider.AUTOMATIC && it.hostname == hostname
+            } ?: DnsProvider.AUTOMATIC
 
             else -> DnsProvider.AUTOMATIC
         }
@@ -84,15 +85,23 @@ class DnsManager(private val context: Context) {
 
     private fun applyProvider(provider: DnsProvider) {
         try {
-            if (provider == DnsProvider.AUTOMATIC) {
-                Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_AUTO)
-            } else {
-                Settings.Global.putString(
-                    context.contentResolver,
-                    PRIVATE_DNS_SPECIFIER,
-                    provider.hostname,
-                )
-                Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_HOSTNAME)
+            when (provider) {
+                DnsProvider.DISABLED -> {
+                    Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_OFF)
+                }
+
+                DnsProvider.AUTOMATIC -> {
+                    Settings.Global.putString(context.contentResolver, PRIVATE_DNS_MODE, MODE_AUTO)
+                }
+
+                else -> {
+                    Settings.Global.putString(
+                        context.contentResolver, PRIVATE_DNS_SPECIFIER, provider.hostname
+                    )
+                    Settings.Global.putString(
+                        context.contentResolver, PRIVATE_DNS_MODE, MODE_HOSTNAME
+                    )
+                }
             }
         } catch (_: SecurityException) {
         }

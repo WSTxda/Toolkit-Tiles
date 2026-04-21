@@ -36,7 +36,7 @@ class LuxMeterTileService : BaseForegroundSensorTileService() {
             state = if (isEnabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = labelProvider.getLabel(isEnabled, lux),
             subtitle = labelProvider.getSubtitle(isEnabled),
-            icon = iconProvider.getIcon(isEnabled),
+            icon = iconProvider.getIcon(),
         )
     }
 }

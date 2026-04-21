@@ -12,8 +12,8 @@ class NetworkTrafficLabelProvider(private val context: Context) {
 
     fun getSubtitle(state: NetworkTrafficState): CharSequence {
         return when (state) {
-            NetworkTrafficState.DOWNLOAD -> context.getString(R.string.network_traffic_download)
-            NetworkTrafficState.UPLOAD -> context.getString(R.string.network_traffic_upload)
+            NetworkTrafficState.DOWNLOAD -> context.getString(R.string.network_traffic_tile_download)
+            NetworkTrafficState.UPLOAD -> context.getString(R.string.network_traffic_tile_upload)
         }
     }
 }
