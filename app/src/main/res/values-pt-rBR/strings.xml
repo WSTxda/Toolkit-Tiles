@@ -217,4 +217,8 @@
     <!--usb debugging tile-->
 
     <string name="usb_debugging_tile">Depuração USB</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile">NFC</string>
 </resources>
