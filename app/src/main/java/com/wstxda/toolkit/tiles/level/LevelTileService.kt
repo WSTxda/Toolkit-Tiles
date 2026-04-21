@@ -14,8 +14,6 @@ class LevelTileService : BaseForegroundSensorTileService() {
     private val labelProvider by lazy { LevelLabelProvider(applicationContext) }
     private val iconProvider by lazy { LevelIconProvider(applicationContext) }
 
-    override val sampleIntervalMs: Long = 100L
-
     override fun isSensorSupported(): Boolean = LevelManager.isSupported(this)
     override fun isSensorEnabled(): Boolean = levelManager.isEnabled.value
     override fun resumeSensor() = levelManager.resume()

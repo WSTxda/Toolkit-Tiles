@@ -30,6 +30,9 @@ class LevelManager(context: Context) : SensorEventListener {
     val degrees = _degrees.asStateFlow()
     private var isSensorRegistered = false
     private var lastHapticFeedback = 0L
+    private val rotationMatrix = FloatArray(16)
+    private val remappedMatrix = FloatArray(16)
+    private val orientationArray = FloatArray(3)
 
     private val sensorManager: SensorManager?
         get() = appContext.getSystemService()
@@ -70,7 +73,7 @@ class LevelManager(context: Context) : SensorEventListener {
     private fun registerSensor() {
         val sensor = rotationSensor ?: return
         if (!isSensorRegistered) {
-            sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI)
             isSensorRegistered = true
         }
     }
@@ -87,7 +90,9 @@ class LevelManager(context: Context) : SensorEventListener {
 
         val rotation = display?.rotation ?: 0
 
-        val orient = getOrientation(event, rotation)
+        val orient = getOrientation(
+            event, rotation, rotationMatrix, remappedMatrix, orientationArray
+        )
         _orientation.value = orient
 
         val deg = when (orient.mode) {

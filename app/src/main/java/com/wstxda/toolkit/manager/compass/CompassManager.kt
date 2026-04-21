@@ -26,6 +26,9 @@ class CompassManager(context: Context) : SensorEventListener {
     val currentDegrees = _currentDegrees.asStateFlow()
     private var isSensorRegistered = false
     private var lastHapticDegrees: Float? = null
+    private val rotationMatrix = FloatArray(9)
+    private val remappedMatrix = FloatArray(9)
+    private val orientation = FloatArray(3)
 
     private val sensorManager: SensorManager?
         get() = appContext.getSystemService()
@@ -72,7 +75,7 @@ class CompassManager(context: Context) : SensorEventListener {
         val sensor = rotationSensor ?: return
 
         if (!isSensorRegistered) {
-            sm.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sm.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI)
             isSensorRegistered = true
             lastHapticDegrees = null
         }
@@ -88,7 +91,9 @@ class CompassManager(context: Context) : SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event == null) return
 
-        val degrees = event.getAzimuthDegrees(display?.rotation ?: 0)
+        val degrees = event.getAzimuthDegrees(
+            display?.rotation ?: 0, rotationMatrix, remappedMatrix, orientation
+        )
         _currentDegrees.value = degrees
 
         if (lastHapticDegrees == null) {

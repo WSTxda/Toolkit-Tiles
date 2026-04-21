@@ -10,22 +10,26 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-fun getOrientation(event: SensorEvent, displayRotation: Int): Orientation {
-    val rotationMatrix = FloatArray(16)
+fun getOrientation(
+    event: SensorEvent,
+    displayRotation: Int,
+    rotationMatrix: FloatArray,
+    remappedMatrix: FloatArray,
+    orientation: FloatArray
+): Orientation {
     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
-    val remapped = remapRotationMatrix(rotationMatrix, displayRotation)
+    remapRotationMatrix(rotationMatrix, displayRotation, remappedMatrix)
 
-    val orientation = FloatArray(3)
-    SensorManager.getOrientation(remapped, orientation)
+    SensorManager.getOrientation(remappedMatrix, orientation)
 
     val pitch = Math.toDegrees(orientation[1].toDouble()).toFloat()
     val roll = Math.toDegrees(orientation[2].toDouble()).toFloat()
 
     val mode = if (abs(pitch) > 45f || abs(roll) > 45f) LevelMode.Line else LevelMode.Dot
 
-    val gx = remapped.getOrNull(8) ?: 0f
-    val gy = remapped.getOrNull(9) ?: 0f
+    val gx = remappedMatrix.getOrNull(8) ?: 0f
+    val gy = remappedMatrix.getOrNull(9) ?: 0f
 
     val balance = Math.toDegrees(atan2(gx.toDouble(), gy.toDouble())).toFloat()
     val adjustedBalance = adjustBalance(balance)
@@ -47,14 +51,14 @@ private fun adjustBalance(balance: Float): Float {
     return if (baseAngle == 0f) balance else baseAngle - balance
 }
 
-private fun remapRotationMatrix(rotationMatrix: FloatArray, displayRotation: Int): FloatArray {
+private fun remapRotationMatrix(
+    rotationMatrix: FloatArray, displayRotation: Int, remappedMatrix: FloatArray
+) {
     val (newX, newY) = when (displayRotation) {
         Surface.ROTATION_90 -> Pair(SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X)
         Surface.ROTATION_180 -> Pair(SensorManager.AXIS_MINUS_X, SensorManager.AXIS_MINUS_Y)
         Surface.ROTATION_270 -> Pair(SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X)
         else -> Pair(SensorManager.AXIS_X, SensorManager.AXIS_Y)
     }
-    val remapped = FloatArray(16)
-    SensorManager.remapCoordinateSystem(rotationMatrix, newX, newY, remapped)
-    return remapped
+    SensorManager.remapCoordinateSystem(rotationMatrix, newX, newY, remappedMatrix)
 }

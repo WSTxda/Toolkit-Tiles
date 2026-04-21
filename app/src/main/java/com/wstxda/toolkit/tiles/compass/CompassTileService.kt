@@ -14,8 +14,6 @@ class CompassTileService : BaseForegroundSensorTileService() {
     private val labelProvider by lazy { CompassLabelProvider(applicationContext) }
     private val iconProvider by lazy { CompassIconProvider(applicationContext) }
 
-    override val sampleIntervalMs: Long = 100L
-
     override fun isSensorSupported(): Boolean = CompassManager.isSupported(this)
     override fun isSensorEnabled(): Boolean = compassManager.isEnabled.value
     override fun resumeSensor() = compassManager.resume()

@@ -23,7 +23,9 @@ class LevelIconProvider(private val context: Context) {
         ContextCompat.getDrawable(context, R.drawable.ic_level_line_indicator)!!
 
     private val dotBitmap = createBitmap(dotBase.intrinsicWidth, dotBase.intrinsicHeight)
+    private val dotCanvas = Canvas(dotBitmap)
     private val lineBitmap = createBitmap(lineBase.intrinsicWidth, lineBase.intrinsicHeight)
+    private val lineCanvas = Canvas(lineBitmap)
 
     fun getIcon(isActive: Boolean, degrees: Int, orient: Orientation): Icon {
         if (!isActive) {
@@ -46,7 +48,7 @@ class LevelIconProvider(private val context: Context) {
         val width = max(1, dotBase.intrinsicWidth)
         val height = max(1, dotBase.intrinsicHeight)
 
-        Canvas(dotBitmap).apply {
+        dotCanvas.apply {
             drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
             dotBase.setBounds(0, 0, width, height)
@@ -80,7 +82,7 @@ class LevelIconProvider(private val context: Context) {
         val width = max(1, lineBase.intrinsicWidth)
         val height = max(1, lineBase.intrinsicHeight)
 
-        Canvas(lineBitmap).apply {
+        lineCanvas.apply {
             drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             lineBase.setBounds(0, 0, width, height)
             lineBase.draw(this)
