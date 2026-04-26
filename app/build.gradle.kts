@@ -14,8 +14,8 @@ android {
         applicationId = "com.wstxda.toolkit"
         minSdk = 26
         targetSdk = 36
-        versionCode = 200
-        versionName = "2.0"
+        versionCode = 210
+        versionName = "2.1.0"
     }
 
     buildTypes {
