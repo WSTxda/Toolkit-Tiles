@@ -174,7 +174,7 @@
     <!--steps-->
     <string name="breathing_tile_inhale">Inspire</string>
     <string name="breathing_tile_exhale">Expire</string>
-    <string name="breathing_tile_pause">Pausa</string>
+    <string name="breathing_tile_pause">Pause</string>
     <string name="breathing_tile_relax">Relaxe</string>
 
     <!--network traffic tile-->
@@ -190,7 +190,7 @@
     <!--status-->
     <string name="battery_tile_status_full">Totalmente carregada</string>
     <string name="battery_tile_status_low">Bateria fraca</string>
-    <string name="battery_tile_status_saver">Economia de energia</string>
+    <string name="battery_tile_status_saver">Modo economia</string>
     <string name="battery_tile_status_discharging">Descarregando</string>
     <!--charging source-->
     <string name="battery_tile_charging">Carregando</string>
