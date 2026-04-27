@@ -46,10 +46,6 @@ class SosManager(context: Context) {
         }
     }
 
-    fun stop() {
-        stopInternal()
-    }
-
     fun cleanup() {
         stopInternal()
         flasher.cleanup()
