@@ -4,11 +4,11 @@
 
 Ekstra uygulamalara ihtiyaç duymadan, kullanışlı özelliklere anında erişim sağlayan ve Android Hızlı Ayarlar kutucukları olarak sunulan basit, hafif araçlar koleksiyonu.
 
-[![GitHub Actions Durumu](https://img.shields.io/github/actions/workflow/status/WSTxda/Toolkit-Tiles/.github%2Fworkflows%2Fandroid.yml?style=for-the-badge&logo=github-actions&labelColor=21262D&color=3FB950)](https://github.com/WSTxda/Toolkit-Tiles/actions)
+[![GitHub Actions Status](https://img.shields.io/github/actions/workflow/status/WSTxda/Toolkit-Tiles/.github%2Fworkflows%2Fandroid.yml?style=for-the-badge&logo=github-actions&labelColor=21262D&color=3FB950)](https://github.com/WSTxda/Toolkit-Tiles/actions)
 [![Platform](https://img.shields.io/badge/android-platform?style=for-the-badge&label=platform&labelColor=21262d&color=6e7681)](https://www.android.com)
 [![API](https://img.shields.io/badge/26%2B-level?style=for-the-badge&logo=android&logoColor=3cd382&label=API&labelColor=21262d&color=ff663b)](https://developer.android.com/studio/releases/platforms)
-[![Sürüm](https://img.shields.io/github/v/release/WSTxda/Toolkit-Tiles?display_name=tag&style=for-the-badge&logo=github&labelColor=21262d&color=1f6feb)](https://github.com/WSTxda/Toolkit-Tiles/releases/latest)
-[![İndirmeler](https://img.shields.io/github/downloads/WSTxda/Toolkit-Tiles/total?style=for-the-badge&labelColor=21262d&color=238636)](https://github.com/WSTxda/Toolkit-Tiles/releases)
+[![Release](https://img.shields.io/github/v/release/WSTxda/Toolkit-Tiles?display_name=tag&style=for-the-badge&logo=github&labelColor=21262d&color=1f6feb)](https://github.com/WSTxda/Toolkit-Tiles/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/WSTxda/Toolkit-Tiles/total?style=for-the-badge&labelColor=21262d&color=238636)](https://github.com/WSTxda/Toolkit-Tiles/releases)
 
 ![Banner](https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/main/images/Banner.svg)
 
