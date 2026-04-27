@@ -60,12 +60,6 @@ class LevelManager(context: Context) : SensorEventListener {
         updateSensorState()
     }
 
-    fun forceStop() {
-        _isEnabled.value = false
-        isResumed = false
-        unregisterSensor()
-    }
-
     private fun updateSensorState() {
         if (_isEnabled.value && isResumed) {
             registerSensor()

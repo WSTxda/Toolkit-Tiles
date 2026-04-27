@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.random.Random
 
-class CoinFlipManager {
+class CoinFlipManager(@Suppress("unused") context: Context) {
 
     private val _headsCount = MutableStateFlow(0)
     val headsCount = _headsCount.asStateFlow()
