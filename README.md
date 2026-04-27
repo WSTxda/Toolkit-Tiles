@@ -1,3 +1,5 @@
+| English | [Türkçe](README.tr.md) |
+
 # Toolkit Tiles – Essential Tools in Your Quick Settings
 
 A collection of simple, lightweight tools available as Android Quick Settings tiles, offering instant access to useful features without the need for extra apps.
