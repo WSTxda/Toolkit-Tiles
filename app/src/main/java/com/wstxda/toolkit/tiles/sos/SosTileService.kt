@@ -1,30 +1,29 @@
 package com.wstxda.toolkit.tiles.sos
 
 import android.service.quicksettings.Tile
-import com.wstxda.toolkit.base.BaseForegroundActiveTileService
+import android.widget.Toast
+import com.wstxda.toolkit.R
+import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.sos.SosModule
 import com.wstxda.toolkit.ui.icon.SosIconProvider
 import com.wstxda.toolkit.ui.label.SosLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-class SosTileService : BaseForegroundActiveTileService() {
+class SosTileService : BaseTileService() {
 
     private val sosManager by lazy { SosModule.getInstance(applicationContext) }
     private val labelProvider by lazy { SosLabelProvider(applicationContext) }
     private val iconProvider by lazy { SosIconProvider(applicationContext) }
 
-    override fun isFeatureSupported(): Boolean = sosManager.hasFlashHardware()
-    override fun isFeatureActive(): Boolean = sosManager.isActive.value
-    override fun toggleFeature() {
-        if (!sosManager.isFlashAvailable.value) return
+    override fun onClick() {
+        if (!sosManager.hasFlashHardware()) {
+            Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (qsTile?.state == Tile.STATE_UNAVAILABLE) return
+
         sosManager.toggle()
-    }
-
-    override fun stopFeature() = sosManager.stop()
-
-    override fun onTileRemoved() {
-        sosManager.cleanup()
-        super.onTileRemoved()
+        updateTile()
     }
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(

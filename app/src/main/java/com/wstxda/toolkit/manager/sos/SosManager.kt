@@ -8,10 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class SosManager(context: Context) {
 
@@ -35,21 +33,10 @@ class SosManager(context: Context) {
         initialValue = flasher.isTorchAvailable.value
     )
 
-    init {
-        managerScope.launch {
-            flasher.isTorchAvailable.collectLatest { available ->
-                if (!available && _isActive.value) {
-                    stopInternal()
-                }
-            }
-        }
-    }
-
     fun hasFlashHardware(): Boolean = flasher.hasFlashHardware
 
     fun toggle() {
         if (!hasFlashHardware()) return
-
         if (!_isActive.value && !isFlashAvailable.value) return
 
         if (_isActive.value) {

@@ -1,14 +1,14 @@
 package com.wstxda.toolkit.tiles.luxmeter
 
 import android.service.quicksettings.Tile
-import com.wstxda.toolkit.base.BaseForegroundSensorTileService
+import com.wstxda.toolkit.base.BaseForegroundTileService
 import com.wstxda.toolkit.manager.luxmeter.LuxMeterManager
 import com.wstxda.toolkit.manager.luxmeter.LuxMeterModule
 import com.wstxda.toolkit.ui.icon.LuxMeterIconProvider
 import com.wstxda.toolkit.ui.label.LuxMeterLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-class LuxMeterTileService : BaseForegroundSensorTileService() {
+class LuxMeterTileService : BaseForegroundTileService() {
 
     private val luxMeterManager by lazy { LuxMeterModule.getInstance(applicationContext) }
     private val labelProvider by lazy { LuxMeterLabelProvider(applicationContext) }
@@ -16,12 +16,11 @@ class LuxMeterTileService : BaseForegroundSensorTileService() {
 
     override val sampleIntervalMs: Long = 100L
 
-    override fun isSensorSupported(): Boolean = LuxMeterManager.isSupported(this)
-    override fun isSensorEnabled(): Boolean = luxMeterManager.isEnabled.value
-    override fun resumeSensor() = luxMeterManager.resume()
-    override fun pauseSensor() = luxMeterManager.pause()
-    override fun toggleSensor() = luxMeterManager.toggle()
-    override fun onForceStop() = luxMeterManager.forceStop()
+    override fun isFeatureSupported(): Boolean = LuxMeterManager.isSupported(this)
+    override fun isFeatureEnabled(): Boolean = luxMeterManager.isEnabled.value
+    override fun resumeFeature() = luxMeterManager.resume()
+    override fun pauseFeature() = luxMeterManager.pause()
+    override fun toggleFeature() = luxMeterManager.toggle()
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         luxMeterManager.isEnabled,

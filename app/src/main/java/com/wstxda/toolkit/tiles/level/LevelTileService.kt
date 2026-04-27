@@ -1,25 +1,24 @@
 package com.wstxda.toolkit.tiles.level
 
 import android.service.quicksettings.Tile
-import com.wstxda.toolkit.base.BaseForegroundSensorTileService
+import com.wstxda.toolkit.base.BaseForegroundTileService
 import com.wstxda.toolkit.manager.level.LevelManager
 import com.wstxda.toolkit.manager.level.LevelModule
 import com.wstxda.toolkit.ui.icon.LevelIconProvider
 import com.wstxda.toolkit.ui.label.LevelLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-class LevelTileService : BaseForegroundSensorTileService() {
+class LevelTileService : BaseForegroundTileService() {
 
     private val levelManager by lazy { LevelModule.getInstance(applicationContext) }
     private val labelProvider by lazy { LevelLabelProvider(applicationContext) }
     private val iconProvider by lazy { LevelIconProvider(applicationContext) }
 
-    override fun isSensorSupported(): Boolean = LevelManager.isSupported(this)
-    override fun isSensorEnabled(): Boolean = levelManager.isEnabled.value
-    override fun resumeSensor() = levelManager.resume()
-    override fun pauseSensor() = levelManager.pause()
-    override fun toggleSensor() = levelManager.toggle()
-    override fun onForceStop() = levelManager.forceStop()
+    override fun isFeatureSupported(): Boolean = LevelManager.isSupported(this)
+    override fun isFeatureEnabled(): Boolean = levelManager.isEnabled.value
+    override fun resumeFeature() = levelManager.resume()
+    override fun pauseFeature() = levelManager.pause()
+    override fun toggleFeature() = levelManager.toggle()
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         levelManager.isEnabled,

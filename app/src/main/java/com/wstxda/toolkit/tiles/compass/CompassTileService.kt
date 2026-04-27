@@ -1,25 +1,24 @@
 package com.wstxda.toolkit.tiles.compass
 
 import android.service.quicksettings.Tile
-import com.wstxda.toolkit.base.BaseForegroundSensorTileService
+import com.wstxda.toolkit.base.BaseForegroundTileService
 import com.wstxda.toolkit.manager.compass.CompassManager
 import com.wstxda.toolkit.manager.compass.CompassModule
 import com.wstxda.toolkit.ui.icon.CompassIconProvider
 import com.wstxda.toolkit.ui.label.CompassLabelProvider
 import kotlinx.coroutines.flow.Flow
 
-class CompassTileService : BaseForegroundSensorTileService() {
+class CompassTileService : BaseForegroundTileService() {
 
     private val compassManager by lazy { CompassModule.getInstance(applicationContext) }
     private val labelProvider by lazy { CompassLabelProvider(applicationContext) }
     private val iconProvider by lazy { CompassIconProvider(applicationContext) }
 
-    override fun isSensorSupported(): Boolean = CompassManager.isSupported(this)
-    override fun isSensorEnabled(): Boolean = compassManager.isEnabled.value
-    override fun resumeSensor() = compassManager.resume()
-    override fun pauseSensor() = compassManager.pause()
-    override fun toggleSensor() = compassManager.toggle()
-    override fun onForceStop() = compassManager.forceStop()
+    override fun isFeatureSupported(): Boolean = CompassManager.isSupported(this)
+    override fun isFeatureEnabled(): Boolean = compassManager.isEnabled.value
+    override fun resumeFeature() = compassManager.resume()
+    override fun pauseFeature() = compassManager.pause()
+    override fun toggleFeature() = compassManager.toggle()
 
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         compassManager.isEnabled,

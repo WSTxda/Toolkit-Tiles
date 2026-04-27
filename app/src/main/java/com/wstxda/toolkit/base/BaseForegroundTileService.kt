@@ -9,48 +9,62 @@ import com.wstxda.toolkit.services.foreground.channel
 import com.wstxda.toolkit.services.foreground.notification
 import com.wstxda.toolkit.services.foreground.startForegroundCompat
 
-abstract class BaseForegroundActiveTileService : BaseTileService() {
+
+abstract class BaseForegroundTileService : BaseTileService() {
 
     private val notificationId: Int by lazy { javaClass.name.hashCode() }
 
-    private val canStartForegroundFromLifecycle =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+    private val startForegroundImmediately =
+        Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 
-    protected abstract fun isFeatureActive(): Boolean
+    private val canOnlyStartForegroundOnClick =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
+
+    private val canStartForegroundFromLifecycle =
+        !startForegroundImmediately && !canOnlyStartForegroundOnClick
+
     protected abstract fun isFeatureSupported(): Boolean
+    protected abstract fun isFeatureEnabled(): Boolean
+    protected abstract fun resumeFeature()
+    protected abstract fun pauseFeature()
     protected abstract fun toggleFeature()
-    protected abstract fun stopFeature()
 
     protected open fun onFeatureNotSupported() {
-        Toast.makeText(this, R.string.not_supported, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.not_supported, Toast.LENGTH_LONG).show()
     }
 
     @CallSuper
     override fun onCreate() {
         super.onCreate()
         getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel())
+        if (startForegroundImmediately) {
+            startForegroundSafely()
+        }
     }
 
     @CallSuper
     override fun onStartListening() {
-        if (isFeatureActive() && canStartForegroundFromLifecycle) {
+        resumeFeature()
+        if (isFeatureEnabled() && canStartForegroundFromLifecycle) {
             startForegroundSafely()
         }
         super.onStartListening()
     }
 
     @CallSuper
-    override fun onDestroy() {
-        stopFeature()
-        stopForeground(STOP_FOREGROUND_REMOVE)
-        super.onDestroy()
+    override fun onStopListening() {
+        pauseFeature()
+        if (!startForegroundImmediately) {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        }
+        super.onStopListening()
     }
 
     @CallSuper
-    override fun onTileRemoved() {
-        stopFeature()
+    override fun onDestroy() {
+        pauseFeature()
         stopForeground(STOP_FOREGROUND_REMOVE)
-        super.onTileRemoved()
+        super.onDestroy()
     }
 
     final override fun onClick() {
@@ -59,10 +73,12 @@ abstract class BaseForegroundActiveTileService : BaseTileService() {
             return
         }
         toggleFeature()
-        if (isFeatureActive()) {
+        if (isFeatureEnabled()) {
             startForegroundSafely()
         } else {
-            stopForeground(STOP_FOREGROUND_REMOVE)
+            if (!startForegroundImmediately) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            }
         }
         updateTile()
     }
@@ -72,9 +88,8 @@ abstract class BaseForegroundActiveTileService : BaseTileService() {
             startForegroundCompat(notificationId, notification())
         } catch (e: Exception) {
             when {
-                e is SecurityException -> stopFeature()
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && e is IllegalStateException -> stopFeature()
-
+                e is SecurityException -> Unit
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && e is IllegalStateException -> Unit
                 else -> throw e
             }
         }

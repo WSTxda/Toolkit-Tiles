@@ -437,7 +437,6 @@
         <service
             android:name=".tiles.sos.SosTileService"
             android:exported="true"
-            android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_sos"
             android:label="@string/sos_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -448,9 +447,6 @@
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
                 android:value="true" />
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Required to keep the morse code flash running when Quick Settings panel is closed" />
         </service>
 
         <!--sound mode quick settings tile service-->
