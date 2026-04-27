@@ -14,8 +14,8 @@ class NetworkTrafficTileService : BaseTileService() {
     private val iconProvider by lazy { NetworkTrafficIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        networkTrafficManager.setListening(true)
         super.onStartListening()
+        networkTrafficManager.setListening(true)
     }
 
     override fun onStopListening() {

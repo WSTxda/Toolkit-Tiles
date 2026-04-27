@@ -14,8 +14,8 @@ class TemperatureTileService : BaseTileService() {
     private val iconProvider by lazy { TemperatureIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        temperatureManager.setListening(true)
         super.onStartListening()
+        temperatureManager.setListening(true)
     }
 
     override fun onStopListening() {

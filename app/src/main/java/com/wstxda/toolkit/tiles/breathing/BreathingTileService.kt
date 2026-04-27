@@ -19,6 +19,11 @@ class BreathingTileService : BaseTileService() {
         updateTile()
     }
 
+    override fun onStopListening() {
+        super.onStopListening()
+        breathingManager.stop()
+    }
+
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         breathingManager.breathingState,
     )

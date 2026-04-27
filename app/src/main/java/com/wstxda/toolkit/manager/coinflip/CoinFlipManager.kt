@@ -1,5 +1,6 @@
 package com.wstxda.toolkit.manager.coinflip
 
+import android.content.Context
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.random.Random
@@ -18,12 +19,7 @@ class CoinFlipManager(@Suppress("unused") context: Context) {
     fun flip() {
         val side = if (Random.nextBoolean()) CoinFlipSide.HEADS else CoinFlipSide.TAILS
         _lastFlip.value = side
-
-        if (side == CoinFlipSide.HEADS) {
-            _headsCount.value += 1
-        } else {
-            _tailsCount.value += 1
-        }
+        if (side == CoinFlipSide.HEADS) _headsCount.value += 1 else _tailsCount.value += 1
     }
 
     fun reset() {

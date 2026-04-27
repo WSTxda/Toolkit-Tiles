@@ -14,8 +14,8 @@ class BatteryTileService : BaseTileService() {
     private val iconProvider by lazy { BatteryIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        batteryManager.setListening(true)
         super.onStartListening()
+        batteryManager.setListening(true)
     }
 
     override fun onStopListening() {

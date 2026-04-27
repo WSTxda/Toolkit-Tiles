@@ -3,21 +3,16 @@ package com.wstxda.toolkit.tiles.lock
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.AccessibilityPermissionActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.lock.LockManager
+import com.wstxda.toolkit.manager.lock.LockModule
 import com.wstxda.toolkit.ui.icon.LockIconProvider
 import com.wstxda.toolkit.ui.label.LockLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class LockTileService : BaseTileService() {
 
-    private val lockManager by lazy { LockManager(applicationContext) }
+    private val lockManager by lazy { LockModule.getInstance(applicationContext) }
     private val labelProvider by lazy { LockLabelProvider(applicationContext) }
     private val iconProvider by lazy { LockIconProvider(applicationContext) }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lockManager.cleanup()
-    }
 
     override fun onClick() {
         if (!lockManager.isPermissionGranted.value) {

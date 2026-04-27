@@ -5,7 +5,6 @@ import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.counter.CounterModule
 import com.wstxda.toolkit.ui.icon.CounterIconProvider
 import com.wstxda.toolkit.ui.label.CounterLabelProvider
-import kotlinx.coroutines.flow.Flow
 
 class CounterResetTileService : BaseTileService() {
 
@@ -17,10 +16,6 @@ class CounterResetTileService : BaseTileService() {
         counterManager.reset()
         updateTile()
     }
-
-    override fun flowsToCollect(): List<Flow<*>> = listOf(
-        counterManager.count,
-    )
 
     override fun updateTile() {
         setTileState(

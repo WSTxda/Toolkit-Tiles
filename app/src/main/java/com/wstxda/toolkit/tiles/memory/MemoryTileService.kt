@@ -14,8 +14,8 @@ class MemoryTileService : BaseTileService() {
     private val iconProvider by lazy { MemoryIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        memoryManager.setListening(true)
         super.onStartListening()
+        memoryManager.setListening(true)
     }
 
     override fun onStopListening() {

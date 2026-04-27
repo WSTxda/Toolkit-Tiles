@@ -3,30 +3,25 @@ package com.wstxda.toolkit.tiles.brightness
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.WriteSettingsPermissionActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.brightness.AutoBrightnessManager
+import com.wstxda.toolkit.manager.brightness.AutoBrightnessModule
 import com.wstxda.toolkit.ui.icon.AutoBrightnessIconProvider
 import com.wstxda.toolkit.ui.label.AutoBrightnessLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class AutoBrightnessTileService : BaseTileService() {
 
-    private val brightnessManager by lazy { AutoBrightnessManager(applicationContext) }
+    private val brightnessManager by lazy { AutoBrightnessModule.getInstance(applicationContext) }
     private val labelProvider by lazy { AutoBrightnessLabelProvider(applicationContext) }
     private val iconProvider by lazy { AutoBrightnessIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        brightnessManager.start()
         super.onStartListening()
+        brightnessManager.start()
     }
 
     override fun onStopListening() {
         super.onStopListening()
         brightnessManager.stop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        brightnessManager.cleanup()
     }
 
     override fun onClick() {

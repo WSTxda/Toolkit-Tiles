@@ -5,30 +5,25 @@ import android.widget.Toast
 import com.wstxda.toolkit.R
 import com.wstxda.toolkit.activity.WriteSecureSettingsActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.nfc.NfcManager
+import com.wstxda.toolkit.manager.nfc.NfcModule
 import com.wstxda.toolkit.ui.icon.NfcIconProvider
 import com.wstxda.toolkit.ui.label.NfcLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class NfcTileService : BaseTileService() {
 
-    private val nfcManager by lazy { NfcManager(applicationContext) }
+    private val nfcManager by lazy { NfcModule.getInstance(applicationContext) }
     private val labelProvider by lazy { NfcLabelProvider(applicationContext) }
     private val iconProvider by lazy { NfcIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        nfcManager.start()
         super.onStartListening()
+        nfcManager.start()
     }
 
     override fun onStopListening() {
         super.onStopListening()
         nfcManager.stop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        nfcManager.cleanup()
     }
 
     override fun onClick() {
@@ -40,7 +35,6 @@ class NfcTileService : BaseTileService() {
             startActivityAndCollapse(WriteSecureSettingsActivity::class.java)
             return
         }
-
         nfcManager.toggle()
         updateTile()
     }

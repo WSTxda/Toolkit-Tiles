@@ -3,21 +3,16 @@ package com.wstxda.toolkit.tiles.soundmode
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.NotificationPolicyPermissionActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.soundmode.SoundModeManager
+import com.wstxda.toolkit.manager.soundmode.SoundModeModule
 import com.wstxda.toolkit.ui.icon.SoundModeIconProvider
 import com.wstxda.toolkit.ui.label.SoundModeLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class SoundModeTileService : BaseTileService() {
 
-    private val soundModeManager by lazy { SoundModeManager(applicationContext) }
+    private val soundModeManager by lazy { SoundModeModule.getInstance(applicationContext) }
     private val labelProvider by lazy { SoundModeLabelProvider(applicationContext) }
     private val iconProvider by lazy { SoundModeIconProvider(applicationContext) }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        soundModeManager.cleanup()
-    }
 
     override fun onClick() {
         if (!soundModeManager.hasPermission()) {

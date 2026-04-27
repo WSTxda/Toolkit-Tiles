@@ -31,6 +31,7 @@ class TemperatureManager(context: Context) {
         if (isPanelOpen == listening) return
         isPanelOpen = listening
         if (listening) {
+            updateData()
             startPolling()
         } else {
             stopPolling()
@@ -40,7 +41,6 @@ class TemperatureManager(context: Context) {
     private fun startPolling() {
         if (pollingJob?.isActive == true) return
         pollingJob = managerScope.launch {
-            updateData()
             while (isActive) {
                 delay(REFRESH_RATE_MS)
                 updateData()

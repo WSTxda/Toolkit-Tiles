@@ -16,8 +16,8 @@ class CaffeineTileService : BaseTileService() {
     private val iconProvider by lazy { CaffeineIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        caffeineManager.synchronizeState()
         super.onStartListening()
+        caffeineManager.synchronizeState()
     }
 
     override fun onClick() {

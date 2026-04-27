@@ -4,21 +4,16 @@ import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.AccessibilityPermissionActivity
 import com.wstxda.toolkit.activity.ScreenshotActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.screenshot.ScreenshotManager
+import com.wstxda.toolkit.manager.screenshot.ScreenshotModule
 import com.wstxda.toolkit.ui.icon.ScreenshotIconProvider
 import com.wstxda.toolkit.ui.label.ScreenshotLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class ScreenshotTileService : BaseTileService() {
 
-    private val screenshotManager by lazy { ScreenshotManager(applicationContext) }
+    private val screenshotManager by lazy { ScreenshotModule.getInstance(applicationContext) }
     private val labelProvider by lazy { ScreenshotLabelProvider(applicationContext) }
     private val iconProvider by lazy { ScreenshotIconProvider(applicationContext) }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        screenshotManager.cleanup()
-    }
 
     override fun onClick() {
         if (screenshotManager.isPermissionGranted.value) {

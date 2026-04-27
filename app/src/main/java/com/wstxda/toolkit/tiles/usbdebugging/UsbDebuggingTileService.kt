@@ -3,30 +3,25 @@ package com.wstxda.toolkit.tiles.usbdebugging
 import android.service.quicksettings.Tile
 import com.wstxda.toolkit.activity.WriteSecureSettingsActivity
 import com.wstxda.toolkit.base.BaseTileService
-import com.wstxda.toolkit.manager.usbdebugging.UsbDebuggingManager
+import com.wstxda.toolkit.manager.usbdebugging.UsbDebuggingModule
 import com.wstxda.toolkit.ui.icon.UsbDebuggingIconProvider
 import com.wstxda.toolkit.ui.label.UsbDebuggingLabelProvider
 import kotlinx.coroutines.flow.Flow
 
 class UsbDebuggingTileService : BaseTileService() {
 
-    private val usbDebuggingManager by lazy { UsbDebuggingManager(applicationContext) }
+    private val usbDebuggingManager by lazy { UsbDebuggingModule.getInstance(applicationContext) }
     private val labelProvider by lazy { UsbDebuggingLabelProvider(applicationContext) }
     private val iconProvider by lazy { UsbDebuggingIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        usbDebuggingManager.start()
         super.onStartListening()
+        usbDebuggingManager.start()
     }
 
     override fun onStopListening() {
         super.onStopListening()
         usbDebuggingManager.stop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        usbDebuggingManager.cleanup()
     }
 
     override fun onClick() {
