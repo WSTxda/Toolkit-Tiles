@@ -1,0 +1,250 @@
+<resources>
+
+    <!--app names-->
+    <string name="app_name" translatable="false">Toolkit Tiles</string>
+
+    <!--app about section -->
+    <string name="about_description">Fazladan uygulama gerektirmeden, kullanışlı özelliklere anında erişim sağlayan basit ve hafif Hızlı Ayarlar kutucukları</string>
+    <string name="about_version">Sürüm %s</string>
+  
+    <!--links-->
+    <string name="about_wstxda" translatable="false">WSTxda</string>
+    <string name="about_developer">Geliştirici</string>
+
+    <string name="about_github" translatable="false">Github</string>
+    <string name="about_repository">Kaynak kod deposu</string>
+
+    <string name="about_contributors">Katkıda Bulunanlar</string>
+    <string name="about_contributors_summary">Projeye katkıda bulunan kişiler</string>
+
+    <string name="about_license">Lisans</string>
+    <string name="about_license_summary" translatable="false">Apache Lisans 2.0</string>
+
+    <!--update checker-->
+    <string name="update_checker_download_button">İndir</string>
+  
+    <!--updater messages-->
+    <string name="update_checker_no_update">Güncelleme bulunamadı</string>
+    <string name="update_checker_update_available">Yeni güncelleme mevcut: %s</string>
+    <string name="update_checker_no_internet">İnternet bağlantısı yok</string>
+    <string name="update_checker_generic_error">Bir şeyler ters gitti… Lütfen daha sonra tekrar deneyin</string>
+  
+    <!--notification foreground service-->
+    <string name="channel_name">Kutucuk hizmetleri</string>
+    <string name="notification_title">Hizmet çalışıyor</string>
+    <string name="notification_label">Bir kutucuk çalışıyor, kutucuğu hızlı ayarlar panelinden devre dışı bırakın veya bu bildirimi gizlemek için buraya dokunun</string>
+
+    <!--accessibility service-->
+    <string name="accessibility_service_description">Bu uygulama, hızlı ayarlar panelindeki bazı kutucukların çalışabilmesi için erişilebilirlik hizmetlerini kullanır. Bu izin, söz konusu kutucukların doğru bir şekilde çalışması ve belirli cihaz özelliklerine hızlı erişim sağlaması için gereklidir.</string>
+    
+    <!--permission messages-->
+
+    <!--accessibility-->
+    <string name="accessibility_permission_message">Erişilebilirlik izni gerekli. Lütfen önce etkinleştirin</string>
+  
+    <!--dnd-->
+    <string name="dnd_access_permission_message">Rahatsız Etme erişim izni gerekli. Lütfen önce etkinleştirin</string>
+  
+    <!--write settings-->
+    <string name="write_settings_permission_message">Sistem ayarlarını değiştirme izni gerekli. Lütfen önce etkinleştirin</string>
+    
+    <!--write secure settings-->  
+    <string name="write_secure_settings_clipboard_message">Komut panoya kopyalandı</string>
+
+    <!--write secure settings command dialog-->
+    <string name="write_secure_settings_title">ADB izni gerekli</string>
+    <string name="write_secure_settings_message">Bu özellik, yalnızca ADB aracılığıyla verilebilen WRITE_SECURE_SETTINGS iznini gerektirir. USB hata ayıklama etkin durumdayken aşağıdaki komutu terminalinizde çalıştırın:</string>
+    <string name="write_secure_settings_support">Komutu çalıştırdıktan sonra etkinleştirmek için kutucuğa tekrar dokunun. Bunu yalnızca bir kez yapmanız yeterlidir.</string>
+  
+    <!--buttons-->
+    <string name="copy_clipboard">Panoya kopyala</string>
+    <string name="close">Kapat</string>
+  
+    <!--general messages-->
+    <string name="not_supported">Cihazınız bu özelliği desteklemiyor</string>
+
+    <!--general tiles subtitles-->
+    <string name="tile_on">Açık</string>
+    <string name="tile_off">Kapalı</string>
+    <string name="tile_open">Açmak için dokunun</string>
+    <string name="tile_start">Başlatmak için dokunun</string>
+    <string name="tile_setup">Kurmak için dokunun</string>
+    <string name="tile_switch">Değiştirmek için dokunun</string>
+    <string name="tile_unavailable">Kullanılamıyor</string>
+    <string name="tile_not_supported">Desteklenmiyor</string>
+
+    <!--compass tile-->
+    <string name="compass_tile">Pusula</string>
+    <string name="compass_tile_degrees" translatable="false">%1$d° %2$s</string>
+  
+    <!--directions-->
+    <string name="N">K</string>
+    <string name="NE">KD</string>
+    <string name="E">D</string>
+    <string name="SE">GD</string>
+    <string name="S">G</string>
+    <string name="SW">GB</string>
+    <string name="W">B</string>
+    <string name="NW">KB</string>
+
+    <!--bubble level tile-->
+    <string name="level_tile">Su Terazisi</string>
+    <string name="level_tile_degrees" translatable="false">%d°</string>
+  
+    <!--perfect level-->
+    <string name="level_tile_zero" translatable="false">0°</string>
+
+    <!--lux meter tile-->
+    <string name="lux_meter_tile">Lüks Metre</string>
+    <string name="lux_meter_tile_lux" translatable="false">%d lx</string>
+
+    <!--lock screen tile-->
+    <string name="lock_tile">Kilitle</string>
+
+    <!--coin flip tile-->
+    <string name="coin_flip_tile">Yazı Tura</string>
+    <string name="coin_flip_tile_tap">Atmak için dokunun</string>
+  
+    <!--sides-->
+    <string name="coin_tile_heads">Yazı</string>
+    <string name="coin_tile_tails">Tura</string>
+  
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">Yazı: %1$d Tura: %2$d</string>
+
+    <!--dice roll tile-->
+    <string name="dice_roll_tile">Zar Atma</string>
+    <string name="dice_roll_tile_tap">Atmak için dokunun</string>
+    <string name="dice_roll_tile_rolling">Atılıyor…</string>
+  
+    <!--numbers-->
+    <string name="dice_tile_1">Bir</string>
+    <string name="dice_tile_2">İki</string>
+    <string name="dice_tile_3">Üç</string>
+    <string name="dice_tile_4">Dört</string>
+    <string name="dice_tile_5">Beş</string>
+    <string name="dice_tile_6">Altı</string>
+
+    <!--sos tile-->
+    <string name="sos_tile">SOS</string>
+
+    <!--counter tile-->
+    <string name="counter_tile">Sayaç</string>
+  
+    <!--values-->
+    <string name="counter_tile_add">Ekle</string>
+    <string name="counter_tile_remove">Azalt</string>
+    <string name="counter_tile_reset">Sıfırla</string>
+
+    <!--screenshot tile-->
+    <string name="screenshot_tile">Ekran görüntüsü</string>
+
+    <!--sound mode tile-->
+    <string name="sound_mode_tile">Ses modu</string>
+  
+    <!--sound modes-->
+    <string name="sound_tile_normal">Normal</string>
+    <string name="sound_tile_silent">Sessiz</string>
+    <string name="sound_tile_vibrate">Titreşim</string>
+
+    <!--caffeine tile-->
+    <string name="caffeine_tile">Kafein</string>
+  
+    <!--timeouts-->
+    <string name="caffeine_tile_minutes">%1$d dakika</string>
+    <string name="caffeine_tile_infinite">Sonsuz</string>
+
+    <!--device memory tile-->
+    <string name="memory_tile">Bellek</string>
+    <string name="memory_tile_format">%1$s / %2$s</string>
+  
+    <!--memory type-->
+    <string name="memory_tile_ram">%s kullanımda</string>
+    <string name="memory_tile_storage">%s boş</string>
+
+    <!--device temperature tile-->
+    <string name="temperature_tile">Sıcaklık</string>
+    <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+
+    <!--media output tile-->
+    <string name="media_output_tile">Medya çıkışı</string>
+
+    <!--auto brightness tile-->
+    <string name="auto_brightness_tile">Otomatik parlaklık</string>
+
+    <!--breathing tile-->
+    <string name="breathing_tile">Nefes</string>
+    <string name="breathing_tile_prepare">Çemberi takip edin</string>
+  
+    <!--steps-->
+    <string name="breathing_tile_inhale">Nefes alın</string>
+    <string name="breathing_tile_exhale">Nefes verin</string>
+    <string name="breathing_tile_pause">Bekleyin</string>
+    <string name="breathing_tile_relax">Rahatlayın</string>
+
+    <!--network traffic tile-->
+    <string name="network_traffic_tile">Ağ</string>
+  
+    <!--speed units-->
+    <string name="network_traffic_tile_kb" translatable="false">%.1f kB</string>
+    <string name="network_traffic_tile_mb" translatable="false">%.1f MB</string>
+  
+    <!--direction-->
+    <string name="network_traffic_tile_download">İndirme</string>
+    <string name="network_traffic_tile_upload">Yükleme</string>
+
+    <!--battery tile-->
+    <string name="battery_tile">Pil</string>
+  
+    <!--info-->
+    <string name="battery_tile_percent" translatable="false">%d%%</string>
+    <string name="battery_tile_voltage" translatable="false">%.2f V</string>
+    <string name="battery_tile_current" translatable="false">%d mA</string>
+    <string name="battery_tile_wattage" translatable="false">%.1f W</string>
+    <string name="battery_tile_temperature" translatable="false">%.1f°C</string>
+  
+    <!--status-->
+    <string name="battery_tile_status_full">Tam şarj</string>
+    <string name="battery_tile_status_low">Düşük pil</string>
+    <string name="battery_tile_status_saver">Pil tasarrufu</string>
+    <string name="battery_tile_status_discharging">Deşarj oluyor</string>
+  
+    <!--charging source-->
+    <string name="battery_tile_charging">Şarj oluyor</string>
+    <string name="battery_tile_charging_ac">Şarj oluyor · AC</string>
+    <string name="battery_tile_charging_usb">Şarj oluyor · USB</string>
+    <string name="battery_tile_charging_wireless">Şarj oluyor · Kablosuz</string>
+    <string name="battery_tile_charging_dock">Şarj oluyor · İstasyon</string>
+  
+    <!--health-->
+    <string name="battery_tile_health_good">İyi</string>
+    <string name="battery_tile_health_overheat">Aşırı ısınma</string>
+    <string name="battery_tile_health_dead">Ölü</string>
+    <string name="battery_tile_health_overvoltage">Aşırı voltaj</string>
+    <string name="battery_tile_health_failure">Arıza</string>
+    <string name="battery_tile_health_cold">Soğuk</string>
+    <string name="battery_tile_health_unknown">Bilinmiyor</string>
+
+    <!--dns tile-->
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">Otomatik</string>
+  
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Yetişkin içerikleri engelle</string>
+    <string name="dns_tile_provider_google" translatable="false">Google</string>
+    <string name="dns_tile_provider_cloudflare" translatable="false">Cloudflare</string>
+    <string name="dns_tile_provider_adguard" translatable="false">AdGuard</string>
+    <string name="dns_tile_provider_opendns" translatable="false">OpenDNS</string>
+    <string name="dns_tile_provider_quad9" translatable="false">Quad9</string>
+    <string name="dns_tile_provider_nextdns" translatable="false">NextDNS</string>
+    <string name="dns_tile_provider_mullvad" translatable="false">Mullvad</string>
+    <string name="dns_tile_provider_controld" translatable="false">Control D</string>
+    <string name="dns_tile_provider_libredns" translatable="false">LibreDNS</string>
+
+    <!--usb debugging tile-->
+    <string name="usb_debugging_tile">USB hata ayıklama</string>
+
+    <!--nfc tile-->
+    <string name="nfc_tile">NFC</string>
+  
+</resources>
