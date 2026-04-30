@@ -1,1 +1,255 @@
+<resources>
 
+    <!--app names-->
+
+    <string name="app_name" translatable="false">Toolkit Tiles</string>
+
+    <!--app about section -->
+
+    <string name="about_description">بلاطات إعدادات سريعة بسيطة وخفيفة تمنحك وصولًا فوريًا إلى الميزات المفيدة دون الحاجة إلى تطبيقات إضافية</string>
+    <string name="about_version">إصدار %s</string>
+    <!--links-->
+    <string name="about_wstxda" translatable="false">WSTxda</string>
+    <string name="about_developer">المطور</string>
+
+    <string name="about_github" translatable="false">Github</string>
+    <string name="about_repository">الكود المصدري المستودع</string>
+
+    <string name="about_contributors">المساهمين</string>
+    <string name="about_contributors_summary">الأشخاص الذين ساهموا في المشروع</string>
+
+    <string name="about_license">الترخيص</string>
+    <string name="about_license_summary" translatable="false">Apache License 2.0</string>
+
+    <!--update checker-->
+
+    <string name="update_checker_download_button">تحميل</string>
+    <!--updater messages-->
+    <string name="update_checker_no_update">لا توجد تحديثات متاحة</string>
+    <string name="update_checker_update_available">تحديث جديد متوفر: %s</string>
+    <string name="update_checker_no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="update_checker_generic_error">حدث خطأ ما… يرجى المحاولة مرة أخرى لاحقًا</string>
+
+    <!--notification foreground service-->
+
+    <string name="channel_name">خدمات البلاطات</string>
+    <string name="notification_title">الخدمة تعمل</string>
+    <string name="notification_label">هناك بلاطة تعمل، قم بتعطيل البلاطة في لوحة الإعدادات السريعة أو اضغط هنا لإخفاء هذا الإشعار</string>
+
+    <!--accessibility service-->
+
+    <string name="accessibility_service_description">يستخدم هذا التطبيق خدمات إمكانية الوصول حتى تعمل بعض البلاطات الخاصة به في لوحة الإعدادات السريعة. هذه الأذونات ضرورية لعمل هذه البلاطات بشكل صحيح وتوفير وصول سريع إلى بعض ميزات الجهاز.</string>
+
+    <!--permission messages-->
+
+    <!--accessibility-->
+    <string name="accessibility_permission_message">مطلوب إذن إمكانية الوصول. برجاء تمكينه أولاً</string>
+    <!--dnd-->
+    <string name="dnd_access_permission_message">يتطلب إذن الوصول إلى عدم الإزعاج. برجاء تمكينه أولاً</string>
+    <!--write settings-->
+    <string name="write_settings_permission_message">مطلوب إذن كتابة إعدادات النظام. برجاء تمكينه أولاً</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">تم نسخ الأمر إلى الحافظة</string>
+
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">يطلب إذن ADB</string>
+    <string name="write_secure_settings_message">تتطلب هذه الميزة إذن WRITE_SECURE_SETTINGS، والذي لا يمكن منحه إلا عبر ADB. قم بتشغيل الأمر أدناه في terminal مع تمكين تصحيح أخطاء USB:</string>
+    <string name="write_secure_settings_support">بعد تشغيل الأمر، اضغط على البلاطة مرة أخرى لتمكينها. تحتاج لفعل ذلك مرة واحدة فقط.</string>
+    <!--buttons-->
+    <string name="copy_clipboard">تم النسخ إلى الحافظة</string>
+    <string name="close">إغلاق</string>
+
+    <!--general messages-->
+
+    <string name="not_supported">جهازك لا يدعم هذه الميزة</string>
+
+    <!--general tiles subtitles-->
+
+    <string name="tile_on">تشغيل</string>
+    <string name="tile_off">إطفاء</string>
+    <string name="tile_open">اضغط للفتح</string>
+    <string name="tile_start">اضغط للبدء</string>
+    <string name="tile_setup">اضغط للإعداد</string>
+    <string name="tile_switch">اضغط للتبديل</string>
+    <string name="tile_unavailable">غير متاح</string>
+    <string name="tile_not_supported">غير مدعوم</string>
+
+    <!--compass tile-->
+
+    <string name="compass_tile">البوصلة</string>
+    <string name="compass_tile_degrees" translatable="false">%1$d° %2$s</string>
+    <!--directions-->
+    <string name="N">الشمال</string>
+    <string name="NE">الشمال الشرقي</string>
+    <string name="E">الشرق</string>
+    <string name="SE">الجنوب الشرقي</string>
+    <string name="S">الجنوب</string>
+    <string name="SW">الجنوب الغربي</string>
+    <string name="W">الغرب</string>
+    <string name="NW">الشمال الغربي</string>
+
+    <!--bubble level tile-->
+
+    <string name="level_tile">المستوى</string>
+    <string name="level_tile_degrees" translatable="false">%d°</string>
+    <!--perfect level-->
+    <string name="level_tile_zero" translatable="false">0°</string>
+
+    <!--lux meter tile-->
+
+    <string name="lux_meter_tile">مقياس الإضاءة</string>
+    <string name="lux_meter_tile_lux" translatable="false">%d lx</string>
+
+    <!--lock screen tile-->
+
+    <string name="lock_tile">قفل</string>
+
+    <!--coin flip tile-->
+
+    <string name="coin_flip_tile">اقلب العملة</string>
+    <string name="coin_flip_tile_tap">اضغط للقلب</string>
+    <!--sides-->
+    <string name="coin_tile_heads">رؤوس</string>
+    <string name="coin_tile_tails">ذيول</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">رؤوس: %1$d ذيول: %2$d</string>
+
+    <!--dice roll tile-->
+
+    <string name="dice_roll_tile">رمي النرد</string>
+    <string name="dice_roll_tile_tap">اضغط للرمي</string>
+    <string name="dice_roll_tile_rolling">جارٍ الرمي…</string>
+    <!--numbers-->
+    <string name="dice_tile_1">واحد</string>
+    <string name="dice_tile_2">أثنان</string>
+    <string name="dice_tile_3">ثلاثة</string>
+    <string name="dice_tile_4">أربعة</string>
+    <string name="dice_tile_5">خمسة</string>
+    <string name="dice_tile_6">ستة</string>
+
+    <!--sos tile-->
+
+    <string name="sos_tile">SOS</string>
+
+    <!--counter tile-->
+
+    <string name="counter_tile">عداد</string>
+    <!--values-->
+    <string name="counter_tile_add">إضافة</string>
+    <string name="counter_tile_remove">إزالة</string>
+    <string name="counter_tile_reset">إعادة ضبط</string>
+
+    <!--screenshot tile-->
+
+    <string name="screenshot_tile">لقطة شاشة</string>
+
+    <!--sound mode tile-->
+
+    <string name="sound_mode_tile">وضع الصوت</string>
+    <!--sound modes-->
+    <string name="sound_tile_normal">طبيعي</string>
+    <string name="sound_tile_silent">صامت</string>
+    <string name="sound_tile_vibrate">أهتزاز</string>
+
+    <!--caffeine tile-->
+
+    <string name="caffeine_tile">الكافيين</string>
+    <!--timeouts-->
+    <string name="caffeine_tile_minutes">%1$d دقيقة</string>
+    <string name="caffeine_tile_infinite">بلا حدود</string>
+
+    <!--device memory tile-->
+
+    <string name="memory_tile">الرامات</string>
+    <string name="memory_tile_format">%1$s من %2$s</string>
+    <!--memory type-->
+    <string name="memory_tile_ram">%s مستخدم</string>
+    <string name="memory_tile_storage">%s فارغ</string>
+
+    <!--device temperature tile-->
+
+    <string name="temperature_tile">درجة الحرارة</string>
+    <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+
+    <!--media output tile-->
+
+    <string name="media_output_tile">إخراج الوسائط</string>
+
+    <!--auto brightness tile-->
+
+    <string name="auto_brightness_tile">السطوع التلقائي</string>
+
+    <!--breathing tile-->
+
+    <string name="breathing_tile">التنفس</string>
+    <string name="breathing_tile_prepare">اتبع الدائرة</string>
+    <!--steps-->
+    <string name="breathing_tile_inhale">شهيق</string>
+    <string name="breathing_tile_exhale">زفير</string>
+    <string name="breathing_tile_pause">توقف مؤقتًا</string>
+    <string name="breathing_tile_relax">اهدأ</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">الإنترنت</string>
+    <!--speed units-->
+    <string name="network_traffic_tile_kb" translatable="false">%.1f kB</string>
+    <string name="network_traffic_tile_mb" translatable="false">%.1f MB</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">التحميل</string>
+    <string name="network_traffic_tile_upload">الرفع</string>
+
+    <!--battery tile-->
+
+    <string name="battery_tile">البطارية</string>
+    <!--info-->
+    <string name="battery_tile_percent" translatable="false">%d%%</string>
+    <string name="battery_tile_voltage" translatable="false">%.2f V</string>
+    <string name="battery_tile_current" translatable="false">%d mA</string>
+    <string name="battery_tile_wattage" translatable="false">%.1f W</string>
+    <string name="battery_tile_temperature" translatable="false">%.1f°C</string>
+    <!--status-->
+    <string name="battery_tile_status_full">أكتمل الشحن</string>
+    <string name="battery_tile_status_low">البطارية منخفضة</string>
+    <string name="battery_tile_status_saver">توفير الطاقة</string>
+    <string name="battery_tile_status_discharging">لا يشحن</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">جارٍ الشحن</string>
+    <string name="battery_tile_charging_ac">جارٍ الشحن · AC</string>
+    <string name="battery_tile_charging_usb">جارٍ الشحن · USB</string>
+    <string name="battery_tile_charging_wireless">جارٍ الشحن · لا سلكي</string>
+    <string name="battery_tile_charging_dock">جارٍ الشحن · قاعدة</string>
+    <!--health-->
+    <string name="battery_tile_health_good">جيد</string>
+    <string name="battery_tile_health_overheat">ارتفاع درجة الحرارة</string>
+    <string name="battery_tile_health_dead">ميتة</string>
+    <string name="battery_tile_health_overvoltage">جهد زائد</string>
+    <string name="battery_tile_health_failure">فشل</string>
+    <string name="battery_tile_health_cold">بارد</string>
+    <string name="battery_tile_health_unknown">مجهول</string>
+
+    <!--dns tile-->
+
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">تلقائي</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Block adult content</string>
+    <string name="dns_tile_provider_google" translatable="false">Google</string>
+    <string name="dns_tile_provider_cloudflare" translatable="false">Cloudflare</string>
+    <string name="dns_tile_provider_adguard" translatable="false">AdGuard</string>
+    <string name="dns_tile_provider_opendns" translatable="false">OpenDNS</string>
+    <string name="dns_tile_provider_quad9" translatable="false">Quad9</string>
+    <string name="dns_tile_provider_nextdns" translatable="false">NextDNS</string>
+    <string name="dns_tile_provider_mullvad" translatable="false">Mullvad</string>
+    <string name="dns_tile_provider_controld" translatable="false">Control D</string>
+    <string name="dns_tile_provider_libredns" translatable="false">LibreDNS</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">تصحيح أخطاء USB</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile">NFC</string>
+</resources>
