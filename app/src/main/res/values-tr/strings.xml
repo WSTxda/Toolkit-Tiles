@@ -13,15 +13,24 @@
     <string name="about_contributors_summary">Projeye katkıda bulunan kişiler</string>
 
     <string name="about_license">Lisans</string>
+    <string name="about_license_summary">Apache Lisansı 2.0</string>
 
     <!--update checker-->
 
-    <string name="update_checker_download_button">İndir</string>
-    <!--updater messages-->
-    <string name="update_checker_no_update">Güncelleme bulunamadı</string>
-    <string name="update_checker_update_available">Yeni güncelleme mevcut: %s</string>
-    <string name="update_checker_no_internet">İnternet bağlantısı yok</string>
-    <string name="update_checker_generic_error">Bir şeyler ters gitti… Lütfen daha sonra tekrar deneyin</string>
+    <string name="updater_title">Yeni güncelleme mevcut!</string>
+    <string name="updater_version">Sürüm %s</string>
+    <string name="updater_no_update_message">Kullanılabilir güncelleme yok</string>
+    <string name="updater_no_internet_message">İnternet bağlantısı yok</string>
+    <string name="updater_generic_error_message">Bir şeyler ters gitti. Lütfen daha sonra tekrar deneyin</string>
+    <string name="updater_download_button">İndir</string>
+    <string name="updater_github_button">GitHub\'da aç</string>
+
+    <!--free android warn dialog-->
+
+    <string name="free_android_warn_title">Önemli bilgi</string>
+    <string name="free_android_warn_message">Google, 2026/2027\'den itibaren sertifikalı Android cihazlarındaki tüm uygulamalar için geliştiricilerin kişisel kimlik bilgilerini doğrudan Google\'a sunmasını şart koşacağını duyurdu. Bu uygulamanın geliştiricileri bu gereksinimi kabul etmediğinden, bu uygulama belirtilen tarihten sonra sertifikalı Android cihazlarda artık çalışmayacaktır.</string>
+    <string name="free_android_warn_link"><u>Daha fazla bilgi</u></string>
+    <string name="free_android_warn_solution_button">Çözüm</string>
 
     <!--notification foreground service-->
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.wstxda.toolkit.ui.component.WriteSecureSettingsBottomSheet
+import com.wstxda.toolkit.utils.Constants
 
 class WriteSecureSettingsActivity : BaseActivity() {
 
@@ -12,8 +13,7 @@ class WriteSecureSettingsActivity : BaseActivity() {
 
         if (savedInstanceState == null) {
             WriteSecureSettingsBottomSheet().show(
-                supportFragmentManager, WriteSecureSettingsBottomSheet.TAG
-            )
+                supportFragmentManager, Constants.WRITE_SECURE_SETTINGS_DIALOG)
         }
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(

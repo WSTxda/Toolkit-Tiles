@@ -13,15 +13,24 @@
     <string name="about_contributors_summary">Pessoas que contribuíram com o projeto</string>
 
     <string name="about_license">Licença</string>
+    <string name="about_license_summary">Apache License 2.0</string>
 
     <!--update checker-->
 
-    <string name="update_checker_download_button">Baixar</string>
-    <!--updater messages-->
-    <string name="update_checker_no_update">Nenhuma atualização disponível</string>
-    <string name="update_checker_update_available">Nova atualização disponível: %s</string>
-    <string name="update_checker_no_internet">Sem conexão com a internet</string>
-    <string name="update_checker_generic_error">Algo deu errado… Tente novamente mais tarde</string>
+    <string name="updater_title">Nova atualização disponível!</string>
+    <string name="updater_version">Versão %s</string>
+    <string name="updater_no_update_message">Nenhuma atualização disponível</string>
+    <string name="updater_no_internet_message">Sem conexão com a internet</string>
+    <string name="updater_generic_error_message">Algo deu errado. Tente novamente mais tarde</string>
+    <string name="updater_download_button">Download</string>
+    <string name="updater_github_button">Ver no GitHub</string>
+
+    <!--free android warn dialog-->
+
+    <string name="free_android_warn_title">Informação importante</string>
+    <string name="free_android_warn_message">O Google anunciou que, a partir de 2026/2027, todos os aplicativos em dispositivos Android certificados exigirão que o desenvolvedor envie dados de identidade pessoal diretamente ao Google. Como os desenvolvedores deste aplicativo não concordam com esse requisito, este aplicativo não funcionará mais em dispositivos Android certificados após esse período.</string>
+    <string name="free_android_warn_link"><u>Mais informações</u></string>
+    <string name="free_android_warn_solution_button">Solução</string>
 
     <!--notification foreground service-->
 
