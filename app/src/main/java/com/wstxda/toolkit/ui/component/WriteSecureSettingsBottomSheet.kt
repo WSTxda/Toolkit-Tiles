@@ -15,11 +15,7 @@ import com.wstxda.toolkit.R
 import com.wstxda.toolkit.databinding.DialogWriteSecureSettingsBinding
 import com.wstxda.toolkit.ui.utils.Haptics
 
-class WriteSecureSettingsBottomSheet : BaseBottomSheet<DialogWriteSecureSettingsBinding>() {
-
-    companion object {
-        const val TAG = "write_secure_settings"
-    }
+open class WriteSecureSettingsBottomSheet : BaseBottomSheet<DialogWriteSecureSettingsBinding>() {
 
     private lateinit var haptics: Haptics
 
@@ -27,7 +23,7 @@ class WriteSecureSettingsBottomSheet : BaseBottomSheet<DialogWriteSecureSettings
     override val bottomDivider: MaterialDivider get() = binding.dividerBottom
     override val scrollView: NestedScrollView get() = binding.scrollView
     override val titleTextView: TextView get() = binding.dialogTitle
-    override val titleResId: Int = R.string.write_secure_settings_title
+    override val titleResId: Int get() = R.string.write_secure_settings_title
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
         DialogWriteSecureSettingsBinding.inflate(inflater, container, false)
@@ -41,20 +37,20 @@ class WriteSecureSettingsBottomSheet : BaseBottomSheet<DialogWriteSecureSettings
         val command = "adb shell pm grant $packageName android.permission.WRITE_SECURE_SETTINGS"
 
         binding.apply {
-            dialogMessage.setText(R.string.write_secure_settings_message)
-            adbCommand.text = command
-            dialogSupportMessage.setText(R.string.write_secure_settings_support)
+            dialogMessage.text = getString(R.string.write_secure_settings_message)
+            dialogAdbCommand.text = command
+            dialogWarningMessage.text = getString(R.string.write_secure_settings_support)
 
-            negativeButton.apply {
-                setText(android.R.string.cancel)
+            dialogButtonNegative.apply {
+                text = getString(android.R.string.cancel)
                 setOnClickListener {
                     haptics.low()
                     dismiss()
                 }
             }
 
-            positiveButton.apply {
-                setText(R.string.copy_clipboard)
+            dialogButtonPositive.apply {
+                text = getString(R.string.copy_clipboard)
                 setOnClickListener {
                     haptics.low()
                     copyToClipboard(command)

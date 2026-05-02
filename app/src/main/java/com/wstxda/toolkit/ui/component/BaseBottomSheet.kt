@@ -19,9 +19,10 @@ abstract class BaseBottomSheet<VB : ViewBinding> : BottomSheetDialogFragment() {
 
     protected abstract val topDivider: MaterialDivider
     protected abstract val bottomDivider: MaterialDivider
-    protected abstract val scrollView: NestedScrollView
+    protected open val scrollView: NestedScrollView? = null
     protected open val titleTextView: TextView? = null
     protected open val titleResId: Int? = null
+    protected open val defaultExpanded: Boolean = false
 
     protected abstract fun getBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
@@ -36,18 +37,16 @@ abstract class BaseBottomSheet<VB : ViewBinding> : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titleResId?.let { resId -> titleTextView?.setText(resId) }
+        titleResId?.let { resId -> titleTextView?.text = getString(resId) }
+        setupContentFragment(savedInstanceState)
         setupScrollListener()
     }
 
     override fun onStart() {
         super.onStart()
-        dialog?.let {
-            val bottomSheet =
-                it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            bottomSheet?.let { sheet ->
-                BottomSheetBehavior.from(sheet).state = BottomSheetBehavior.STATE_EXPANDED
-            }
+        if (defaultExpanded) {
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.let { BottomSheetBehavior.from(it).state = BottomSheetBehavior.STATE_EXPANDED }
         }
     }
 
@@ -56,11 +55,13 @@ abstract class BaseBottomSheet<VB : ViewBinding> : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun setupScrollListener() {
-        scrollView.setOnScrollChangeListener { _, _, _, _, _ ->
-            val canScrollUp = scrollView.canScrollVertically(-1)
-            val canScrollDown = scrollView.canScrollVertically(1)
-            updateDividerVisibility(canScrollUp, canScrollDown)
+    protected open fun setupContentFragment(savedInstanceState: Bundle?) {}
+
+    protected open fun setupScrollListener() {
+        scrollView?.setOnScrollChangeListener { _, _, _, _, _ ->
+            updateDividerVisibility(
+                scrollView!!.canScrollVertically(-1), scrollView!!.canScrollVertically(1)
+            )
         }
     }
 

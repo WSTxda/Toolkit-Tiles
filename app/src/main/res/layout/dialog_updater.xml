@@ -21,9 +21,26 @@
         android:autoSizeTextType="uniform"
         android:maxLines="4"
         android:paddingHorizontal="14dp"
-        android:paddingBottom="16dp"
         android:textAlignment="center"
-        tools:text="@string/write_secure_settings_title" />
+        tools:text="@string/updater_title" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/dialog_chip_version"
+        style="@style/Widget.Material3.Chip.Assist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:textColor="?attr/colorOnTertiaryContainer"
+        app:chipBackgroundColor="?attr/colorTertiaryContainer"
+        app:chipCornerRadius="20dp"
+        app:chipEndPadding="2dp"
+        app:chipIconTint="?attr/colorOnTertiaryContainer"
+        app:chipStartPadding="2dp"
+        app:chipStrokeWidth="0dp"
+        tools:text="@string/updater_version" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider_top"
@@ -40,70 +57,49 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="12dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/dialog_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="?attr/dialogPreferredPadding"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="?attr/dialogPreferredPadding"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/write_secure_settings_message" />
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/dialog_card_adb_command"
+                android:id="@+id/dialog_card_changelog"
+                style="?attr/materialCardViewFilledStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="?attr/dialogPreferredPadding"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="?attr/dialogPreferredPadding"
                 app:cardBackgroundColor="?attr/colorSurfaceContainerHighest"
+                app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dialog_message"
-                app:strokeColor="?attr/colorOutline">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/dialog_adb_command"
+                    android:id="@+id/dialog_changelog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:padding="12dp"
+                    android:padding="16dp"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textIsSelectable="true"
-                    tools:text="adb shell pm grant com.wstxda.toolkit android.permission.WRITE_SECURE_SETTINGS" />
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="@string/app_name" />
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/dialog_warning_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="?attr/dialogPreferredPadding"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="?attr/dialogPreferredPadding"
-                android:drawableStart="@drawable/ic_info"
-                android:drawablePadding="8dp"
-                android:drawableTint="?attr/colorOnSurfaceVariant"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dialog_card_adb_command"
-                tools:text="@string/write_secure_settings_support" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/dialog_download_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:visibility="gone"
+        tools:progress="60"
+        tools:visibility="visible" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider_bottom"
@@ -131,7 +127,7 @@
             app:layout_constraintEnd_toStartOf="@id/dialog_button_positive"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/close" />
+            tools:text="@string/updater_github_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_button_positive"
@@ -140,10 +136,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="?attr/dialogPreferredPadding"
+            app:icon="@drawable/ic_download_alt"
+            app:iconGravity="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/dialog_button_negative"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/copy_clipboard" />
+            tools:text="@string/updater_download_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,7 +3,11 @@ package com.wstxda.toolkit.activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
+import com.wstxda.toolkit.services.UpdaterService
 import com.wstxda.toolkit.ui.component.AboutAppBottomSheet
+import com.wstxda.toolkit.ui.component.FreeAndroidWarnDialog
+import com.wstxda.toolkit.utils.Constants
 
 class AboutAppActivity : BaseActivity() {
 
@@ -11,7 +15,7 @@ class AboutAppActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            AboutAppBottomSheet().show(supportFragmentManager, AboutAppBottomSheet.TAG)
+            AboutAppBottomSheet().show(supportFragmentManager, Constants.ABOUT_DIALOG)
         }
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(
@@ -25,5 +29,8 @@ class AboutAppActivity : BaseActivity() {
                 }
             }, false
         )
+
+        FreeAndroidWarnDialog.show(supportFragmentManager, this)
+        UpdaterService.checkForUpdatesAuto(lifecycleScope, this, supportFragmentManager)
     }
 }

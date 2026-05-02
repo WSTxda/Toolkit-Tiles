@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.divider.MaterialDivider
 import com.wstxda.toolkit.R
 import com.wstxda.toolkit.databinding.DialogAboutAppBinding
@@ -17,16 +18,13 @@ import com.wstxda.toolkit.viewmodel.AboutAppViewModel
 
 class AboutAppBottomSheet : BaseBottomSheet<DialogAboutAppBinding>() {
 
-    companion object {
-        const val TAG = "about_app"
-    }
-
     private lateinit var haptics: Haptics
     private val viewModel: AboutAppViewModel by viewModels()
 
     override val topDivider: MaterialDivider get() = binding.dividerTop
     override val bottomDivider: MaterialDivider get() = binding.dividerBottom
     override val scrollView: NestedScrollView get() = binding.scrollView
+    override val defaultExpanded: Boolean = true
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?) =
         DialogAboutAppBinding.inflate(inflater, container, false)
@@ -37,17 +35,22 @@ class AboutAppBottomSheet : BaseBottomSheet<DialogAboutAppBinding>() {
         haptics = Haptics(requireContext().applicationContext)
 
         val adapter = AboutAppAdapter(viewModel::openUrl)
-        binding.recyclerLinks.adapter = adapter
+        binding.dialogRecyclerLinks.adapter = adapter
 
         viewModel.applicationVersion.observe(viewLifecycleOwner) { version ->
-            binding.appUpdate.text = getString(R.string.about_version, version)
+            binding.dialogButtonUpdate.text = getString(R.string.about_version, version)
 
-            binding.appUpdate.setOnClickListener {
+            binding.dialogButtonUpdate.setOnClickListener {
                 haptics.low()
-                UpdaterService.checkForUpdates(requireContext(), it)
+                UpdaterService.checkForUpdates(
+                    scope = lifecycleScope,
+                    context = requireContext(),
+                    fragmentManager = parentFragmentManager,
+                    anchorView = it
+                )
             }
 
-            binding.appIconContainer.setOnClickListener {
+            binding.dialogIconContainer.setOnClickListener {
                 haptics.low()
                 viewModel.openAppInfo()
             }

@@ -32,7 +32,7 @@
             android:layout_height="wrap_content">
 
             <FrameLayout
-                android:id="@+id/app_icon_container"
+                android:id="@+id/dialog_icon_container"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="24dp"
@@ -47,7 +47,7 @@
                     app:indicatorSize="120dp" />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/app_icon_logo"
+                    android:id="@+id/dialog_icon_logo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:importantForAccessibility="no"
@@ -55,7 +55,7 @@
             </FrameLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/app_name"
+                android:id="@+id/dialog_app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -64,10 +64,10 @@
                 android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_icon_container" />
+                app:layout_constraintTop_toBottomOf="@id/dialog_icon_container" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/app_update"
+                android:id="@+id/dialog_button_update"
                 style="@style/Widget.Material3Expressive.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,11 +79,11 @@
                 app:iconTint="?attr/colorOnTertiaryContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_name"
+                app:layout_constraintTop_toBottomOf="@id/dialog_app_name"
                 tools:text="Version 2.0" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/app_description"
+                android:id="@+id/dialog_app_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="?attr/dialogPreferredPadding"
@@ -96,10 +96,10 @@
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_update" />
+                app:layout_constraintTop_toBottomOf="@id/dialog_button_update" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_links"
+                android:id="@+id/dialog_recycler_links"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="?attr/dialogPreferredPadding"
@@ -110,7 +110,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_description"
+                app:layout_constraintTop_toBottomOf="@id/dialog_app_description"
                 tools:itemCount="1"
                 tools:listitem="@layout/list_item_about" />
         </androidx.constraintlayout.widget.ConstraintLayout>
