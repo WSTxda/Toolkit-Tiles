@@ -14,6 +14,7 @@ import com.wstxda.toolkit.databinding.DialogAboutAppBinding
 import com.wstxda.toolkit.services.UpdaterService
 import com.wstxda.toolkit.ui.adapter.AboutAppAdapter
 import com.wstxda.toolkit.ui.utils.Haptics
+import com.wstxda.toolkit.utils.Constants
 import com.wstxda.toolkit.viewmodel.AboutAppViewModel
 
 class AboutAppBottomSheet : BaseBottomSheet<DialogAboutAppBinding>() {
@@ -34,7 +35,10 @@ class AboutAppBottomSheet : BaseBottomSheet<DialogAboutAppBinding>() {
 
         haptics = Haptics(requireContext().applicationContext)
 
-        val adapter = AboutAppAdapter(viewModel::openUrl)
+        val adapter = AboutAppAdapter(
+            onUrlClick = viewModel::openUrl, onActionClick = {
+                LibraryBottomSheet().show(parentFragmentManager, Constants.LIBRARY_DIALOG)
+            })
         binding.dialogRecyclerLinks.adapter = adapter
 
         viewModel.applicationVersion.observe(viewLifecycleOwner) { version ->

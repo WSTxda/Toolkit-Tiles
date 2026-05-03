@@ -9,11 +9,11 @@
 
     <string name="about_repository">Kaynak kod deposu</string>
 
-    <string name="about_contributors">Katkıda Bulunanlar</string>
-    <string name="about_contributors_summary">Projeye katkıda bulunan kişiler</string>
-
     <string name="about_license">Lisans</string>
     <string name="about_license_summary">Apache Lisansı 2.0</string>
+
+    <string name="about_used_library">Kütüphaneler</string>
+    <string name="about_used_library_summary">Açık kaynak lisansları</string>
 
     <!--update checker-->
 

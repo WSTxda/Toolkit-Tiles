@@ -5,6 +5,7 @@ appcompat = "1.7.1"
 fragment = "1.8.9"
 preference = "1.2.1"
 material = "1.14.0-rc01"
+aboutLibraries = "14.0.1"
 markdown = "4.6.2"
 
 [libraries]
@@ -13,8 +14,10 @@ androidx-activity = { module = "androidx.activity:activity", version.ref = "acti
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+aboutlibraries-view = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutLibraries" }
 markdown-core = { module = "io.noties.markwon:core", version.ref = "markdown" }
 markdown-linkify = { module = "io.noties.markwon:linkify", version.ref = "markdown" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }

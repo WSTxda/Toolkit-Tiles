@@ -45,7 +45,7 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadLinks() {
-        val linkList = listOf(
+        _links.value = listOf(
             AboutItem(
                 icon = R.drawable.ic_developer,
                 title = R.string.about_wstxda,
@@ -59,10 +59,10 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
                 url = "https://github.com/WSTxda/Toolkit-Tiles"
             ),
             AboutItem(
-                icon = R.drawable.ic_contributors,
-                title = R.string.about_contributors,
-                summary = R.string.about_contributors_summary,
-                url = "https://github.com/WSTxda/Toolkit-Tiles/graphs/contributors"
+                icon = R.drawable.ic_library,
+                title = R.string.about_used_library,
+                summary = R.string.about_used_library_summary,
+                isActionItem = true,
             ),
             AboutItem(
                 icon = R.drawable.ic_license,
@@ -71,7 +71,6 @@ class AboutAppViewModel(application: Application) : AndroidViewModel(application
                 url = "https://github.com/WSTxda/Toolkit-Tiles/blob/main/LICENSE"
             ),
         )
-        _links.value = linkList
     }
 
     fun openUrl(link: AboutItem) {

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.aboutLibraries)
 }
 
 android {
@@ -50,6 +51,7 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.preference)
     implementation(libs.google.material)
+    implementation(libs.aboutlibraries.view)
     implementation(libs.markdown.core)
     implementation(libs.markdown.linkify)
 }

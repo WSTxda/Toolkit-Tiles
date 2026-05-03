@@ -28,8 +28,8 @@
 
     <style name="ShapeAppearance.Material3.ListItem.First" parent="" tools:override="true">
         <item name="cornerFamily">?attr/shapeCornerFamily</item>
-        <item name="cornerSizeTopLeft">?attr/shapeCornerSizeLargeIncreased</item>
-        <item name="cornerSizeTopRight">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSizeTopLeft">?attr/shapeCornerSizeLarge</item>
+        <item name="cornerSizeTopRight">?attr/shapeCornerSizeLarge</item>
         <item name="cornerSizeBottomLeft">?attr/shapeCornerSizeExtraSmall</item>
         <item name="cornerSizeBottomRight">?attr/shapeCornerSizeExtraSmall</item>
     </style>
@@ -43,17 +43,17 @@
         <item name="cornerFamily">?attr/shapeCornerFamily</item>
         <item name="cornerSizeTopLeft">?attr/shapeCornerSizeExtraSmall</item>
         <item name="cornerSizeTopRight">?attr/shapeCornerSizeExtraSmall</item>
-        <item name="cornerSizeBottomLeft">?attr/shapeCornerSizeLargeIncreased</item>
-        <item name="cornerSizeBottomRight">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSizeBottomLeft">?attr/shapeCornerSizeLarge</item>
+        <item name="cornerSizeBottomRight">?attr/shapeCornerSizeLarge</item>
     </style>
 
     <style name="ShapeAppearance.Material3.ListItem.Single" parent="" tools:override="true">
         <item name="cornerFamily">?attr/shapeCornerFamily</item>
-        <item name="cornerSize">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSize">?attr/shapeCornerSizeLarge</item>
     </style>
 
     <style name="ShapeAppearance.Material3.ListItem.Checked" parent="" tools:override="true">
         <item name="cornerFamily">?attr/shapeCornerFamily</item>
-        <item name="cornerSize">?attr/shapeCornerSizeLargeIncreased</item>
+        <item name="cornerSize">?attr/shapeCornerSizeLarge</item>
     </style>
 </resources>
