@@ -1,0 +1,255 @@
+<resources>
+
+    <!--app names-->
+
+    <string name="app_name" translatable="false">Toolkit Tiles</string>
+
+    <!--app about section -->
+
+    <string name="about_description">Công cụ đơn giản, nhẹ nhàng trong thanh thông báo của bạn giúp mọc thêm mấy cái tính năng hữu ích mà không cần tải quá nhiều app khác</string>
+    <string name="about_version">Phiên bản %s</string>
+    <!--links-->
+    <string name="about_wstxda" translatable="false">WSTxda</string>
+    <string name="about_developer">Nhà phát triển</string>
+
+    <string name="about_github" translatable="false">Github</string>
+    <string name="about_repository">Mã nguồn</string>
+
+    <string name="about_contributors">Người đóng góp</string>
+    <string name="about_contributors_summary">Những người mà đã đóng góp trong dự án này</string>
+
+    <string name="about_license">Giấy phép</string>
+    <string name="about_license_summary" translatable="false">Apache License 2.0</string>
+
+    <!--update checker-->
+
+    <string name="update_checker_download_button">Tải xuống</string>
+    <!--updater messages-->
+    <string name="update_checker_no_update">Không có cập nhật gì mới</string>
+    <string name="update_checker_update_available">Có cập nhật mới: %s</string>
+    <string name="update_checker_no_internet">Mất mạng</string>
+    <string name="update_checker_generic_error">Sập rồi, vui lòng thử lại sau</string>
+
+    <!--notification foreground service-->
+
+    <string name="channel_name">Dịch vụ ô chức năng</string>
+    <string name="notification_title">DỊch vụ đang hoạt động</string>
+    <string name="notification_label">Có một ô đang chạy, vô hiệu hóa nó trong cài đặt nhanh hoặc chạm vào đây để ẩn thông báo</string>
+
+    <!--accessibility service-->
+
+    <string name="accessibility_service_description">Ứng dụng này sử dụng quyền trợ năng để cho một vài tính năng trong ứng dụng hoạt động bình thường, đây là quyền cần thiết để những ô hoạt động và cung cấp những tính năng (app bank của bạn sẽ tự ái ahhh).</string>
+
+    <!--permission messages-->
+
+    <!--accessibility-->
+    <string name="accessibility_permission_message">Chưa cấp quyền trợ năng, vui lòng cấp quyền cho nó</string>
+    <!--dnd-->
+    <string name="dnd_access_permission_message">Chưa cấp quyền chỉnh sửa cài đặt không làm phiền, vui lòng cấp quyền cho nó</string>
+    <!--write settings-->
+    <string name="write_settings_permission_message">Chưa cấp quyền chỉnh sửa cài đặt hệ thống, vui lòng cấp quyền cho nó</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">Lệnh đã được sao chép vào bảng nhớ tạm</string>
+
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">Quyền qua ADB là cần thiết</string>
+    <string name="write_secure_settings_message">Tính năng này cần quyền WRITE_SECURE_SETTINGS, mà cái quyền này chỉ được cấp qua ADB, vui lòng bật gỡ lỗi usb trong thiết bị và chạy quyền sau trên platform tool :</string>
+    <string name="write_secure_settings_support">Sau khi chạy xong lệnh, sờ lại vào cái tính năng đấy, bạn chỉ cần làm 1 lần thôi (xóa app thì chịu).</string>
+    <!--buttons-->
+    <string name="copy_clipboard">Sao chép vào bảng nhớ tạm</string>
+    <string name="close">Đóng</string>
+
+    <!--general messages-->
+
+    <string name="not_supported">Thiết bị của bạn không hỗ trợ tính năng này (chịu)</string>
+
+    <!--general tiles subtitles-->
+
+    <string name="tile_on">Bật</string>
+    <string name="tile_off">Tắt</string>
+    <string name="tile_open">Sờ để mở</string>
+    <string name="tile_start">Sờ để bắt đầu</string>
+    <string name="tile_setup">Sờ để thiết lập</string>
+    <string name="tile_switch">Sờ để chuyển</string>
+    <string name="tile_unavailable">KHÔNG</string>
+    <string name="tile_not_supported">Không hỗ trợ</string>
+
+    <!--compass tile-->
+
+    <string name="compass_tile">La bàn</string>
+    <string name="compass_tile_degrees" translatable="false">%1$d° %2$s</string>
+    <!--directions-->
+    <string name="N">B</string>
+    <string name="NE">ĐB</string>
+    <string name="E">Đ</string>
+    <string name="SE">ĐN</string>
+    <string name="S">N</string>
+    <string name="SW">TN</string>
+    <string name="W">T</string>
+    <string name="NW">TB</string>
+
+    <!--bubble level tile-->
+
+    <string name="level_tile">Thước đo</string>
+    <string name="level_tile_degrees" translatable="false">%d°</string>
+    <!--perfect level-->
+    <string name="level_tile_zero" translatable="false">0°</string>
+
+    <!--lux meter tile-->
+
+    <string name="lux_meter_tile">Cảm biến ánh sáng</string>
+    <string name="lux_meter_tile_lux" translatable="false">%d lx</string>
+
+    <!--lock screen tile-->
+
+    <string name="lock_tile">Khóa</string>
+
+    <!--coin flip tile-->
+
+    <string name="coin_flip_tile">Lật đồng xu</string>
+    <string name="coin_flip_tile_tap">Sờ để quay</string>
+    <!--sides-->
+    <string name="coin_tile_heads">Ngửa</string>
+    <string name="coin_tile_tails">Sập</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">Ngửa: %1$d Sập: %2$d</string>
+
+    <!--dice roll tile-->
+
+    <string name="dice_roll_tile">Xúc xắc</string>
+    <string name="dice_roll_tile_tap">Sờ để làm ván</string>
+    <string name="dice_roll_tile_rolling">Đang quay......</string>
+    <!--numbers-->
+    <string name="dice_tile_1">Một</string>
+    <string name="dice_tile_2">Hai</string>
+    <string name="dice_tile_3">Ba</string>
+    <string name="dice_tile_4">Bốn</string>
+    <string name="dice_tile_5">Năm</string>
+    <string name="dice_tile_6">Sáu</string>
+
+    <!--sos tile-->
+
+    <string name="sos_tile">SOS</string>
+
+    <!--counter tile-->
+
+    <string name="counter_tile">Bộ đếm</string>
+    <!--values-->
+    <string name="counter_tile_add">Lên</string>
+    <string name="counter_tile_remove">Xuống</string>
+    <string name="counter_tile_reset">Xóa</string>
+
+    <!--screenshot tile-->
+
+    <string name="screenshot_tile">Chụp màn</string>
+
+    <!--sound mode tile-->
+
+    <string name="sound_mode_tile">Chế độ âm thanh</string>
+    <!--sound modes-->
+    <string name="sound_tile_normal">Bình thường</string>
+    <string name="sound_tile_silent">Câm</string>
+    <string name="sound_tile_vibrate">Rung</string>
+
+    <!--caffeine tile-->
+
+    <string name="caffeine_tile">Thức</string>
+    <!--timeouts-->
+    <string name="caffeine_tile_minutes">%1$d phút</string>
+    <string name="caffeine_tile_infinite">Không sập</string>
+
+    <!--device memory tile-->
+
+    <string name="memory_tile">Bộ nhớ</string>
+    <string name="memory_tile_format">%1$s trong %2$s</string>
+    <!--memory type-->
+    <string name="memory_tile_ram">%s đang bị cướp</string>
+    <string name="memory_tile_storage">%s đang thất nghiệp</string>
+
+    <!--device temperature tile-->
+
+    <string name="temperature_tile">Nhiệt độ (mi xi)</string>
+    <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+
+    <!--media output tile-->
+
+    <string name="media_output_tile">Nguồn xuất âm</string>
+
+    <!--auto brightness tile-->
+
+    <string name="auto_brightness_tile">Ánh sáng tự động</string>
+
+    <!--breathing tile-->
+
+    <string name="breathing_tile">Thở</string>
+    <string name="breathing_tile_prepare">Nhìn hình ta thấy</string>
+    <!--steps-->
+    <string name="breathing_tile_inhale">Hít vào</string>
+    <string name="breathing_tile_exhale">Thở ra</string>
+    <string name="breathing_tile_pause">Thôi</string>
+    <string name="breathing_tile_relax">Tịnh</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">Mạng</string>
+    <!--speed units-->
+    <string name="network_traffic_tile_kb" translatable="false">%.1f kB</string>
+    <string name="network_traffic_tile_mb" translatable="false">%.1f MB</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">Tải xuống</string>
+    <string name="network_traffic_tile_upload">Tải lên</string>
+
+    <!--battery tile-->
+
+    <string name="battery_tile">Battery</string>
+    <!--info-->
+    <string name="battery_tile_percent" translatable="false">%d%%</string>
+    <string name="battery_tile_voltage" translatable="false">%.2f V</string>
+    <string name="battery_tile_current" translatable="false">%d mA</string>
+    <string name="battery_tile_wattage" translatable="false">%.1f W</string>
+    <string name="battery_tile_temperature" translatable="false">%.1f°C</string>
+    <!--status-->
+    <string name="battery_tile_status_full">Đầy rồi</string>
+    <string name="battery_tile_status_low">Chết rồi</string>
+    <string name="battery_tile_status_saver">Ngủ đông</string>
+    <string name="battery_tile_status_discharging">Tự lực cánh sinh</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">Đang sạc</string>
+    <string name="battery_tile_charging_ac">Đang sạc · Nguồn</string>
+    <string name="battery_tile_charging_usb">Đang sạc · USB</string>
+    <string name="battery_tile_charging_wireless">Đang sạc · Không dây</string>
+    <string name="battery_tile_charging_dock">Đang sạc · Đế sạc</string>
+    <!--health-->
+    <string name="battery_tile_health_good">Tốt</string>
+    <string name="battery_tile_health_overheat">Hà Nội/10</string>
+    <string name="battery_tile_health_dead">Ọc ọc</string>
+    <string name="battery_tile_health_overvoltage">Đang bị dí</string>
+    <string name="battery_tile_health_failure">Không biết</string>
+    <string name="battery_tile_health_cold">Lạnh</string>
+    <string name="battery_tile_health_unknown">Chịu</string>
+
+    <!--dns tile-->
+
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">Tự động</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Chặn nội dung phản cảm</string>
+    <string name="dns_tile_provider_google" translatable="false">Google</string>
+    <string name="dns_tile_provider_cloudflare" translatable="false">Cloudflare</string>
+    <string name="dns_tile_provider_adguard" translatable="false">AdGuard</string>
+    <string name="dns_tile_provider_opendns" translatable="false">OpenDNS</string>
+    <string name="dns_tile_provider_quad9" translatable="false">Quad9</string>
+    <string name="dns_tile_provider_nextdns" translatable="false">NextDNS</string>
+    <string name="dns_tile_provider_mullvad" translatable="false">Mullvad</string>
+    <string name="dns_tile_provider_controld" translatable="false">Control D</string>
+    <string name="dns_tile_provider_libredns" translatable="false">LibreDNS</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">Gỡ lỗi USB</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile">NFC</string>
+</resources>
