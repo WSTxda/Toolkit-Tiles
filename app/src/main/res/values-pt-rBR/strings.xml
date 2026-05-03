@@ -9,11 +9,11 @@
 
     <string name="about_repository">Repositório com o código fonte</string>
 
-    <string name="about_contributors">Contribuidores</string>
-    <string name="about_contributors_summary">Pessoas que contribuíram com o projeto</string>
-
     <string name="about_license">Licença</string>
     <string name="about_license_summary">Apache License 2.0</string>
+
+    <string name="about_used_library">Bibliotecas</string>
+    <string name="about_used_library_summary">Licenças de código aberto</string>
 
     <!--update checker-->
 

@@ -3,7 +3,6 @@ package com.wstxda.toolkit.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.listitem.ListItemLayout
@@ -12,7 +11,8 @@ import com.wstxda.toolkit.databinding.ListItemAboutBinding
 import com.wstxda.toolkit.ui.utils.Haptics
 
 class AboutAppAdapter(
-    private val onClick: (AboutItem) -> Unit
+    private val onUrlClick: (AboutItem) -> Unit,
+    private val onActionClick: (AboutItem) -> Unit,
 ) : ListAdapter<AboutItem, AboutAppAdapter.LinkViewHolder>(LinkDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LinkViewHolder(
@@ -38,14 +38,14 @@ class AboutAppAdapter(
             link.summary?.let { summaryItem.setText(it) }
             summaryItem.isVisible = link.summary != null
 
-            val isClickable = link.url != null
+            val isClickable = link.url != null || link.isActionItem
             cardItem.isClickable = isClickable
             cardItem.isFocusable = isClickable
 
             if (isClickable) {
                 cardItem.setOnClickListener {
                     haptics.low()
-                    onClick(link)
+                    if (link.isActionItem) onActionClick(link) else onUrlClick(link)
                 }
             } else {
                 cardItem.setOnClickListener(null)
@@ -54,12 +54,5 @@ class AboutAppAdapter(
             val listItemLayout = itemView as ListItemLayout
             listItemLayout.updateAppearance(position, totalItems)
         }
-    }
-
-    object LinkDiffCallback : DiffUtil.ItemCallback<AboutItem>() {
-        override fun areItemsTheSame(oldItem: AboutItem, newItem: AboutItem) =
-            oldItem.title == newItem.title
-
-        override fun areContentsTheSame(oldItem: AboutItem, newItem: AboutItem) = oldItem == newItem
     }
 }

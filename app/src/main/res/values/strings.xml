@@ -15,11 +15,11 @@
     <string name="about_github" translatable="false">Github</string>
     <string name="about_repository">Source code repository</string>
 
-    <string name="about_contributors">Contributors</string>
-    <string name="about_contributors_summary">People who contributed to the project</string>
-
     <string name="about_license">Licence</string>
     <string name="about_license_summary">Apache License 2.0</string>
+
+    <string name="about_used_library">Libraries</string>
+    <string name="about_used_library_summary">Open source licenses</string>
 
     <!--update checker-->
 

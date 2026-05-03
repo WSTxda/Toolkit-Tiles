@@ -8,6 +8,7 @@ object Constants {
 
     const val UPDATER_DIALOG = "UpdaterBottomSheet"
     const val ABOUT_DIALOG = "AboutAppBottomSheet"
+    const val LIBRARY_DIALOG = "LibraryBottomSheet"
     const val WRITE_SECURE_SETTINGS_DIALOG = "WriteSecureSettingsBottomSheet"
     const val FREE_ANDROID_WARN_DIALOG = "FreeAndroidWarnDialog"
 

@@ -21,46 +21,57 @@
             android:layout_height="wrap_content"
             android:paddingVertical="6dp">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/icon_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorOnSurface"
-                tools:src="@drawable/ic_github" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:maxLines="2"
+                android:layout_marginEnd="12dp"
+                android:maxLines="4"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="?attr/colorOnSurface"
-                app:layout_constraintBottom_toTopOf="@+id/summary_item"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_item"
+                app:layout_constraintBottom_toTopOf="@+id/license_item"
+                app:layout_constraintEnd_toStartOf="@+id/version_chip"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:text="@string/about_wstxda" />
+                tools:text="AboutLibraries Core Library" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/summary_item"
+                android:id="@+id/license_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:ellipsize="marquee"
-                android:maxLines="4"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/title_item"
+                app:layout_constraintEnd_toStartOf="@+id/version_chip"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_item"
-                tools:text="@string/about_developer" />
+                tools:text="Apache License 2.0" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/version_chip"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                app:chipBackgroundColor="?attr/colorSecondaryContainer"
+                android:textSize="12sp"
+                app:chipIconTint="?attr/colorOnSecondaryContainer"
+                app:chipEndPadding="0dp"
+                app:chipMinHeight="24dp"
+                app:chipStartPadding="0dp"
+                app:chipStrokeWidth="0dp"
+                app:ensureMinTouchTargetSize="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1.0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.listitem.ListItemCardView>
 </com.google.android.material.listitem.ListItemLayout>
