@@ -29,8 +29,6 @@ class UsbDebuggingTileService : BaseTileService() {
             startActivityAndCollapse(WriteSecureSettingsActivity::class.java)
             return
         }
-        if (!usbDebuggingManager.isDeveloperOptionsEnabled.value) return
-
         usbDebuggingManager.toggle()
         updateTile()
     }
