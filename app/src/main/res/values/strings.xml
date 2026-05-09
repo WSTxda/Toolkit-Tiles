@@ -260,4 +260,8 @@
     <!--nfc tile-->
 
     <string name="nfc_tile">NFC</string>
+
+    <!--power menu tile-->
+
+    <string name="power_tile">Power</string>
 </resources>

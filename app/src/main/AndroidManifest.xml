@@ -427,6 +427,24 @@
                 android:value="true" />
         </service>
 
+        <!--power menu quick settings tile service-->
+
+        <service
+            android:name=".tiles.power.PowerTileService"
+            android:enabled="@bool/enable_power_tile"
+            android:exported="true"
+            android:icon="@drawable/ic_power"
+            android:label="@string/power_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
+
         <!--screenshot quick settings tile service-->
 
         <service
