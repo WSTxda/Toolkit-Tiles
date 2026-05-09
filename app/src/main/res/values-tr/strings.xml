@@ -234,4 +234,8 @@
     <!--power menu tile-->
 
     <string name="power_tile">Güç</string>
+
+    <!--volume panel tile-->
+
+    <string name="volume_tile">Ses</string>
 </resources>

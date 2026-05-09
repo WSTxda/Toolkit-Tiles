@@ -264,4 +264,8 @@
     <!--power menu tile-->
 
     <string name="power_tile">Power</string>
+
+    <!--volume panel tile-->
+
+    <string name="volume_tile">Volume</string>
 </resources>

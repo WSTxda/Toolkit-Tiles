@@ -87,6 +87,11 @@
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 
+        <activity
+            android:name=".activity.VolumeActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
         <!--permission activity for tiles-->
 
         <activity
@@ -525,6 +530,23 @@
             </intent-filter>
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
+        <!--volume quick settings tile service-->
+
+        <service
+            android:name=".tiles.volume.VolumeTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_volume"
+            android:label="@string/volume_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
     </application>
