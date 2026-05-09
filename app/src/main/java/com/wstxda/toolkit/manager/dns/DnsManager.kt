@@ -62,8 +62,9 @@ class DnsManager(context: Context) {
 
     fun cycleProvider() {
         val current = getCurrentProviderInternal()
-        val providers = DnsProvider.entries
-        val next = providers[(current.ordinal + 1) % providers.size]
+        val providers = DnsProvider.entries.filter { it != DnsProvider.CUSTOM }
+        val currentIndex = providers.indexOf(current).takeIf { it >= 0 } ?: -1
+        val next = providers[(currentIndex + 1) % providers.size]
         applyProvider(next)
     }
 
@@ -77,11 +78,16 @@ class DnsManager(context: Context) {
             MODE_OFF -> DnsProvider.DISABLED
             MODE_AUTO -> DnsProvider.AUTOMATIC
             MODE_HOSTNAME -> DnsProvider.entries.firstOrNull {
-                it != DnsProvider.DISABLED && it != DnsProvider.AUTOMATIC && it.hostname == hostname
-            } ?: DnsProvider.AUTOMATIC
+                it.hostname.isNotEmpty() && it.hostname == hostname
+            } ?: DnsProvider.CUSTOM
 
             else -> DnsProvider.AUTOMATIC
         }
+    }
+
+    fun getDisplayHostname(): String {
+        if (getCurrentProviderInternal() != DnsProvider.CUSTOM) return ""
+        return Settings.Global.getString(appContext.contentResolver, PRIVATE_DNS_SPECIFIER) ?: ""
     }
 
     private fun applyProvider(provider: DnsProvider) {

@@ -25,6 +25,7 @@ class DnsIconProvider(private val context: Context) {
             DnsProvider.CONTROLD -> R.drawable.ic_controld
             DnsProvider.LIBREDNS -> R.drawable.ic_libredns
             DnsProvider.CLOUDFLARE_FAMILY -> R.drawable.ic_block_adult_content
+            DnsProvider.CUSTOM -> R.drawable.ic_dns_on
         }
 
         return Icon.createWithResource(context, iconRes)

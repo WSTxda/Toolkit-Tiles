@@ -19,4 +19,6 @@ enum class DnsProvider(val hostname: String) {
     LIBREDNS("dot.libredns.gr"),
 
     CLOUDFLARE_FAMILY("family.cloudflare-dns.com"),
+
+    CUSTOM(""),
 }

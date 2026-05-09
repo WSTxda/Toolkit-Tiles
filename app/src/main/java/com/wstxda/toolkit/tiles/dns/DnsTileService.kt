@@ -38,7 +38,9 @@ class DnsTileService : BaseTileService() {
             } else {
                 Tile.STATE_INACTIVE
             },
-            label = labelProvider.getLabel(currentProvider, hasPermission),
+            label = labelProvider.getLabel(
+                currentProvider, hasPermission, dnsManager.getDisplayHostname()
+            ),
             subtitle = labelProvider.getSubtitle(hasPermission),
             icon = iconProvider.getIcon(currentProvider, hasPermission),
         )
