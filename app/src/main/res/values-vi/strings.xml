@@ -1,0 +1,252 @@
+<resources>
+
+    <!--app about section -->
+
+    <string name="about_description">Các ô Cài đặt nhanh đơn giản, nhẹ nhàng giúp bạn truy cập tức thì vào các tính năng hữu ích mà không cần thêm ứng dụng</string>
+    <string name="about_version">Phiên bản %s</string>
+    <!--links-->
+    <string name="about_developer">Nhà phát triển</string>
+
+    <string name="about_repository">Kho mã nguồn</string>
+
+    <string name="about_license">Giấy phép</string>
+    <string name="about_license_summary">Apache License 2.0</string>
+
+    <string name="about_used_library">Thư viện</string>
+    <string name="about_used_library_summary">Giấy phép mã nguồn mở</string>
+
+    <!--update checker-->
+
+    <string name="updater_title">Có bản cập nhật mới!</string>
+    <string name="updater_version">Phiên bản %s</string>
+    <string name="updater_no_update_message">Không có bản cập nhật nào</string>
+    <string name="updater_no_internet_message">Không có kết nối internet</string>
+    <string name="updater_generic_error_message">Đã xảy ra lỗi. Vui lòng thử lại sau</string>
+    <string name="updater_download_button">Tải xuống</string>
+    <string name="updater_github_button">Mở trên GitHub</string>
+
+    <!--free android warn dialog-->
+
+    <string name="free_android_warn_title">Thông tin quan trọng</string>
+    <string name="free_android_warn_message">Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin nhận dạng cá nhân trực tiếp cho Google. Vì các nhà phát triển của ứng dụng này không đồng ý với yêu cầu này, ứng dụng này sẽ không còn hoạt động trên các thiết bị Android được chứng nhận sau thời điểm đó.</string>
+    <string name="free_android_warn_link"><u>Thêm thông tin</u></string>
+    <string name="free_android_warn_solution_button">Giải pháp</string>
+
+    <!--notification foreground service-->
+
+    <string name="channel_name">Dịch vụ ô cài đặt</string>
+    <string name="notification_title">Dịch vụ đang chạy</string>
+    <string name="notification_label">Một ô đang chạy, hãy tắt ô đó trong bảng cài đặt nhanh hoặc nhấn vào đây để ẩn thông báo này</string>
+
+    <!--accessibility service-->
+
+    <string name="accessibility_service_description">Ứng dụng này sử dụng các dịch vụ trợ năng để một số ô trong bảng cài đặt nhanh có thể hoạt động. Quyền này rất cần thiết để các ô này hoạt động chính xác và cung cấp quyền truy cập nhanh vào một số tính năng của thiết bị.</string>
+
+    <!--permission messages-->
+
+    <!--accessibility-->
+    <string name="accessibility_permission_message">Yêu cầu quyền Trợ năng. Vui lòng bật quyền này trước</string>
+    <!--dnd-->
+    <string name="dnd_access_permission_message">Yêu cầu quyền truy cập Không làm phiền. Vui lòng bật quyền này trước</string>
+    <!--write settings-->
+    <string name="write_settings_permission_message">Yêu cầu quyền Ghi cài đặt hệ thống. Vui lòng bật quyền này trước</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">Đã sao chép lệnh vào bảng nhớ tạm</string>
+
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">Yêu cầu quyền ADB</string>
+    <string name="write_secure_settings_message">Tính năng này yêu cầu quyền WRITE_SECURE_SETTINGS, quyền này chỉ có thể được cấp thông qua ADB. Hãy chạy lệnh dưới đây trong terminal của bạn với tính năng gỡ lỗi USB đã được bật:</string>
+    <string name="write_secure_settings_support">Sau khi chạy lệnh, hãy nhấn lại vào ô để bật tính năng. Bạn chỉ cần thực hiện việc này một lần.</string>
+    <!--buttons-->
+    <string name="copy_clipboard">Sao chép lệnh</string>
+    <string name="close">Đóng</string>
+
+    <!--general messages-->
+
+    <string name="not_supported">Thiết bị của bạn không hỗ trợ tính năng này</string>
+    <string name="clipboard_cleared">Đã xóa bảng nhớ tạm</string>
+    <string name="google_not_found">Không tìm thấy hoạt động tìm kiếm nhạc. Vui lòng cài đặt hoặc bật Ứng dụng Google</string>
+
+    <!--general tiles subtitles-->
+
+    <string name="tile_on">Bật</string>
+    <string name="tile_off">Tắt</string>
+    <string name="tile_open">Nhấn để mở</string>
+    <string name="tile_start">Nhấn để bắt đầu</string>
+    <string name="tile_setup">Nhấn để thiết lập</string>
+    <string name="tile_switch">Nhấn để chuyển đổi</string>
+    <string name="tile_unavailable">Không khả dụng</string>
+    <string name="tile_not_supported">Không hỗ trợ</string>
+
+    <!--compass tile-->
+
+    <string name="compass_tile">La bàn</string>
+    <!--directions-->
+    <string name="N">B</string>
+    <string name="NE">ĐB</string>
+    <string name="E">Đ</string>
+    <string name="SE">ĐN</string>
+    <string name="S">N</string>
+    <string name="SW">TN</string>
+    <string name="W">T</string>
+    <string name="NW">TB</string>
+
+    <!--bubble level tile-->
+
+    <string name="level_tile">Thước cân bằng</string>
+
+    <!--lux meter tile-->
+
+    <string name="lux_meter_tile">Máy đo ánh sáng</string>
+
+    <!--lock screen tile-->
+
+    <string name="lock_tile">Khóa màn hình</string>
+
+    <!--coin flip tile-->
+
+    <string name="coin_flip_tile">Tung đồng xu</string>
+    <string name="coin_flip_tile_tap">Nhấn để tung</string>
+    <!--sides-->
+    <string name="coin_tile_heads">Ngửa</string>
+    <string name="coin_tile_tails">Sấp</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">Ngửa: %1$d Sấp: %2$d</string>
+
+    <!--dice roll tile-->
+
+    <string name="dice_roll_tile">Đổ xúc xắc</string>
+    <string name="dice_roll_tile_tap">Nhấn để đổ</string>
+    <string name="dice_roll_tile_rolling">Đang đổ…</string>
+    <!--numbers-->
+    <string name="dice_tile_1">Một</string>
+    <string name="dice_tile_2">Hai</string>
+    <string name="dice_tile_3">Ba</string>
+    <string name="dice_tile_4">Bốn</string>
+    <string name="dice_tile_5">Năm</string>
+    <string name="dice_tile_6">Sáu</string>
+
+    <!--sos tile-->
+
+    <string name="sos_tile">SOS</string>
+
+    <!--counter tile-->
+
+    <string name="counter_tile">Bộ đếm</string>
+    <!--values-->
+    <string name="counter_tile_add">Thêm</string>
+    <string name="counter_tile_remove">Bớt</string>
+    <string name="counter_tile_reset">Đặt lại</string>
+
+    <!--screenshot tile-->
+
+    <string name="screenshot_tile">Chụp màn hình</string>
+
+    <!--sound mode tile-->
+
+    <string name="sound_mode_tile">Chế độ âm thanh</string>
+    <!--sound modes-->
+    <string name="sound_tile_normal">Bình thường</string>
+    <string name="sound_tile_silent">Im lặng</string>
+    <string name="sound_tile_vibrate">Rung</string>
+
+    <!--caffeine tile-->
+
+    <string name="caffeine_tile">Caffeine</string>
+    <!--timeouts-->
+    <string name="caffeine_tile_minutes">%1$d phút</string>
+    <string name="caffeine_tile_infinite">Vô hạn</string>
+
+    <!--device memory tile-->
+
+    <string name="memory_tile">Bộ nhớ</string>
+    <string name="memory_tile_format">%1$s / %2$s</string>
+    <!--memory type-->
+    <string name="memory_tile_ram">%s đang sử dụng</string>
+    <string name="memory_tile_storage">%s trống</string>
+
+    <!--device temperature tile-->
+
+    <string name="temperature_tile">Nhiệt độ</string>
+
+    <!--media output tile-->
+
+    <string name="media_output_tile">Đầu ra âm thanh</string>
+
+    <!--auto brightness tile-->
+
+    <string name="auto_brightness_tile">Độ sáng tự động</string>
+
+    <!--breathing tile-->
+
+    <string name="breathing_tile">Hít thở</string>
+    <string name="breathing_tile_prepare">Làm theo vòng tròn</string>
+    <!--steps-->
+    <string name="breathing_tile_inhale">Hít vào</string>
+    <string name="breathing_tile_exhale">Thở ra</string>
+    <string name="breathing_tile_pause">Tạm dừng</string>
+    <string name="breathing_tile_relax">Thư giãn</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">Mạng</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">Tải xuống</string>
+    <string name="network_traffic_tile_upload">Tải lên</string>
+
+    <!--battery tile-->
+
+    <string name="battery_tile">Pin</string>
+    <!--status-->
+    <string name="battery_tile_status_full">Đã sạc đầy</string>
+    <string name="battery_tile_status_low">Pin yếu</string>
+    <string name="battery_tile_status_saver">Tiết kiệm pin</string>
+    <string name="battery_tile_status_discharging">Đang dùng pin</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">Đang sạc</string>
+    <string name="battery_tile_charging_ac">Đang sạc · Bộ sạc AC</string>
+    <string name="battery_tile_charging_usb">Đang sạc · USB</string>
+    <string name="battery_tile_charging_wireless">Đang sạc · Không dây</string>
+    <string name="battery_tile_charging_dock">Đang sạc · Dock</string>
+    <!--health-->
+    <string name="battery_tile_health_good">Tốt</string>
+    <string name="battery_tile_health_overheat">Quá nhiệt</string>
+    <string name="battery_tile_health_dead">Hỏng</string>
+    <string name="battery_tile_health_overvoltage">Quá áp</string>
+    <string name="battery_tile_health_failure">Lỗi</string>
+    <string name="battery_tile_health_cold">Lạnh</string>
+    <string name="battery_tile_health_unknown">Không xác định</string>
+
+    <!--dns tile-->
+
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">Tự động</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">Chặn nội dung người lớn</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">Gỡ lỗi USB</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile">NFC</string>
+
+    <!--power menu tile-->
+
+    <string name="power_tile">Menu nguồn</string>
+
+    <!--volume panel tile-->
+
+    <string name="volume_tile">Âm lượng</string>
+
+    <!--clipboard cleaner tile-->
+
+    <string name="clipboard_tile">Bảng nhớ tạm</string>
+    <string name="clipboard_tile_tap">Nhấn để xóa</string>
+
+    <!--music search tile-->
+
+    <string name="music_search_tile">Tìm kiếm nhạc</string>
+</resources>
