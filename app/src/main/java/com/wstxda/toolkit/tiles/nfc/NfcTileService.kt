@@ -17,8 +17,8 @@ class NfcTileService : BaseTileService() {
     private val iconProvider by lazy { NfcIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        super.onStartListening()
         nfcManager.start()
+        super.onStartListening()
     }
 
     override fun onStopListening() {

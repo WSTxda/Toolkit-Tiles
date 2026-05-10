@@ -15,8 +15,8 @@ class AutoBrightnessTileService : BaseTileService() {
     private val iconProvider by lazy { AutoBrightnessIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        super.onStartListening()
         brightnessManager.start()
+        super.onStartListening()
     }
 
     override fun onStopListening() {

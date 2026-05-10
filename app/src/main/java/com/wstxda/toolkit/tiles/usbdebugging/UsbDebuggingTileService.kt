@@ -15,8 +15,8 @@ class UsbDebuggingTileService : BaseTileService() {
     private val iconProvider by lazy { UsbDebuggingIconProvider(applicationContext) }
 
     override fun onStartListening() {
-        super.onStartListening()
         usbDebuggingManager.start()
+        super.onStartListening()
     }
 
     override fun onStopListening() {
