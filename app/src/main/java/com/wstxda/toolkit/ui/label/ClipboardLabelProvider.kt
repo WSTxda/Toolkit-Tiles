@@ -10,6 +10,6 @@ class ClipboardLabelProvider(private val context: Context) {
     }
 
     fun getSubtitle(): CharSequence {
-        return context.getString(R.string.tile_open)
+        return context.getString(R.string.clipboard_tile_tap)
     }
 }

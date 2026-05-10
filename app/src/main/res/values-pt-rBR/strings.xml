@@ -65,6 +65,8 @@
     <!--general messages-->
 
     <string name="not_supported">Seu dispositivo não suporta este recurso</string>
+    <string name="clipboard_cleared">Área de transferência limpa</string>
+    <string name="google_not_found">Atividade de pesquisar música não encontrada. Por favor, instale ou ative o aplicativo Google</string>
 
     <!--general tiles subtitles-->
 
@@ -233,9 +235,18 @@
 
     <!--power menu tile-->
 
-    <string name="power_tile">Energia</string>
+    <string name="power_tile">Menu de energia</string>
 
     <!--volume panel tile-->
 
     <string name="volume_tile">Volume</string>
+
+    <!--clipboard cleaner tile-->
+
+    <string name="clipboard_tile">Área de transferência</string>
+    <string name="clipboard_tile_tap">Toque para limpar</string>
+
+    <!--music search tile-->
+
+    <string name="music_search_tile">Pesquisar música</string>
 </resources>

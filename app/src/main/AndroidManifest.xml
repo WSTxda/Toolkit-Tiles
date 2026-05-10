@@ -226,7 +226,7 @@
         <service
             android:name=".tiles.clipboard.ClipboardTileService"
             android:exported="true"
-            android:icon="@drawable/ic_clipboard"
+            android:icon="@drawable/ic_clipboard_clear"
             android:label="@string/clipboard_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:process=":tiles">

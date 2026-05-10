@@ -7,6 +7,6 @@ import com.wstxda.toolkit.R
 class ClipboardIconProvider(private val context: Context) {
 
     fun getIcon(): Icon {
-        return Icon.createWithResource(context, R.drawable.ic_clipboard)
+        return Icon.createWithResource(context, R.drawable.ic_clipboard_clear)
     }
 }

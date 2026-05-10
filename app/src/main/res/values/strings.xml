@@ -265,7 +265,7 @@
 
     <!--power menu tile-->
 
-    <string name="power_tile">Power</string>
+    <string name="power_tile">Power menu</string>
 
     <!--volume panel tile-->
 
@@ -274,6 +274,7 @@
     <!--clipboard cleaner tile-->
 
     <string name="clipboard_tile">Clipboard</string>
+    <string name="clipboard_tile_tap">Tap to clear</string>
 
     <!--music search tile-->
 

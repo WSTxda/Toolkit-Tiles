@@ -65,6 +65,8 @@
     <!--general messages-->
 
     <string name="not_supported">Cihazınız bu özelliği desteklemiyor</string>
+    <string name="clipboard_cleared">Pano temizlendi</string>
+    <string name="google_not_found">Müzik arama etkinliği bulunamadı. Lütfen Google Uygulamasını yükleyin veya etkinleştirin</string>
 
     <!--general tiles subtitles-->
 
@@ -233,9 +235,18 @@
 
     <!--power menu tile-->
 
-    <string name="power_tile">Güç</string>
+    <string name="power_tile">Güç menüsü</string>
 
     <!--volume panel tile-->
 
     <string name="volume_tile">Ses</string>
+
+    <!--clipboard cleaner tile-->
+
+    <string name="clipboard_tile">Pano</string>
+    <string name="clipboard_tile_tap">Temizlemek için dokunun</string>
+
+    <!--music search tile-->
+
+    <string name="music_search_tile">Müzik arama</string>
 </resources>
