@@ -1,0 +1,252 @@
+<resources>
+
+    <!--app about section -->
+
+    <string name="about_description">بلاطات إعدادات سريعة بسيطة وخفيفة تمنحك وصولًا فوريًا إلى الميزات المفيدة دون الحاجة إلى تطبيقات إضافية</string>
+    <string name="about_version">إصدار %s</string>
+    <!--links-->
+    <string name="about_developer">المطور</string>
+
+    <string name="about_repository">مستودع الكود المصدري</string>
+
+    <string name="about_license">الترخيص</string>
+    <string name="about_license_summary">Apache License 2.0</string>
+
+    <string name="about_used_library">المكتبات</string>
+    <string name="about_used_library_summary">تراخيص مفتوحة المصدر</string>
+
+    <!--update checker-->
+
+    <string name="updater_title">تحديث جديد متوفر!</string>
+    <string name="updater_version">إصدار %s</string>
+    <string name="updater_no_update_message">لا توجد تحديثات متاحة</string>
+    <string name="updater_no_internet_message">لا يوجد اتصال بالإنترنت</string>
+    <string name="updater_generic_error_message">حدث خطأ ما… يرجى المحاولة مرة أخرى لاحقًا</string>
+    <string name="updater_download_button">تحميل</string>
+    <string name="updater_github_button">الفتح في GitHub</string>
+
+    <!--free android warn dialog-->
+
+    <string name="free_android_warn_title">معلومات هامة</string>
+    <string name="free_android_warn_message">أعلنت Google أنه بدءًا من عام 2026/2027، ستتطلب جميع التطبيقات على أجهزة Android المعتمدة من المطور إرسال تفاصيل الهوية الشخصية مباشرةً إلى Google. نظرًا لأن مطوري هذا التطبيق لا يوافقون على هذا المطلب، فلن يعمل هذا التطبيق بعد ذلك الوقت على أجهزة Android المعتمدة.</string>
+    <string name="free_android_warn_link"><u>مزيد من المعلومات</u></string>
+    <string name="free_android_warn_solution_button">الحل</string>
+
+    <!--notification foreground service-->
+
+    <string name="channel_name">خدمات البلاطات</string>
+    <string name="notification_title">الخدمة تعمل</string>
+    <string name="notification_label">هناك بلاطة تعمل، قم بتعطيل البلاطة في لوحة الإعدادات السريعة أو اضغط هنا لإخفاء هذا الإشعار</string>
+
+    <!--accessibility service-->
+
+    <string name="accessibility_service_description">يستخدم هذا التطبيق خدمات إمكانية الوصول حتى تعمل بعض البلاطات الخاصة به في لوحة الإعدادات السريعة. هذه الأذونات ضرورية لعمل هذه البلاطات بشكل صحيح وتوفير وصول سريع إلى بعض ميزات الجهاز.</string>
+
+    <!--permission messages-->
+
+    <!--accessibility-->
+    <string name="accessibility_permission_message">مطلوب إذن إمكانية الوصول. برجاء تمكينه أولاً</string>
+    <!--dnd-->
+    <string name="dnd_access_permission_message">يتطلب إذن الوصول إلى عدم الإزعاج. برجاء تمكينه أولاً</string>
+    <!--write settings-->
+    <string name="write_settings_permission_message">مطلوب إذن كتابة إعدادات النظام. برجاء تمكينه أولاً</string>
+    <!--write secure settings-->
+    <string name="write_secure_settings_clipboard_message">تم نسخ الأمر إلى الحافظة</string>
+
+    <!--write secure settings command dialog-->
+
+    <string name="write_secure_settings_title">يطلب إذن ADB</string>
+    <string name="write_secure_settings_message">تتطلب هذه الميزة إذن WRITE_SECURE_SETTINGS، والذي لا يمكن منحه إلا عبر ADB. قم بتشغيل الأمر أدناه في terminal مع تمكين تصحيح أخطاء USB:</string>
+    <string name="write_secure_settings_support">بعد تشغيل الأمر، اضغط على البلاطة مرة أخرى لتمكينها. تحتاج لفعل ذلك مرة واحدة فقط.</string>
+    <!--buttons-->
+    <string name="copy_clipboard">النسخ إلى الحافظة</string>
+    <string name="close">إغلاق</string>
+
+    <!--general messages-->
+
+    <string name="not_supported">جهازك لا يدعم هذه الميزة</string>
+    <string name="clipboard_cleared">تم مسح الحافظة</string>
+    <string name="google_not_found">لم يتم العثور على نشاط البحث عن الموسيقى. يرجى تثبيت أو تمكين تطبيق Google</string>
+
+    <!--general tiles subtitles-->
+
+    <string name="tile_on">تشغيل</string>
+    <string name="tile_off">إطفاء</string>
+    <string name="tile_open">اضغط للفتح</string>
+    <string name="tile_start">اضغط للبدء</string>
+    <string name="tile_setup">اضغط للإعداد</string>
+    <string name="tile_switch">اضغط للتبديل</string>
+    <string name="tile_unavailable">غير متاح</string>
+    <string name="tile_not_supported">غير مدعوم</string>
+
+    <!--compass tile-->
+
+    <string name="compass_tile">البوصلة</string>
+    <!--directions-->
+    <string name="N">الشمال</string>
+    <string name="NE">الشمال الشرقي</string>
+    <string name="E">الشرق</string>
+    <string name="SE">الجنوب الشرقي</string>
+    <string name="S">الجنوب</string>
+    <string name="SW">الجنوب الغربي</string>
+    <string name="W">الغرب</string>
+    <string name="NW">الشمال الغربي</string>
+
+    <!--bubble level tile-->
+
+    <string name="level_tile">المستوى</string>
+
+    <!--lux meter tile-->
+
+    <string name="lux_meter_tile">مقياس الإضاءة</string>
+
+    <!--lock screen tile-->
+
+    <string name="lock_tile">قفل</string>
+
+    <!--coin flip tile-->
+
+    <string name="coin_flip_tile">اقلب العملة</string>
+    <string name="coin_flip_tile_tap">اضغط للقلب</string>
+    <!--sides-->
+    <string name="coin_tile_heads">رؤوس</string>
+    <string name="coin_tile_tails">ذيول</string>
+    <!--sides counter-->
+    <string name="coin_flip_tile_count">رؤوس: %1$d ذيول: %2$d</string>
+
+    <!--dice roll tile-->
+
+    <string name="dice_roll_tile">رمي النرد</string>
+    <string name="dice_roll_tile_tap">اضغط للرمي</string>
+    <string name="dice_roll_tile_rolling">جارٍ الرمي…</string>
+    <!--numbers-->
+    <string name="dice_tile_1">واحد</string>
+    <string name="dice_tile_2">اثنان</string>
+    <string name="dice_tile_3">ثلاثة</string>
+    <string name="dice_tile_4">أربعة</string>
+    <string name="dice_tile_5">خمسة</string>
+    <string name="dice_tile_6">ستة</string>
+
+    <!--sos tile-->
+
+    <string name="sos_tile">SOS</string>
+
+    <!--counter tile-->
+
+    <string name="counter_tile">عداد</string>
+    <!--values-->
+    <string name="counter_tile_add">إضافة</string>
+    <string name="counter_tile_remove">إزالة</string>
+    <string name="counter_tile_reset">إعادة ضبط</string>
+
+    <!--screenshot tile-->
+
+    <string name="screenshot_tile">لقطة شاشة</string>
+
+    <!--sound mode tile-->
+
+    <string name="sound_mode_tile">وضع الصوت</string>
+    <!--sound modes-->
+    <string name="sound_tile_normal">طبيعي</string>
+    <string name="sound_tile_silent">صامت</string>
+    <string name="sound_tile_vibrate">اهتزاز</string>
+
+    <!--caffeine tile-->
+
+    <string name="caffeine_tile">الكافيين</string>
+    <!--timeouts-->
+    <string name="caffeine_tile_minutes">%1$d دقيقة</string>
+    <string name="caffeine_tile_infinite">بلا حدود</string>
+
+    <!--device memory tile-->
+
+    <string name="memory_tile">الذاكرة</string>
+    <string name="memory_tile_format">%1$s من %2$s</string>
+    <!--memory type-->
+    <string name="memory_tile_ram">%s مستخدم</string>
+    <string name="memory_tile_storage">%s فارغ</string>
+
+    <!--device temperature tile-->
+
+    <string name="temperature_tile">درجة الحرارة</string>
+
+    <!--media output tile-->
+
+    <string name="media_output_tile">إخراج الوسائط</string>
+
+    <!--auto brightness tile-->
+
+    <string name="auto_brightness_tile">السطوع التلقائي</string>
+
+    <!--breathing tile-->
+
+    <string name="breathing_tile">التنفس</string>
+    <string name="breathing_tile_prepare">اتبع الدائرة</string>
+    <!--steps-->
+    <string name="breathing_tile_inhale">شهيق</string>
+    <string name="breathing_tile_exhale">زفير</string>
+    <string name="breathing_tile_pause">توقف مؤقتًا</string>
+    <string name="breathing_tile_relax">اهدأ</string>
+
+    <!--network traffic tile-->
+
+    <string name="network_traffic_tile">الشبكة</string>
+    <!--direction-->
+    <string name="network_traffic_tile_download">التحميل</string>
+    <string name="network_traffic_tile_upload">الرفع</string>
+
+    <!--battery tile-->
+
+    <string name="battery_tile">البطارية</string>
+    <!--status-->
+    <string name="battery_tile_status_full">اكتمل الشحن</string>
+    <string name="battery_tile_status_low">البطارية منخفضة</string>
+    <string name="battery_tile_status_saver">توفير الطاقة</string>
+    <string name="battery_tile_status_discharging">لا يشحن</string>
+    <!--charging source-->
+    <string name="battery_tile_charging">جارٍ الشحن</string>
+    <string name="battery_tile_charging_ac">جارٍ الشحن · AC</string>
+    <string name="battery_tile_charging_usb">جارٍ الشحن · USB</string>
+    <string name="battery_tile_charging_wireless">جارٍ الشحن · لاسلكي</string>
+    <string name="battery_tile_charging_dock">جارٍ الشحن · قاعدة</string>
+    <!--health-->
+    <string name="battery_tile_health_good">جيدة</string>
+    <string name="battery_tile_health_overheat">ارتفاع درجة الحرارة</string>
+    <string name="battery_tile_health_dead">ميتة</string>
+    <string name="battery_tile_health_overvoltage">جهد زائد</string>
+    <string name="battery_tile_health_failure">فشل</string>
+    <string name="battery_tile_health_cold">باردة</string>
+    <string name="battery_tile_health_unknown">مجهولة</string>
+
+    <!--dns tile-->
+
+    <string name="dns_tile">DNS</string>
+    <string name="dns_tile_automatic">تلقائي</string>
+    <!--providers-->
+    <string name="dns_tile_provider_block_adult_content">حظر محتوى البالغين</string>
+
+    <!--usb debugging tile-->
+
+    <string name="usb_debugging_tile">تصحيح أخطاء USB</string>
+
+    <!--nfc tile-->
+
+    <string name="nfc_tile">NFC</string>
+
+    <!--power menu tile-->
+
+    <string name="power_tile">قائمة الطاقة</string>
+
+    <!--volume panel tile-->
+
+    <string name="volume_tile">مستوى الصوت</string>
+
+    <!--clipboard cleaner tile-->
+
+    <string name="clipboard_tile">الحافظة</string>
+    <string name="clipboard_tile_tap">اضغط للمسح</string>
+
+    <!--music search tile-->
+
+    <string name="music_search_tile">البحث عن الموسيقى</string>
+</resources>
