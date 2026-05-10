@@ -92,6 +92,11 @@
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
 
+        <activity
+            android:name=".activity.ClipboardActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
         <!--permission activity for tiles-->
 
         <activity
@@ -194,6 +199,20 @@
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
                 android:value="true" />
+        </service>
+
+        <!--clipboard quick settings tile service-->
+
+        <service
+            android:name=".tiles.clipboard.ClipboardTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_clipboard"
+            android:label="@string/clipboard_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
         </service>
 
         <!--coin flip quick settings tile service-->

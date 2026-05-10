@@ -71,6 +71,7 @@
     <!--general messages-->
 
     <string name="not_supported">Your device does not support this feature</string>
+    <string name="clipboard_cleared">Clipboard cleared</string>
 
     <!--general tiles subtitles-->
 
@@ -268,4 +269,8 @@
     <!--volume panel tile-->
 
     <string name="volume_tile">Volume</string>
+
+    <!--clipboard cleaner tile-->
+
+    <string name="clipboard_tile">Clipboard</string>
 </resources>
