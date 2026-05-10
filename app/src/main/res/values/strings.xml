@@ -72,6 +72,7 @@
 
     <string name="not_supported">Your device does not support this feature</string>
     <string name="clipboard_cleared">Clipboard cleared</string>
+    <string name="google_not_found">Music search activity not found. Please install or enable Google App</string>
 
     <!--general tiles subtitles-->
 
@@ -273,4 +274,8 @@
     <!--clipboard cleaner tile-->
 
     <string name="clipboard_tile">Clipboard</string>
+
+    <!--music search tile-->
+
+    <string name="music_search_tile">Music search</string>
 </resources>
