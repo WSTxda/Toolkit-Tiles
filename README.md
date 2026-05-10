@@ -17,36 +17,40 @@ Whether you need a quick measurement, a random decision, system controls, or an 
 
 #### Sensors & Measurement
 
-* **Bubble Level:** Surface alignment and tilt detection
-* **Compass:** Cardinal directions and azimuth using device sensors
-* **Lux Meter:** Ambient light intensity (lux)
-* **Network Traffic:** Monitor real-time network speed
-* **Temperature:** Battery temperature
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_level.svg" width="18" valign="middle"> **Bubble Level:** Surface alignment and tilt detection
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_compass.svg" width="18" valign="middle"> **Compass:** Cardinal directions and azimuth using device sensors
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_lux_meter.svg" width="18" valign="middle"> **Lux Meter:** Ambient light intensity (lux)
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_network.svg" width="18" valign="middle"> **Network Traffic:** Monitor real-time network speed
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_temperature.svg" width="18" valign="middle"> **Temperature:** Battery temperature
 
 #### Utilities & Fun
 
-* **Coin Flip:** Virtual coin toss
-* **Counter:** Increment, decrement and reset counters
-* **Dice Roll:** Simulated dice roll
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_clipboard.svg" width="18" valign="middle"> **Clipboard Cleaner:** Clear clipboard contents instantly
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_coin.svg" width="18" valign="middle"> **Coin Flip:** Virtual coin toss
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_counter.svg" width="18" valign="middle"> **Counter:** Increment, decrement and reset counters
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_dice.svg" width="18" valign="middle"> **Dice Roll:** Simulated dice roll
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_music_search.svg" width="18" valign="middle"> **Music Search:** Identify songs using Google app music recognition
 
 #### System & Controls
 
-* **Auto Brightness:** Toggle automatic screen brightness
-* **Battery Info:** Display battery status, charging, and health information
-* **Caffeine:** Keep the screen awake
-* **Device Memory:** Display use of RAM and internal storage
-* **DNS:** Switch between multiple DNS providers
-* **Lock Screen:** Lock the device instantly
-* **Media / Sound Output:** Audio output selector
-* **NFC:** Toggle the device's NFC
-* **Screenshot:** Take screenshots from Quick Settings
-* **Sound Mode:** Ring/vibrate/silent toggle
-* **USB Debugging:** Toggle USB debugging in developer settings
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_auto_brightness.svg" width="18" valign="middle"> **Auto Brightness:** Toggle automatic screen brightness
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_battery.svg" width="18" valign="middle"> **Battery Info:** Display battery status, charging, and health information
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_caffeine.svg" width="18" valign="middle"> **Caffeine:** Keep the screen awake
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_memory.svg" width="18" valign="middle"> **Device Memory:** Display use of RAM and internal storage
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_dns.svg" width="18" valign="middle"> **DNS:** Switch between multiple DNS providers
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_lock.svg" width="18" valign="middle"> **Lock Screen:** Lock the device instantly
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_media_output.svg" width="18" valign="middle"> **Media / Sound Output:** Audio output selector
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_nfc.svg" width="18" valign="middle"> **NFC:** Toggle the device's NFC
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_power.svg" width="18" valign="middle"> **Power Menu:** Open the system power menu instantly
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_screenshot.svg" width="18" valign="middle"> **Screenshot:** Take screenshots from Quick Settings
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_sound.svg" width="18" valign="middle"> **Sound Mode:** Ring/vibrate/silent toggle
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_usb.svg" width="18" valign="middle"> **USB Debugging:** Toggle USB debugging in developer settings
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_volume.svg" width="18" valign="middle"> **Volume Control:** Open the system volume panel
 
 #### Wellbeing
 
-* **Breathing:** Guided breathing exercise
-* **SOS:** Morse SOS using the camera flash
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_breathing.svg" width="18" valign="middle"> **Breathing:** Guided breathing exercise
+* <img src="https://raw.githubusercontent.com/WSTxda/Toolkit-Tiles/refs/heads/main/images/tiles/ic_sos.svg" width="18" valign="middle"> **SOS:** Morse SOS using the camera flash
 
 ## Installation & Usage
 
