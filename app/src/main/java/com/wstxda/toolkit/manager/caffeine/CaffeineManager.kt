@@ -23,7 +23,7 @@ class CaffeineManager(context: Context) {
         private const val PREF_NAME = "caffeine_prefs"
         private const val PREF_KEY_ORIGINAL = "original_timeout"
         private const val PREF_KEY_EXPECTED = "expected_timeout"
-        private const val DEFAULT_TIMEOUT = 60000
+        private const val DEFAULT_TIMEOUT = 60_000
     }
 
     private val appContext = context.applicationContext
@@ -47,12 +47,6 @@ class CaffeineManager(context: Context) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
                 managerScope.launch { restoreOriginalTimeout() }
             }
-        }
-    }
-
-    private val settingsObserver = object : android.database.ContentObserver(null) {
-        override fun onChange(selfChange: Boolean) {
-            synchronizeState()
         }
     }
 
@@ -97,10 +91,12 @@ class CaffeineManager(context: Context) {
         if (newState == CaffeineState.Off) {
             restoreOriginalTimeout()
         } else {
-            if (stateCycle.indexOf(newState) == 1) saveOriginalTimeout()
+            if (!getPrefs().contains(PREF_KEY_ORIGINAL)) {
+                saveOriginalTimeout()
+            }
 
             if (setSystemTimeout(newState.timeout)) {
-                getPrefs().edit { putInt(PREF_KEY_EXPECTED, newState.timeout) }
+                getPrefs().edit(commit = true) { putInt(PREF_KEY_EXPECTED, newState.timeout) }
                 toggleReceiver(true)
             } else {
                 forceReset()
@@ -111,8 +107,7 @@ class CaffeineManager(context: Context) {
 
     private fun saveOriginalTimeout() {
         val current = getSystemTimeout()
-        if (stateCycle.any { it.timeout == current && it != CaffeineState.Off }) return
-        getPrefs().edit { putInt(PREF_KEY_ORIGINAL, current) }
+        getPrefs().edit(commit = true) { putInt(PREF_KEY_ORIGINAL, current) }
     }
 
     private fun restoreOriginalTimeout() {
@@ -123,7 +118,7 @@ class CaffeineManager(context: Context) {
 
     private fun forceReset() {
         _currentState.value = CaffeineState.Off
-        getPrefs().edit { remove(PREF_KEY_EXPECTED) }
+        getPrefs().edit { clear() }
         toggleReceiver(false)
         requestTileUpdate()
     }
@@ -133,16 +128,10 @@ class CaffeineManager(context: Context) {
             appContext.registerReceiver(
                 screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF)
             )
-            appContext.contentResolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT),
-                false,
-                settingsObserver
-            )
             isReceiverRegistered = true
         } else if (!enable && isReceiverRegistered) {
             try {
                 appContext.unregisterReceiver(screenOffReceiver)
-                appContext.contentResolver.unregisterContentObserver(settingsObserver)
             } catch (_: IllegalArgumentException) {
             }
             isReceiverRegistered = false
