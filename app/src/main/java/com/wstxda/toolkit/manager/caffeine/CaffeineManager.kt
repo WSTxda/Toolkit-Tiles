@@ -13,21 +13,29 @@ import com.wstxda.toolkit.tiles.caffeine.CaffeineTileService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class CaffeineManager(context: Context) {
 
     companion object {
         private const val PREF_NAME = "caffeine_prefs"
-        private const val PREF_KEY_ORIGINAL = "original_timeout"
-        private const val PREF_KEY_EXPECTED = "expected_timeout"
-        private const val DEFAULT_TIMEOUT = 60000
+        private const val PREF_KEY_ORIGINAL_SCREEN = "original_timeout_screen"
+        private const val PREF_KEY_ORIGINAL_SLEEP = "original_timeout_sleep"
+        private const val PREF_KEY_EXPECTED_CLAMP = "expected_clamp_timeout"
+        private const val PREF_KEY_EXPECTED_STATE_IDX = "expected_state_index"
+        private const val DEFAULT_TIMEOUT = 60_000
+        private const val SLEEP_TIMEOUT_KEY = "sleep_timeout"
+        private const val ASYNC_OEM_CLAMP_CHECK_MS = 1_500L
     }
 
     private val appContext = context.applicationContext
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val stateMutex = Mutex()
     private val permissionManager = PermissionManager(appContext)
     private val _currentState = MutableStateFlow<CaffeineState>(CaffeineState.Off)
     val currentState = _currentState.asStateFlow()
@@ -45,29 +53,27 @@ class CaffeineManager(context: Context) {
     private val screenOffReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
-                managerScope.launch { restoreOriginalTimeout() }
+                managerScope.launch {
+                    stateMutex.withLock { restoreOriginalTimeouts() }
+                }
             }
         }
     }
 
-    private val settingsObserver = object : android.database.ContentObserver(null) {
-        override fun onChange(selfChange: Boolean) {
-            synchronizeState()
-        }
-    }
-
-    fun synchronizeState() {
-        managerScope.launch {
+    fun synchronizeState() = managerScope.launch {
+        stateMutex.withLock {
             val prefs = getPrefs()
-            val expectedTimeout = prefs.getInt(PREF_KEY_EXPECTED, -1)
+            val expectedClampedTimeout = prefs.getInt(PREF_KEY_EXPECTED_CLAMP, -1)
 
-            if (expectedTimeout != -1) {
+            if (expectedClampedTimeout != -1) {
                 val systemTimeout = getSystemTimeout()
-                if (systemTimeout != expectedTimeout) {
+
+                if (systemTimeout != expectedClampedTimeout) {
                     forceReset()
                 } else {
-                    val restoredState =
-                        stateCycle.find { it.timeout == expectedTimeout } ?: CaffeineState.Off
+                    val stateIndex = prefs.getInt(PREF_KEY_EXPECTED_STATE_IDX, 0)
+                    val restoredState = stateCycle.getOrNull(stateIndex) ?: CaffeineState.Off
+
                     _currentState.value = restoredState
                     if (restoredState != CaffeineState.Off) toggleReceiver(true)
                 }
@@ -80,71 +86,98 @@ class CaffeineManager(context: Context) {
 
     fun isPermissionGranted(): Boolean = permissionManager.hasWriteSettingsPermission()
 
-    fun cycleState() {
-        if (!isPermissionGranted()) return
+    fun cycleState() = managerScope.launch {
+        if (!isPermissionGranted()) return@launch
 
-        val currentIndex = stateCycle.indexOf(_currentState.value)
-        val nextState = stateCycle[(currentIndex + 1) % stateCycle.size]
-
-        _currentState.value = nextState
-
-        managerScope.launch {
+        stateMutex.withLock {
+            val currentIndex = stateCycle.indexOf(_currentState.value)
+            val nextState = stateCycle[(currentIndex + 1) % stateCycle.size]
             applyState(nextState)
         }
     }
 
     private fun applyState(newState: CaffeineState) {
         if (newState == CaffeineState.Off) {
-            restoreOriginalTimeout()
-        } else {
-            if (stateCycle.indexOf(newState) == 1) saveOriginalTimeout()
-
-            if (setSystemTimeout(newState.timeout)) {
-                getPrefs().edit { putInt(PREF_KEY_EXPECTED, newState.timeout) }
-                toggleReceiver(true)
-            } else {
-                forceReset()
-            }
+            restoreOriginalTimeouts()
+            return
         }
+
+        if (!getPrefs().contains(PREF_KEY_ORIGINAL_SCREEN)) {
+            saveOriginalTimeouts()
+        }
+
+        val systemSuccess = setSystemTimeout(newState.timeout)
+
+        if (systemSuccess && newState == CaffeineState.Infinite) {
+            setSleepTimeout(-1)
+        }
+
+        if (systemSuccess) {
+            val realObtainedTimeout = getSystemTimeout()
+            val visualIndexState = stateCycle.indexOf(newState)
+
+            getPrefs().edit(commit = true) {
+                putInt(PREF_KEY_EXPECTED_CLAMP, realObtainedTimeout)
+                putInt(PREF_KEY_EXPECTED_STATE_IDX, visualIndexState)
+            }
+
+            _currentState.value = newState
+            toggleReceiver(true)
+            scheduleOemWatcherCheck(newState)
+        } else {
+            forceReset()
+        }
+
         requestTileUpdate()
     }
 
-    private fun saveOriginalTimeout() {
-        val current = getSystemTimeout()
-        if (stateCycle.any { it.timeout == current && it != CaffeineState.Off }) return
-        getPrefs().edit { putInt(PREF_KEY_ORIGINAL, current) }
+    private fun scheduleOemWatcherCheck(expectedState: CaffeineState) = managerScope.launch {
+        delay(ASYNC_OEM_CLAMP_CHECK_MS)
+        stateMutex.withLock {
+            if (_currentState.value != expectedState) return@withLock
+
+            val cachedClamped = getPrefs().getInt(PREF_KEY_EXPECTED_CLAMP, -1)
+            val actualLateTimeout = getSystemTimeout()
+
+            if (cachedClamped != -1 && cachedClamped != actualLateTimeout) {
+                forceReset()
+            }
+        }
     }
 
-    private fun restoreOriginalTimeout() {
-        val original = getPrefs().getInt(PREF_KEY_ORIGINAL, DEFAULT_TIMEOUT)
-        setSystemTimeout(original)
+    private fun saveOriginalTimeouts() {
+        getPrefs().edit(commit = true) {
+            putInt(PREF_KEY_ORIGINAL_SCREEN, getSystemTimeout())
+            putInt(PREF_KEY_ORIGINAL_SLEEP, getSleepTimeout())
+        }
+    }
+
+    private fun restoreOriginalTimeouts() {
+        val prefs = getPrefs()
+        val originalScreen = prefs.getInt(PREF_KEY_ORIGINAL_SCREEN, DEFAULT_TIMEOUT)
+        setSystemTimeout(originalScreen)
+
+        if (prefs.contains(PREF_KEY_ORIGINAL_SLEEP)) {
+            val originalSleep = prefs.getInt(PREF_KEY_ORIGINAL_SLEEP, -1)
+            setSleepTimeout(originalSleep)
+        }
+
         forceReset()
     }
 
     private fun forceReset() {
         _currentState.value = CaffeineState.Off
-        getPrefs().edit { remove(PREF_KEY_EXPECTED) }
+        getPrefs().edit { clear() }
         toggleReceiver(false)
         requestTileUpdate()
     }
 
     private fun toggleReceiver(enable: Boolean) {
         if (enable && !isReceiverRegistered) {
-            appContext.registerReceiver(
-                screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF)
-            )
-            appContext.contentResolver.registerContentObserver(
-                Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT),
-                false,
-                settingsObserver
-            )
+            appContext.registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
             isReceiverRegistered = true
         } else if (!enable && isReceiverRegistered) {
-            try {
-                appContext.unregisterReceiver(screenOffReceiver)
-                appContext.contentResolver.unregisterContentObserver(settingsObserver)
-            } catch (_: IllegalArgumentException) {
-            }
+            runCatching { appContext.unregisterReceiver(screenOffReceiver) }
             isReceiverRegistered = false
         }
     }
@@ -159,6 +192,19 @@ class CaffeineManager(context: Context) {
         Settings.System.putInt(
             appContext.contentResolver, Settings.System.SCREEN_OFF_TIMEOUT, timeout
         )
+        true
+    } catch (_: Exception) {
+        false
+    }
+
+    private fun getSleepTimeout(): Int = try {
+        Settings.Secure.getInt(appContext.contentResolver, SLEEP_TIMEOUT_KEY)
+    } catch (_: Exception) {
+        -1
+    }
+
+    private fun setSleepTimeout(timeout: Int): Boolean = try {
+        Settings.Secure.putInt(appContext.contentResolver, SLEEP_TIMEOUT_KEY, timeout)
         true
     } catch (_: Exception) {
         false
