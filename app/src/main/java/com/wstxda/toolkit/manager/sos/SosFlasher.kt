@@ -61,6 +61,10 @@ class SosFlasher(context: Context) {
         }
 
         override fun onTorchModeUnavailable(id: String) {
+            if (id == cameraId) {
+                _torchAvailable.value = false
+                _isTorchOn.value = false
+            }
         }
     }
 
