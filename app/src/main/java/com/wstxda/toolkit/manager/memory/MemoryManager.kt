@@ -21,7 +21,8 @@ class MemoryManager(context: Context) {
     companion object {
         private const val PREFS_NAME = "memory_prefs"
         private const val KEY_STATE = "current_state"
-        private const val REFRESH_RATE_MS = 1000L
+        private const val REFRESH_RATE_RAM_MS = 1500L
+        private const val REFRESH_RATE_STORAGE_MS = 10000L
     }
 
     private val appContext = context.applicationContext
@@ -61,22 +62,27 @@ class MemoryManager(context: Context) {
         appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit {
             putString(KEY_STATE, nextState.name)
         }
-
-        managerScope.launch { updateData() }
+        if (isPanelOpen) restartPolling()
     }
 
     fun setListening(listening: Boolean) {
         if (isPanelOpen == listening) return
         isPanelOpen = listening
-        if (isPanelOpen) startPolling() else stopPolling()
+        if (isPanelOpen) restartPolling() else stopPolling()
     }
 
-    private fun startPolling() {
-        if (pollingJob?.isActive == true) return
+    private fun restartPolling() {
+        stopPolling()
         pollingJob = managerScope.launch {
             updateData()
             while (isActive) {
-                delay(REFRESH_RATE_MS)
+                val dynamicDelayMs = if (_currentState.value == MemoryState.RAM) {
+                    REFRESH_RATE_RAM_MS
+                } else {
+                    REFRESH_RATE_STORAGE_MS
+                }
+
+                delay(dynamicDelayMs)
                 updateData()
             }
         }
