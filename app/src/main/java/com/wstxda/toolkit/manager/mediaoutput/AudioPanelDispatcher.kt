@@ -21,7 +21,7 @@ object AudioPanelDispatcher {
 
         if (invokeNativeSystemRouter(context)) return true
 
-        triggerGenericAndroid(context)
+        if (triggerGenericAndroid(context)) return true
 
         return openVolumePanelFallback(context)
     }
@@ -53,13 +53,13 @@ object AudioPanelDispatcher {
         return intents.any { performIntentLaunch(context, it) }
     }
 
-    private fun triggerGenericAndroid(context: Context) {
+    private fun triggerGenericAndroid(context: Context): Boolean {
         val intents = arrayOf(
             Intent("com.android.systemui.action.LAUNCH_MEDIA_OUTPUT_DIALOG").setPackage("com.android.systemui"),
             Intent("com.android.settings.panel.action.MEDIA_OUTPUT")
         )
 
-        intents.forEach { performIntentLaunch(context, it) }
+        return intents.any { performIntentLaunch(context, it) }
     }
 
     private fun openVolumePanelFallback(context: Context): Boolean {
