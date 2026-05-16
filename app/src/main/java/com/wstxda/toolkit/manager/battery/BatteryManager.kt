@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager as AndroidBatteryManager
+import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.edit
 import kotlinx.coroutines.CoroutineScope
@@ -49,18 +50,6 @@ class BatteryManager(context: Context) {
         }
     }
 
-    private fun registerReceiver() {
-        runCatching {
-            appContext.registerReceiver(
-                batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-            )
-        }
-    }
-
-    private fun unregisterReceiver() {
-        runCatching { appContext.unregisterReceiver(batteryReceiver) }
-    }
-
     fun setListening(listening: Boolean) {
         if (isPanelOpen == listening) return
         isPanelOpen = listening
@@ -85,6 +74,26 @@ class BatteryManager(context: Context) {
         appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit {
             putString(KEY_DISPLAY_STATE, next.name)
         }
+    }
+
+    private fun registerReceiver() {
+        runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                appContext.registerReceiver(
+                    batteryReceiver,
+                    IntentFilter(Intent.ACTION_BATTERY_CHANGED),
+                    Context.RECEIVER_NOT_EXPORTED
+                )
+            } else {
+                appContext.registerReceiver(
+                    batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+                )
+            }
+        }
+    }
+
+    private fun unregisterReceiver() {
+        runCatching { appContext.unregisterReceiver(batteryReceiver) }
     }
 
     private fun startPolling() {

@@ -1,63 +1,57 @@
 package com.wstxda.toolkit.manager.temperature
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
+import android.os.Build
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 
 class TemperatureManager(context: Context) {
 
-    companion object {
-        private const val REFRESH_RATE_MS = 1000L
-    }
-
     private val appContext = context.applicationContext
-    private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     private val _temperature = MutableStateFlow(0f)
     val temperature = _temperature.asStateFlow()
-    private var pollingJob: Job? = null
-    private var isPanelOpen = false
 
-    fun setListening(listening: Boolean) {
-        if (isPanelOpen == listening) return
-        isPanelOpen = listening
-        if (listening) {
-            updateData()
-            startPolling()
-        } else {
-            stopPolling()
-        }
-    }
+    private var isListening = false
 
-    private fun startPolling() {
-        if (pollingJob?.isActive == true) return
-        pollingJob = managerScope.launch {
-            while (isActive) {
-                delay(REFRESH_RATE_MS)
-                updateData()
+    private val batteryReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
+                _temperature.value = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) / 10f
             }
         }
     }
 
-    private fun stopPolling() {
-        pollingJob?.cancel()
-        pollingJob = null
-    }
+    fun setListening(listening: Boolean) {
+        if (isListening == listening) return
+        isListening = listening
 
-    private fun updateData() {
-        val intent = appContext.registerReceiver(
-            null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        )
-        val tempInt = intent?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) ?: 0
-        _temperature.value = tempInt / 10f
+        if (listening) {
+            val sticky = appContext.registerReceiver(
+                null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            )
+            val initialTemp = sticky?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) ?: 0
+            _temperature.value = initialTemp / 10f
+
+            runCatching {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    appContext.registerReceiver(
+                        batteryReceiver,
+                        IntentFilter(Intent.ACTION_BATTERY_CHANGED),
+                        Context.RECEIVER_NOT_EXPORTED
+                    )
+                } else {
+                    appContext.registerReceiver(
+                        batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+                    )
+                }
+            }
+        } else {
+            runCatching { appContext.unregisterReceiver(batteryReceiver) }
+        }
     }
 }
