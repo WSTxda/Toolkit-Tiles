@@ -31,14 +31,16 @@ class NetworkTrafficTileService : BaseTileService() {
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         networkTrafficManager.currentState,
         networkTrafficManager.speedValue,
+        networkTrafficManager.isActive,
     )
 
     override fun updateTile() {
         val state = networkTrafficManager.currentState.value
         val speed = networkTrafficManager.speedValue.value
+        val isMonitoring = networkTrafficManager.isActive.value
 
         setTileState(
-            state = Tile.STATE_INACTIVE,
+            state = if (isMonitoring) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE,
             label = labelProvider.getLabel(speed),
             subtitle = labelProvider.getSubtitle(state),
             icon = iconProvider.getIcon(state),

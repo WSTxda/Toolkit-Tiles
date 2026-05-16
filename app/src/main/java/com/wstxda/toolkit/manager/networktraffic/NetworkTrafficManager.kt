@@ -33,6 +33,9 @@ class NetworkTrafficManager(context: Context) {
     private val _speedValue = MutableStateFlow("")
     val speedValue = _speedValue.asStateFlow()
 
+    private val _isActive = MutableStateFlow(false)
+    val isActive = _isActive.asStateFlow()
+
     private var pollingJob: Job? = null
     private var isPanelOpen = false
 
@@ -64,7 +67,13 @@ class NetworkTrafficManager(context: Context) {
     fun setListening(listening: Boolean) {
         if (isPanelOpen == listening) return
         isPanelOpen = listening
-        if (isPanelOpen) restartPolling() else stopPolling()
+        if (isPanelOpen) {
+            _isActive.value = true
+            restartPolling()
+        } else {
+            stopPolling()
+            _isActive.value = false
+        }
     }
 
     private fun restartPolling() {
