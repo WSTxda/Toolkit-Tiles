@@ -5,7 +5,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.provider.Settings
-import android.text.TextUtils
 import androidx.core.content.getSystemService
 import com.wstxda.toolkit.services.accessibility.TileAccessibilityService
 
@@ -14,23 +13,14 @@ class PermissionManager(context: Context) {
     private val appContext = context.applicationContext
 
     fun isAccessibilityServiceEnabled(): Boolean {
-        val expectedComponentName = ComponentName(appContext, TileAccessibilityService::class.java)
-
-        val enabledServicesSetting = Settings.Secure.getString(
-            appContext.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        ) ?: return false
-
-        val colonSplitter = TextUtils.SimpleStringSplitter(':')
-        colonSplitter.setString(enabledServicesSetting)
-
-        while (colonSplitter.hasNext()) {
-            val componentNameString = colonSplitter.next()
-            val enabledComponent = ComponentName.unflattenFromString(componentNameString)
-            if (enabledComponent != null && enabledComponent == expectedComponentName) {
-                return true
-            }
-        }
-        return false
+        val am = appContext.getSystemService<android.view.accessibility.AccessibilityManager>()
+        val enabledServices = am?.getEnabledAccessibilityServiceList(
+            android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK
+        )
+        val toolkitComponent = ComponentName(appContext, TileAccessibilityService::class.java).flattenToString()
+        return enabledServices?.any {
+            it.id.contains(toolkitComponent, ignoreCase = true) || it.resolveInfo.serviceInfo.packageName == appContext.packageName
+        } == true
     }
 
     fun hasWriteSettingsPermission(): Boolean = Settings.System.canWrite(appContext)
