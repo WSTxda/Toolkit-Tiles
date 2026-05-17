@@ -279,4 +279,14 @@
     <!--music search tile-->
 
     <string name="music_search_tile">Music search</string>
+
+    <!--rotation tile-->
+
+    <string name="rotation_tile">Rotation</string>
+    <!--modes-->
+    <string name="rotation_tile_auto">Auto</string>
+    <string name="rotation_tile_portrait">Portrait</string>
+    <string name="rotation_tile_landscape">Landscape</string>
+    <string name="rotation_tile_reverse_portrait">Reverse portrait</string>
+    <string name="rotation_tile_reverse_landscape">Reverse landscape</string>
 </resources>
