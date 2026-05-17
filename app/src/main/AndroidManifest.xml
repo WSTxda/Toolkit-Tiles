@@ -62,10 +62,10 @@
         </provider>
 
 
-        <!--about app activity for tiles preferences-->
+        <!--tile preferences router activity for tiles preferences-->
 
         <activity
-            android:name=".activity.AboutAppActivity"
+            android:name=".activity.TilePreferencesActivity"
             android:configChanges="uiMode|orientation|screenSize|keyboard|keyboardHidden"
             android:exported="false"
             android:launchMode="singleTask"
@@ -74,6 +74,15 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
+
+        <!--about app activity-->
+
+        <activity
+            android:name=".activity.AboutAppActivity"
+            android:configChanges="uiMode|orientation|screenSize|keyboard|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Transparent" />
 
         <!--function activity for tiles-->
 
