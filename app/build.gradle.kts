@@ -6,16 +6,13 @@ plugins {
 android {
     namespace = "com.wstxda.toolkit"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
 
     defaultConfig {
         applicationId = "com.wstxda.toolkit"
         minSdk = 26
-        //noinspection OldTargetApi
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 220
         versionName = "2.2.0"
     }
