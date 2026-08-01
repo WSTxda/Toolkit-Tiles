@@ -28,14 +28,18 @@ class BatteryLabelProvider(private val context: Context) {
                 R.string.battery_tile_wattage, info.wattageW
             )
 
-            BatteryDisplayState.TEMPERATURE -> context.getString(
-                R.string.battery_tile_temperature, info.temperatureC
+            BatteryDisplayState.TEMPERATURE_C -> context.getString(
+                R.string.battery_tile_temperature_c, info.temperatureC
+            )
+
+            BatteryDisplayState.TEMPERATURE_F -> context.getString(
+                R.string.battery_tile_temperature_f, info.temperatureF
             )
         }
     }
 
     fun getSubtitle(info: BatteryInfo, state: BatteryDisplayState): CharSequence? {
-        if (state == BatteryDisplayState.TEMPERATURE) return when (info.healthCode) {
+        if (state == BatteryDisplayState.TEMPERATURE_C || state == BatteryDisplayState.TEMPERATURE_F) return when (info.healthCode) {
             AndroidBatteryManager.BATTERY_HEALTH_GOOD -> context.getString(R.string.battery_tile_health_good)
             AndroidBatteryManager.BATTERY_HEALTH_OVERHEAT -> context.getString(R.string.battery_tile_health_overheat)
             AndroidBatteryManager.BATTERY_HEALTH_DEAD -> context.getString(R.string.battery_tile_health_dead)
