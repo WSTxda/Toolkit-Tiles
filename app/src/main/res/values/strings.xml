@@ -180,7 +180,8 @@
     <!--device temperature tile-->
 
     <string name="temperature_tile">Temperature</string>
-    <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+    <string name="temperature_tile_format_c" translatable="false">%.1f°C</string>
+    <string name="temperature_tile_format_f" translatable="false">%.1f°F</string>
 
     <!--media output tile-->
 
@@ -218,7 +219,8 @@
     <string name="battery_tile_voltage" translatable="false">%.2f V</string>
     <string name="battery_tile_current" translatable="false">%d mA</string>
     <string name="battery_tile_wattage" translatable="false">%.1f W</string>
-    <string name="battery_tile_temperature" translatable="false">%.1f°C</string>
+    <string name="battery_tile_temperature_c" translatable="false">%.1f°C</string>
+    <string name="battery_tile_temperature_f" translatable="false">%.1f°F</string>
     <!--status-->
     <string name="battery_tile_status_full">Fully charged</string>
     <string name="battery_tile_status_low">Low battery</string>

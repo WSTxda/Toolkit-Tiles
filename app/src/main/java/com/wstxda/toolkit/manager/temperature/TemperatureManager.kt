@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import androidx.core.content.edit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,13 +18,21 @@ import kotlinx.coroutines.launch
 class TemperatureManager(context: Context) {
 
     companion object {
+        private const val PREFS_NAME = "temperature_prefs"
+        private const val KEY_UNIT_FAHRENHEIT = "unit_fahrenheit"
         private const val REFRESH_RATE_MS = 1000L
     }
 
     private val appContext = context.applicationContext
+    private val prefs = appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
     private val managerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _temperature = MutableStateFlow(0f)
     val temperature = _temperature.asStateFlow()
+
+    private val _isFahrenheit = MutableStateFlow(prefs.getBoolean(KEY_UNIT_FAHRENHEIT, false))
+    val isFahrenheit = _isFahrenheit.asStateFlow()
+
     private var pollingJob: Job? = null
     private var isPanelOpen = false
 
@@ -36,6 +45,12 @@ class TemperatureManager(context: Context) {
         } else {
             stopPolling()
         }
+    }
+
+    fun toggleUnit() {
+        val nextValue = !_isFahrenheit.value
+        _isFahrenheit.value = nextValue
+        prefs.edit { putBoolean(KEY_UNIT_FAHRENHEIT, nextValue) }
     }
 
     private fun startPolling() {
