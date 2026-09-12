@@ -180,7 +180,8 @@
     <!--device temperature tile-->
 
     <string name="temperature_tile">Temperature</string>
-    <string name="temperature_tile_format" translatable="false">%.1f°C</string>
+    <string name="temperature_tile_celsius" translatable="false">%.1f°C</string>
+    <string name="temperature_tile_fahrenheit" translatable="false">%.1f°F</string>
 
     <!--media output tile-->
 

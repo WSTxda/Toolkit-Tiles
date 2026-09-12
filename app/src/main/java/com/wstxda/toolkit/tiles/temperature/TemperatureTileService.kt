@@ -23,16 +23,23 @@ class TemperatureTileService : BaseTileService() {
         temperatureManager.setListening(false)
     }
 
+    override fun onClick() {
+        temperatureManager.toggleUnit()
+        updateTile()
+    }
+
     override fun flowsToCollect(): List<Flow<*>> = listOf(
         temperatureManager.temperature,
+        temperatureManager.unit,
     )
 
     override fun updateTile() {
         val temperature = temperatureManager.temperature.value
+        val unit = temperatureManager.unit.value
 
         setTileState(
             state = Tile.STATE_INACTIVE,
-            label = labelProvider.getLabel(temperature),
+            label = labelProvider.getLabel(temperature, unit),
             subtitle = labelProvider.getSubtitle(),
             icon = iconProvider.getIcon(),
         )
