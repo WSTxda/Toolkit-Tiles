@@ -47,7 +47,7 @@
     <!--accessibility-->
     <string name="accessibility_permission_message">مطلوب إذن إمكانية الوصول. برجاء تمكينه أولاً</string>
     <!--dnd-->
-    <string name="dnd_access_permission_message">يتطلب إذن الوصول إلى عدم الإزعاج. برجاء تمكينه أولاً</string>
+    <string name="dnd_access_permission_message">مطلوب إذن الوصول إلى عدم الإزعاج. برجاء تمكينه أولاً</string>
     <!--write settings-->
     <string name="write_settings_permission_message">مطلوب إذن كتابة إعدادات النظام. برجاء تمكينه أولاً</string>
     <!--write secure settings-->
@@ -66,7 +66,7 @@
 
     <string name="not_supported">جهازك لا يدعم هذه الميزة</string>
     <string name="clipboard_cleared">تم مسح الحافظة</string>
-    <string name="google_not_found">لم يتم العثور على نشاط البحث عن الموسيقى. يرجى تثبيت أو تمكين تطبيق Google</string>
+    <string name="google_not_found"> نشاط البحث عن الموسيقى غير موجود. يرجى تثبيت أو تمكين تطبيق Google</string>
 
     <!--general tiles subtitles-->
 
@@ -109,10 +109,10 @@
     <string name="coin_flip_tile">اقلب العملة</string>
     <string name="coin_flip_tile_tap">اضغط للقلب</string>
     <!--sides-->
-    <string name="coin_tile_heads">رؤوس</string>
-    <string name="coin_tile_tails">ذيول</string>
+    <string name="coin_tile_heads">كتابة</string>
+    <string name="coin_tile_tails">صورة</string>
     <!--sides counter-->
-    <string name="coin_flip_tile_count">رؤوس: %1$d ذيول: %2$d</string>
+    <string name="coin_flip_tile_count">كتابة: %1$d صورة: %2$d</string>
 
     <!--dice roll tile-->
 
