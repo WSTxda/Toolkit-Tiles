@@ -1,7 +1,6 @@
 package com.wstxda.toolkit.tiles.ldac
 
 import android.content.Intent
-import android.graphics.drawable.Icon
 import android.service.quicksettings.Tile
 import android.widget.Toast
 import com.wstxda.toolkit.R
@@ -11,6 +10,7 @@ import com.wstxda.toolkit.activity.WriteSecureSettingsActivity
 import com.wstxda.toolkit.base.BaseTileService
 import com.wstxda.toolkit.manager.ldac.LdacConnection
 import com.wstxda.toolkit.manager.ldac.LdacModule
+import com.wstxda.toolkit.ui.icon.LdacIconProvider
 import com.wstxda.toolkit.ui.label.LdacLabelProvider
 import kotlinx.coroutines.flow.Flow
 
@@ -18,7 +18,7 @@ class LdacTileService : BaseTileService() {
 
     private val manager by lazy { LdacModule.getInstance(applicationContext) }
     private val labelProvider by lazy { LdacLabelProvider(applicationContext) }
-    private val icon by lazy { Icon.createWithResource(this, R.drawable.ic_ldac) }
+    private val iconProvider by lazy { LdacIconProvider(applicationContext) }
 
     override fun onStartListening() {
         manager.startMonitoring()
@@ -95,7 +95,7 @@ class LdacTileService : BaseTileService() {
             subtitle = labelProvider.getSubtitle(
                 snapshot, hasSecureSettings, hasAssociation
             ),
-            icon = icon,
+            icon = iconProvider.getIcon(snapshot),
         )
     }
 }
