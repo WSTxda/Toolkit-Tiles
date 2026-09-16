@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:ignore="ForegroundServicesPolicy" />
@@ -37,6 +42,10 @@
 
     <uses-feature
         android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.software.companion_device_setup"
         android:required="false" />
 
     <application
@@ -123,6 +132,18 @@
             android:name=".activity.WriteSecureSettingsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.BluetoothPermissionActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent" />
+
+        <activity
+            android:name=".activity.LdacAssociationActivity"
+            android:enabled="@bool/enable_ldac_association"
+            android:exported="false"
+            android:theme="@style/AppTheme.Transparent"
+            tools:targetApi="36" />
 
         <!--function services for tiles-->
 
@@ -452,6 +473,27 @@
             android:exported="true"
             android:icon="@drawable/ic_media_output"
             android:label="@string/media_output_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:process=":tiles">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+            <meta-data
+                android:name="android.service.quicksettings.TILE_CATEGORY"
+                android:value="android.service.quicksettings.CATEGORY_CONNECTIVITY" />
+        </service>
+
+        <!--LDAC playback quality quick settings tile service-->
+
+        <service
+            android:name=".tiles.ldac.LdacTileService"
+            android:enabled="@bool/enable_ldac_tile"
+            android:exported="true"
+            android:icon="@drawable/ic_ldac"
+            android:label="@string/ldac_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:process=":tiles">
             <intent-filter>

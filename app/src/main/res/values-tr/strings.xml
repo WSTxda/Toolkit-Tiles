@@ -249,4 +249,19 @@
     <!--music search tile-->
 
     <string name="music_search_tile">Müzik arama</string>
+
+    <!--LDAC playback quality tile-->
+    <string name="ldac_tile">LDAC kalitesi</string>
+    <string name="ldac_quality_adaptive">En iyi çaba (uyarlanabilir)</string>
+    <string name="ldac_quality_330">Bağlantı (330 kbps)</string>
+    <string name="ldac_quality_660">Dengeli (660 kbps)</string>
+    <string name="ldac_quality_990">Kalite (990 kbps)</string>
+    <string name="ldac_bluetooth_permission">Yakındaki cihazlara izin ver</string>
+    <string name="ldac_not_connected">Bluetooth ses cihazı yok</string>
+    <string name="ldac_not_active">LDAC etkin değil</string>
+    <string name="ldac_association_required">Bu cihazı yetkilendirmek için dokunun</string>
+    <string name="ldac_association_complete">Cihaz yetkilendirildi</string>
+    <string name="ldac_association_cancelled">Yetkilendirme iptal edildi</string>
+    <string name="ldac_association_failed">Cihaz yetkilendirilemedi</string>
+    <string name="ldac_change_failed">LDAC kalitesi değiştirilemedi</string>
 </resources>

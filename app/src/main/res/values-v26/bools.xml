@@ -1,0 +1,6 @@
+<resources>
+
+    <!--LDAC was added to Android's Bluetooth stack in API 26-->
+
+    <bool name="enable_ldac_tile">true</bool>
+</resources>

@@ -6,4 +6,6 @@
     <bool name="enable_screenshot_tile">false</bool>
     <bool name="enable_dns_tile">false</bool>
     <bool name="enable_power_tile">false</bool>
+    <bool name="enable_ldac_tile">false</bool>
+    <bool name="enable_ldac_association">false</bool>
 </resources>
