@@ -22,6 +22,7 @@ data class LdacSnapshot(
 
 enum class LdacConnection {
     PermissionRequired,
+    Connecting,
     Disconnected,
     NonLdac,
     Ready,

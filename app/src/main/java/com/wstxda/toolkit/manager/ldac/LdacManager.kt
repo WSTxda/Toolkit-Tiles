@@ -198,11 +198,15 @@ class LdacManager(context: Context) {
         }
         if (a2dp != null || proxyRequested) return
 
+        _snapshot.value = readSnapshot(LdacConnection.Connecting)
         proxyRequested = runCatching {
             bluetoothAdapter?.getProfileProxy(
                 appContext, profileListener, BluetoothProfile.A2DP
             ) == true
         }.getOrDefault(false)
+        if (!proxyRequested) {
+            _snapshot.value = readSnapshot(LdacConnection.Disconnected)
+        }
     }
 
     private fun refreshQuality() {
@@ -215,7 +219,15 @@ class LdacManager(context: Context) {
             return
         }
 
-        val devices = runCatching { a2dp?.connectedDevices.orEmpty() }.getOrDefault(emptyList())
+        val proxy = a2dp
+        if (proxy == null) {
+            _snapshot.value = readSnapshot(
+                if (proxyRequested) LdacConnection.Connecting else LdacConnection.Disconnected
+            )
+            return
+        }
+
+        val devices = runCatching { proxy.connectedDevices }.getOrDefault(emptyList())
         if (devices.isEmpty()) {
             _snapshot.value = readSnapshot(LdacConnection.Disconnected)
             return

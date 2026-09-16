@@ -16,6 +16,8 @@ class LdacLabelProvider(private val context: Context) {
         !hasSecureSettings -> context.getString(R.string.tile_setup)
         snapshot.connection == LdacConnection.PermissionRequired ->
             context.getString(R.string.ldac_bluetooth_permission)
+        snapshot.connection == LdacConnection.Connecting ->
+            context.getString(R.string.tile_unavailable)
         snapshot.connection == LdacConnection.Disconnected ->
             context.getString(R.string.ldac_not_connected)
         snapshot.connection == LdacConnection.NonLdac ->
