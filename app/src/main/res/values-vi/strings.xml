@@ -249,4 +249,19 @@
     <!--music search tile-->
 
     <string name="music_search_tile">Tìm kiếm nhạc</string>
+
+    <!--LDAC playback quality tile-->
+    <string name="ldac_tile">Chất lượng LDAC</string>
+    <string name="ldac_quality_adaptive">Tối ưu linh hoạt</string>
+    <string name="ldac_quality_330">Kết nối (330 kbps)</string>
+    <string name="ldac_quality_660">Cân bằng (660 kbps)</string>
+    <string name="ldac_quality_990">Chất lượng (990 kbps)</string>
+    <string name="ldac_bluetooth_permission">Cho phép thiết bị ở gần</string>
+    <string name="ldac_not_connected">Không có thiết bị âm thanh Bluetooth</string>
+    <string name="ldac_not_active">LDAC chưa hoạt động</string>
+    <string name="ldac_association_required">Nhấn để cấp quyền cho thiết bị này</string>
+    <string name="ldac_association_complete">Đã cấp quyền cho thiết bị</string>
+    <string name="ldac_association_cancelled">Đã hủy cấp quyền</string>
+    <string name="ldac_association_failed">Không thể cấp quyền cho thiết bị</string>
+    <string name="ldac_change_failed">Không thể đổi chất lượng LDAC</string>
 </resources>

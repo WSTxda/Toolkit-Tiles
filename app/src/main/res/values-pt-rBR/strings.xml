@@ -249,4 +249,19 @@
     <!--music search tile-->
 
     <string name="music_search_tile">Pesquisar música</string>
+
+    <!--LDAC playback quality tile-->
+    <string name="ldac_tile">Qualidade LDAC</string>
+    <string name="ldac_quality_adaptive">Melhor esforço (adaptável)</string>
+    <string name="ldac_quality_330">Conexão (330 kbps)</string>
+    <string name="ldac_quality_660">Equilibrado (660 kbps)</string>
+    <string name="ldac_quality_990">Qualidade (990 kbps)</string>
+    <string name="ldac_bluetooth_permission">Permitir dispositivos próximos</string>
+    <string name="ldac_not_connected">Nenhum dispositivo de áudio Bluetooth</string>
+    <string name="ldac_not_active">LDAC não está ativo</string>
+    <string name="ldac_association_required">Toque para autorizar este dispositivo</string>
+    <string name="ldac_association_complete">Dispositivo autorizado</string>
+    <string name="ldac_association_cancelled">Autorização cancelada</string>
+    <string name="ldac_association_failed">Não foi possível autorizar o dispositivo</string>
+    <string name="ldac_change_failed">Não foi possível alterar a qualidade LDAC</string>
 </resources>

@@ -1,0 +1,6 @@
+<resources>
+
+    <!--Android 16 requires companion-device association for codec control-->
+
+    <bool name="enable_ldac_association">true</bool>
+</resources>

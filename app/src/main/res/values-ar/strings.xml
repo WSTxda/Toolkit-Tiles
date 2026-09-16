@@ -249,4 +249,19 @@
     <!--music search tile-->
 
     <string name="music_search_tile">البحث عن الموسيقى</string>
+
+    <!--LDAC playback quality tile-->
+    <string name="ldac_tile">جودة LDAC</string>
+    <string name="ldac_quality_adaptive">أفضل أداء (تكيفي)</string>
+    <string name="ldac_quality_330">اتصال (330 كيلوبت/ث)</string>
+    <string name="ldac_quality_660">متوازن (660 كيلوبت/ث)</string>
+    <string name="ldac_quality_990">جودة (990 كيلوبت/ث)</string>
+    <string name="ldac_bluetooth_permission">السماح بالأجهزة القريبة</string>
+    <string name="ldac_not_connected">لا يوجد جهاز صوت Bluetooth</string>
+    <string name="ldac_not_active">LDAC غير نشط</string>
+    <string name="ldac_association_required">انقر لتخويل هذا الجهاز</string>
+    <string name="ldac_association_complete">تم تخويل الجهاز</string>
+    <string name="ldac_association_cancelled">تم إلغاء التخويل</string>
+    <string name="ldac_association_failed">تعذر تخويل الجهاز</string>
+    <string name="ldac_change_failed">تعذر تغيير جودة LDAC</string>
 </resources>
